@@ -1,0 +1,15 @@
+{
+  "name": "rm-kotlin-sdk-test",
+  "version": "1.0.0-alpha",
+  "main": "kotlin/rm-kotlin-sdk-test.js",
+  "devDependencies": {},
+  "dependencies": {
+    "rm-kotlin-sdk": "1.0.0-alpha",
+    "kotlin": "file:/Users/sianloong/Developers/IdeaProjects/rm-kotlin-sdk/build/js/packages_imported/kotlin/1.5.0",
+    "kotlin-test": "file:/Users/sianloong/Developers/IdeaProjects/rm-kotlin-sdk/build/js/packages_imported/kotlin-test/1.5.0",
+    "kotlin-test-js-runner": "file:/Users/sianloong/Developers/IdeaProjects/rm-kotlin-sdk/build/js/packages_imported/kotlin-test-js-runner/1.5.0"
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": []
+}

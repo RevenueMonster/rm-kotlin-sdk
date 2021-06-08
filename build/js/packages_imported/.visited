@@ -1,0 +1,26 @@
+{
+  "version": "9",
+  "items": {
+    "60b8d22184ea05b8478f531cf627b2b6": {
+      "src": "/Users/sianloong/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.5.0/4080d69efca5e39e9b4972f125e40f1607bd6460/kotlin-stdlib-common-1.5.0.jar"
+    },
+    "f4dc9750f60c16fb0a0e55f4f8c2366f": {
+      "src": "/Users/sianloong/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-js/1.5.0/8eab8909451db9e9c3ff2ea33439f6f501053cd5/kotlin-stdlib-js-1.5.0.jar",
+      "target": "kotlin/1.5.0"
+    },
+    "337ff817e087aded273dfc9ba494baf4": {
+      "src": "/Users/sianloong/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-test-js-runner/1.5.0/20ef83e15f8c2cde090f3bfd8c1eba72947f7ab8/kotlin-test-js-runner-1.5.0.jar",
+      "target": "kotlin-test-js-runner/1.5.0"
+    },
+    "dcad44328cfade6175d3cf385590e401": {
+      "src": "/Users/sianloong/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-test-js/1.5.0/a4d28199ebb541ae9f12e9b52ac5becc7022c622/kotlin-test-js-1.5.0.jar",
+      "target": "kotlin-test/1.5.0"
+    },
+    "a1f2cbd80cbfd8c5e97a20e260c54171": {
+      "src": "/Users/sianloong/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-test-common/1.5.0/76b8f329f75b3d9116dda879b2c85e68035599b7/kotlin-test-common-1.5.0.jar"
+    },
+    "546a510e5dc9c5d7948f74475bf1f7a5": {
+      "src": "/Users/sianloong/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-test-annotations-common/1.5.0/f7737b199fe1970c61110fec5259b2e06485902d/kotlin-test-annotations-common-1.5.0.jar"
+    }
+  }
+}
