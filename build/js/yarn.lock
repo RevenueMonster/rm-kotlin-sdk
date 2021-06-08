@@ -2,6 +2,18 @@
 # yarn lockfile v1
 
 
+abort-controller@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/abort-controller/-/abort-controller-3.0.0.tgz#eaf54d53b62bae4138e809ca225c8439a6efb392"
+  integrity sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==
+  dependencies:
+    event-target-shim "^5.0.0"
+
+async-limiter@~1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
+  integrity sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==
+
 dukat@0.5.8-rc.4:
   version "0.5.8-rc.4"
   resolved "https://registry.yarnpkg.com/dukat/-/dukat-0.5.8-rc.4.tgz#90384dcb50b14c26f0e99dae92b2dea44f5fce21"
@@ -9,6 +21,11 @@ dukat@0.5.8-rc.4:
   dependencies:
     google-protobuf "3.12.2"
     typescript "3.9.5"
+
+event-target-shim@^5.0.0:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-5.0.1.tgz#5d4d3ebdf9583d63a5333ce2deb7480ab2b05789"
+  integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
 
 google-protobuf@3.12.2:
   version "3.12.2"
@@ -21,10 +38,47 @@ google-protobuf@3.12.2:
 "kotlin-test@file:packages_imported/kotlin-test/1.5.0":
   version "1.5.0"
 
-"kotlin@file:packages_imported/kotlin/1.5.0":
-  version "1.5.0"
+"kotlin@file:packages_imported/kotlin/1.5.10":
+  version "1.5.10"
+
+"kotlinx-atomicfu@file:packages_imported/kotlinx-atomicfu/0.16.1":
+  version "0.16.1"
+
+"kotlinx-coroutines-core@file:packages_imported/kotlinx-coroutines-core/1.5.0-native-mt":
+  version "1.5.0-native-mt"
+
+"ktor-ktor-client-core-js-legacy@file:packages_imported/ktor-ktor-client-core-js-legacy/1.6.0":
+  version "1.6.0"
+  dependencies:
+    abort-controller "3.0.0"
+    node-fetch "2.6.0"
+    ws "6.2.1"
+
+"ktor-ktor-http-cio-js-legacy@file:packages_imported/ktor-ktor-http-cio-js-legacy/1.6.0":
+  version "1.6.0"
+
+"ktor-ktor-http-js-legacy@file:packages_imported/ktor-ktor-http-js-legacy/1.6.0":
+  version "1.6.0"
+
+"ktor-ktor-io-js-legacy@file:packages_imported/ktor-ktor-io-js-legacy/1.6.0":
+  version "1.6.0"
+
+"ktor-ktor-utils-js-legacy@file:packages_imported/ktor-ktor-utils-js-legacy/1.6.0":
+  version "1.6.0"
+
+node-fetch@2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
+  integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
 
 typescript@3.9.5:
   version "3.9.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.5.tgz#586f0dba300cde8be52dd1ac4f7e1009c1b13f36"
   integrity sha512-hSAifV3k+i6lEoCJ2k6R2Z/rp/H3+8sdmcn5NrS3/3kE7+RyZXm9aqvxWqjEXHAd8b0pShatpcdMTvEdvAJltQ==
+
+ws@6.2.1:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-6.2.1.tgz#442fdf0a47ed64f59b6a5d8ff130f4748ed524fb"
+  integrity sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA==
+  dependencies:
+    async-limiter "~1.0.0"

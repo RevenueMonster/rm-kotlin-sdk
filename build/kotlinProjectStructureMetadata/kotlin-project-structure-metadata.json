@@ -4,20 +4,6 @@
     "isPublishedAsRoot": "true",
     "variants": [
       {
-        "name": "iosArm64ApiElements",
-        "sourceSet": [
-          "commonMain",
-          "iosMain"
-        ]
-      },
-      {
-        "name": "iosX64ApiElements",
-        "sourceSet": [
-          "commonMain",
-          "iosMain"
-        ]
-      },
-      {
         "name": "jsApiElements",
         "sourceSet": [
           "commonMain"
@@ -52,21 +38,8 @@
       {
         "name": "commonMain",
         "dependsOn": [],
-        "moduleDependency": [
-          "org.jetbrains.kotlin:kotlin-stdlib-common"
-        ],
+        "moduleDependency": [],
         "binaryLayout": "klib"
-      },
-      {
-        "name": "iosMain",
-        "dependsOn": [
-          "commonMain"
-        ],
-        "moduleDependency": [
-          "org.jetbrains.kotlin:kotlin-stdlib-common"
-        ],
-        "binaryLayout": "klib",
-        "hostSpecific": "true"
       }
     ]
   }
