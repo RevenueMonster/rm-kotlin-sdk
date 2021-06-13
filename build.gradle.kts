@@ -1,6 +1,6 @@
 plugins {
-    kotlin("multiplatform") version "1.5.0"
-    kotlin("plugin.serialization") version "1.5.0"
+    kotlin("multiplatform") version "1.5.10"
+    kotlin("plugin.serialization") version "1.5.10"
 }
 
 group = "rm"
@@ -38,16 +38,16 @@ kotlin {
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
 
-    val ktor_version = "1.6.0"
-    val serialization_version = "1.2.1"
+    val ktorVersion = "1.6.0"
+    val serializationVersion = "1.2.1"
 
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib"))
-                implementation("io.ktor:ktor-client-core:$ktor_version")
-                implementation("io.ktor:ktor-client-serialization:$ktor_version")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serialization_version")
+                implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation("io.ktor:ktor-client-serialization:$ktorVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
             }
         }
         val commonTest by getting {
@@ -58,8 +58,8 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-android:$ktor_version")
-                implementation("io.ktor:ktor-client-apache:$ktor_version")
+                implementation("io.ktor:ktor-client-android:$ktorVersion")
+                implementation("io.ktor:ktor-client-apache:$ktorVersion")
             }
         }
         val jvmTest by getting {
@@ -76,6 +76,10 @@ kotlin {
 //        }
         val nativeMain by getting {
         }
-        val nativeTest by getting
+        val nativeTest by getting {
+        }
+//        val iosMain by creating {
+//            dependsOn(commonMain)
+//        }
     }
 }

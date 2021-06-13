@@ -9,11 +9,18 @@ import kotlin.test.Test
 class RevenueMonsterSDKTest {
     @Test
     fun initSDK() {
-        val sdk = RevenueMonsterSDK()
+        val sdk = RevenueMonsterSDK(
+            clientID = "1599646279297591629",
+            clientSecret = "NekiDbnNHbHLWdRmbqtwBCqywfYkVVnE",
+            privateKey = "",
+            publicKey = "",
+        )
 
         runBlocking {
-            val result = sdk.payment.qrPay()
-            println(result)
+            sdk.getAccessToken()
+//            sdk.payment.find("210612084000300428219453")
+//            val result = sdk.payment.qrPay()
+//            println(result)
         }
 
         println(sdk.getString())
