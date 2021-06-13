@@ -1,6 +1,6 @@
-# Revenue Monster Kotlin Multiplatform SDK
+# RM KMP SDK
 
-> Revenue Monster SDK
+> Revenue Monster kotlin multiplatform SDK
 
 ## 📦️ Dependencies
 
