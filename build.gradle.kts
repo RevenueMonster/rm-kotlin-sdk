@@ -4,8 +4,12 @@ plugins {
     id("maven-publish")
 }
 
-group = "org.rm.sdk"
+group = "org.revenuemonster"
 version = "1.0.0-alpha.0"
+
+val artifact = "rm-kotlin-sdk"
+val url = "https://github.com/RevenueMonster/rm-kotlin-sdk"
+val gitUrl = "github.com:RevenueMonster/rm-kotlin-sdk.git"
 
 repositories {
     mavenCentral()
@@ -15,13 +19,13 @@ repositories {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            groupId = "org.rm.sdk"
-            artifactId = "library"
+            groupId = "$group"
+            artifactId = "$artifact"
             version = "$version"
             pom {
-                name.set("rm-kotlin-sdk")
+                name.set("$artifact")
                 description.set("Revenue Monster Kotlin Multiplatform SDK")
-                url.set("https://github.com/RevenueMonster/rm-kotlin-sdk")
+                url.set("$url")
                 developers {
                     developer {
                         id.set("si3nloong")
@@ -30,9 +34,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection.set("scm:git:git://github.com:RevenueMonster/rm-kotlin-sdk.git")
-                    developerConnection.set("scm:git:ssh://github.com:RevenueMonster/rm-kotlin-sdk.git")
-                    url.set("https://github.com/RevenueMonster/rm-kotlin-sdk")
+                    connection.set("scm:git:git://$gitUrl")
+                    developerConnection.set("scm:git:ssh://$gitUrl")
+                    url.set("$url")
                 }
             }
 //            from(components["java"])

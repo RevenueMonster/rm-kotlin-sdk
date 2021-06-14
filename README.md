@@ -7,9 +7,9 @@
 ```kts
 kotlin {
    sourceSets {
-      commonMain {
+      val commonMain by getting {
          dependencies {
-            implementation 'org.revenuemonster:rm-kotlin-sdk:1.0.0-alpha.0'
+            implementation("org.revenuemonster:rm-kotlin-sdk:1.0.0-alpha.0")
          }
       }
    }
