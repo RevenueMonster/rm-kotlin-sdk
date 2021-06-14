@@ -13,6 +13,7 @@ repositories {
 }
 
 kotlin {
+    // setup for JVM
     jvm {
         compilations.all {
             kotlinOptions.jvmTarget = "1.8"
@@ -43,6 +44,7 @@ kotlin {
     val serializationVersion = "1.2.1"
 
     sourceSets {
+        // Dependencies for common
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib"))
@@ -57,6 +59,7 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
+        // Dependencies for JVM, android mobile phone and android based application (such as tablet)
         val jvmMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
@@ -75,6 +78,7 @@ kotlin {
 //                implementation(kotlin("test-js"))
 //            }
 //        }
+        // Dependencies for iOS and desktop
         val nativeMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
