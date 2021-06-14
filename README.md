@@ -9,7 +9,7 @@ kotlin {
    sourceSets {
       commonMain {
          dependencies {
-            implementation 'org.revenuemonster.sdk:RevenueMonsterSDK:1.0.0-alpha.0'
+            implementation 'org.revenuemonster:rm-kotlin-sdk:1.0.0-alpha.0'
          }
       }
    }
