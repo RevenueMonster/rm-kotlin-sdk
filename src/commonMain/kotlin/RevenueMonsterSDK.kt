@@ -59,7 +59,7 @@ class RevenueMonsterSDK(
                     headers {
                         append(HttpHeaders.Accept, "application/json")
                         append(HttpHeaders.ContentType, "application/json")
-                        append(HttpHeaders.Authorization, "Basic s$b64")
+                        append(HttpHeaders.Authorization, "Basic $b64")
                     }
                     body = mapOf("grantType" to "client_credentials")
                 }
