@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform") version "1.5.10"
     kotlin("plugin.serialization") version "1.5.10"
+    id("maven-publish")
 }
 
 group = "rm"
@@ -75,6 +76,10 @@ kotlin {
 //            }
 //        }
         val nativeMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-ios:$ktorVersion")
+                implementation("io.ktor:ktor-client-curl:$ktorVersion")
+            }
         }
         val nativeTest by getting {
         }

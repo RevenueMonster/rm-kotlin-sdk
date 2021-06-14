@@ -17,7 +17,10 @@ class RevenueMonsterSDKTest {
         )
 
         runBlocking {
-            sdk.getAccessToken()
+            try {
+                sdk.getAccessToken()
+            } catch (e: Throwable) {
+            }
 //            sdk.payment.find("210612084000300428219453")
 //            val result = sdk.payment.qrPay()
 //            println(result)
