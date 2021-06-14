@@ -18,17 +18,23 @@ class RevenueMonsterSDKTest {
 
         runBlocking {
             try {
-                sdk.getAccessToken()
+                val credential = sdk.getAccessToken()
+                println(credential)
             } catch (e: Throwable) {
+            }
+
+            try {
+                println("Base url !")
+                println(sdk.baseUrl)
+                val stores = sdk.merchant.getStores()
+                println(stores)
+            } catch (e: Throwable) {
+                println("debug here ============>")
+                println(e.message)
             }
 //            sdk.payment.find("210612084000300428219453")
 //            val result = sdk.payment.qrPay()
 //            println(result)
         }
-
-        println(sdk.getString())
-//        CoroutineScope(Dispatchers.Main).launch {
-
-//        }
     }
 }

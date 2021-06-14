@@ -10,10 +10,20 @@ import io.ktor.http.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
 import org.rm.sdk.model.Credential
 import org.rm.sdk.model.Error
 import org.rm.sdk.util.Base64Factory
+import org.rm.sdk.util.randomString
+
+class Config
+
+val client: HttpClient = HttpClient() {
+    install(JsonFeature) {
+        serializer = KotlinxSerializer()
+    }
+}
 
 class RevenueMonsterSDK(
     private val clientID: String,
@@ -21,35 +31,55 @@ class RevenueMonsterSDK(
     private val privateKey: String,
     private val publicKey: String,
     private val sandbox: Boolean = true,
+    block: Config.() -> Unit = {}
 ) {
-    private val oauth2Url: String = domains[sandbox]?.get(0) ?: ""
-    private val baseUrl: String = domains[sandbox]?.get(1) ?: ""
+    val oauth2Url: String = domains[sandbox]?.get(0) ?: ""
+    val baseUrl: String = domains[sandbox]?.get(1) ?: ""
 
-    private var credential: Credential? = null
     private val mutex = Mutex()
+    private var credential: Credential? = null
 
     private companion object {
         private val domains = mapOf<Boolean, Array<String>>(
-            true to arrayOf("https://sb-oauth.revenuemonster.my", "https://sb-api.revenuemonster.my"),
-            false to arrayOf("https://oauth.revenuemonster.my", "https://api.revenuemonster.my"),
+            true to arrayOf("https://sb-oauth.revenuemonster.my", "https://sb-open.revenuemonster.my"),
+            false to arrayOf("https://oauth.revenuemonster.my", "https://open.revenuemonster.my"),
         )
     }
 
     val payment: PaymentModule = PaymentModule(this)
     val merchant: MerchantModule = MerchantModule(this)
-    val client: HttpClient by lazy {
-        HttpClient() {
-            install(JsonFeature) {
-                serializer = KotlinxSerializer()
+
+    suspend inline fun <reified T> call(
+        url: String,
+        method: HttpMethod = HttpMethod.Get,
+//        headers: HeadersBuilder = HeadersBuilder(),
+        body: Any? = null,
+    ): T {
+        try {
+            val nonce = randomString(32)
+            val timestamp = Clock.System.now().epochSeconds.toString()
+
+            return client.request("$baseUrl$url") {
+                method
+                headers {
+                    append(HttpHeaders.Accept, "application/json")
+                    append(HttpHeaders.ContentType, "application/json")
+                    append("X-Signature", "sha256")
+                    append("X-Nonce-Str", nonce)
+                    append("X-Timestamp", timestamp)
+//                    append(HttpHeaders.Authorization, "Bearer $accessToken")
+                }
+                body
             }
+        } catch (e: ClientRequestException) {
+            throw Json {
+                ignoreUnknownKeys = true
+                coerceInputValues = true
+            }.decodeFromString(Error.serializer(), e.response.readText())
+        } catch (e: Exception) {
+            throw e
         }
     }
-
-//    protected suspend fun call(
-//        headers: HttpHeaders,
-//        body: Any,
-//    ) {
-//    }
 
     suspend fun getAccessToken(): Credential {
         try {
@@ -77,16 +107,10 @@ class RevenueMonsterSDK(
             }.decodeFromString(Error.serializer(), e.response.readText())
             println("debug ${err.message}")
             println(e.response.readText())
-//            println(e.response.status)
-//            println(e.cause)
             throw err
         } catch (e: Exception) {
             println("debug 2")
             throw e
         }
-    }
-
-    fun getString(): String {
-        return "test1111"
     }
 }
