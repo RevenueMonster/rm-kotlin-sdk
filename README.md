@@ -2,10 +2,31 @@
 
 > Revenue Monster Kotlin Multiplatform SDK, support every possible platform, such as desktop, mobile and web
 
+## 🔨 Installation
+
+```kts
+kotlin {
+   sourceSets {
+      commonMain {
+         dependencies {
+            implementation 'org.revenuemonster.sdk:RevenueMonsterSDK:1.0.0-alpha.0'
+         }
+      }
+   }
+}
+```
+
+<p align="center"><b>build.gradle(.kts)</b></p>
+
 ## 🪣 Requirements
 
 - [Kotlin](https://github.com/JetBrains/kotlin) compiler at least 1.5.10
 - [JDK](https://www.oracle.com/java/technologies/javase-downloads.html) at least 1.8
+
+## ✨ Features
+
+- Minimal package dependency
+- Support multiple platform
 
 ## 📦️ Dependencies
 

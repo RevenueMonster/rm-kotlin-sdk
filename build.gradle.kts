@@ -4,12 +4,40 @@ plugins {
     id("maven-publish")
 }
 
-group = "rm"
-version = "1.0.0-alpha"
+group = "org.rm.sdk"
+version = "1.0.0-alpha.0"
 
 repositories {
     mavenCentral()
     mavenLocal()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "org.rm.sdk"
+            artifactId = "library"
+            version = "$version"
+            pom {
+                name.set("rm-kotlin-sdk")
+                description.set("Revenue Monster Kotlin Multiplatform SDK")
+                url.set("https://github.com/RevenueMonster/rm-kotlin-sdk")
+                developers {
+                    developer {
+                        id.set("si3nloong")
+                        name.set("Lee Sian Loong")
+                        email.set("sianloong90@gmail.com")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:git://github.com:RevenueMonster/rm-kotlin-sdk.git")
+                    developerConnection.set("scm:git:ssh://github.com:RevenueMonster/rm-kotlin-sdk.git")
+                    url.set("https://github.com/RevenueMonster/rm-kotlin-sdk")
+                }
+            }
+//            from(components["java"])
+        }
+    }
 }
 
 kotlin {

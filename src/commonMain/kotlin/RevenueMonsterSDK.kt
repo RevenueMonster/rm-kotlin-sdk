@@ -45,11 +45,11 @@ class RevenueMonsterSDK(
         }
     }
 
-    protected fun call(
-        headers: HttpHeaders,
-        body: Any,
-    ) {
-    }
+//    protected suspend fun call(
+//        headers: HttpHeaders,
+//        body: Any,
+//    ) {
+//    }
 
     suspend fun getAccessToken(): Credential {
         try {
