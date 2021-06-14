@@ -23,13 +23,13 @@
 | Android | - | JVM | ❎ |
 | iOS | x64 | Kotlin/Native | ❎ |
 | iOS | (arm64) | Kotlin/Native | ❎ |
-| macOS | - | Kotlin/Desktop | ❎ |
-| linux | - | Kotlin/Desktop | ❎ |
-| window | - | Kotlin/Desktop | ❎ |
+| macOS | - | Kotlin/Native | ❎ |
+| linux | - | Kotlin/Native | ❎ |
+| window | - | Kotlin/Native | ❎ |
 
 ## ⚠️ Disclaimer
 
-> This package under heavily development, please don't try this!
+> This package under heavily development, please don't try this yet!
 
 ## 📄 License
 
