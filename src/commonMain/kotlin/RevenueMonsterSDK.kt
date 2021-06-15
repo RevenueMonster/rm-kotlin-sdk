@@ -15,13 +15,22 @@ import kotlinx.serialization.json.Json
 import org.rm.sdk.model.Credential
 import org.rm.sdk.model.Error
 import org.rm.sdk.util.Base64Factory
+import org.rm.sdk.util.Signature
 import org.rm.sdk.util.randomString
 
 class Config
 
 val client: HttpClient = HttpClient() {
+    engine {
+        threadsCount = 2
+    }
     install(JsonFeature) {
-        serializer = KotlinxSerializer()
+        serializer = KotlinxSerializer(
+            kotlinx.serialization.json.Json {
+                isLenient = true
+                ignoreUnknownKeys = true
+            }
+        )
     }
 }
 
@@ -31,13 +40,13 @@ class RevenueMonsterSDK(
     private val privateKey: String,
     private val publicKey: String,
     private val sandbox: Boolean = true,
-    block: Config.() -> Unit = {}
+//    block: Config.() -> Unit = {}
 ) {
     val oauth2Url: String = domains[sandbox]?.get(0) ?: ""
     val baseUrl: String = domains[sandbox]?.get(1) ?: ""
 
     private val mutex = Mutex()
-    private var credential: Credential? = null
+    internal var credential: Credential? = null
 
     private companion object {
         private val domains = mapOf<Boolean, Array<String>>(
@@ -49,34 +58,57 @@ class RevenueMonsterSDK(
     val payment: PaymentModule = PaymentModule(this)
     val merchant: MerchantModule = MerchantModule(this)
 
-    suspend inline fun <reified T> call(
+    internal suspend inline fun <reified T> call(
         url: String,
-        method: HttpMethod = HttpMethod.Get,
+        requestMethod: HttpMethod = HttpMethod.Get,
 //        headers: HeadersBuilder = HeadersBuilder(),
-        body: Any? = null,
+        requestBody: Any? = null,
     ): T {
         try {
-            val nonce = randomString(32)
+            val uri = baseUrl + url
+            var data = ""
+            val signType = "sha256"
             val timestamp = Clock.System.now().epochSeconds.toString()
+            val nonce = randomString(32)
+            val signature = Signature.generateSignature(
+                data = data,
+                privateKey = privateKey,
+                requestUrl = uri,
+                nonceStr = nonce,
+                signType = signType,
+                method = requestMethod.value,
+                timestamp = timestamp
+            )
+            val accessToken = credential?.accessToken
 
-            return client.request("$baseUrl$url") {
-                method
+            println("URL => $uri")
+            println("Method => ${requestMethod.value}")
+            println("Body => $data")
+            println("AccessToken => $accessToken")
+            println("Timestamp => $timestamp")
+            println("Signature => $signature")
+
+            return client.request(uri) {
+                method = requestMethod
                 headers {
                     append(HttpHeaders.Accept, "application/json")
                     append(HttpHeaders.ContentType, "application/json")
-                    append("X-Signature", "sha256")
+                    append(HttpHeaders.Authorization, "Bearer $accessToken")
+                    append("X-Signature", "$signType $signature")
                     append("X-Nonce-Str", nonce)
                     append("X-Timestamp", timestamp)
-//                    append(HttpHeaders.Authorization, "Bearer $accessToken")
                 }
-                body
             }
         } catch (e: ClientRequestException) {
+            println("ClientRequestException!!!")
+            println(e)
             throw Json {
                 ignoreUnknownKeys = true
                 coerceInputValues = true
             }.decodeFromString(Error.serializer(), e.response.readText())
         } catch (e: Exception) {
+            println("Exception!!!")
+            println(e)
             throw e
         }
     }
@@ -100,7 +132,8 @@ class RevenueMonsterSDK(
 
             return item
         } catch (e: ClientRequestException) {
-            println("debug 1")
+            println("ClientRequestException !!!")
+            println(e)
             val err = Json {
                 ignoreUnknownKeys = true
                 coerceInputValues = true
@@ -109,7 +142,8 @@ class RevenueMonsterSDK(
             println(e.response.readText())
             throw err
         } catch (e: Exception) {
-            println("debug 2")
+            println("Exception !!!")
+            println(e)
             throw e
         }
     }
