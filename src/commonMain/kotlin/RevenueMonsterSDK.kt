@@ -80,7 +80,7 @@ class RevenueMonsterSDK(
 
             println("URL => $uri")
             println("Method => ${requestMethod.value}")
-            println("Body => $json")
+            println("Body => $data")
             println("AccessToken => $accessToken")
             println("Timestamp => $timestamp")
             println("Signature => $signature")

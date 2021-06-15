@@ -1,5 +1,6 @@
 package org.rm.sdk.model
 
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -9,5 +10,6 @@ data class Store(
     val postCode: String,
     val city: String,
     val status: String,
-    val createdAt: String,
+    val createdAt: Instant,
+    val updatedAt: Instant,
 )
