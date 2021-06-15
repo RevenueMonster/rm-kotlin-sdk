@@ -21,6 +21,9 @@ import org.rm.sdk.util.randomString
 class Config
 
 val client: HttpClient = HttpClient() {
+    engine {
+        threadsCount = 2
+    }
     install(JsonFeature) {
         serializer = KotlinxSerializer(
             kotlinx.serialization.json.Json {
