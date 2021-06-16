@@ -5,8 +5,17 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Expiry(
-    val type: String,
+    val type: ExpiryType,
     val day: UInt,
     val expiredAt: Instant
 )
+
+
+enum class ExpiryType {
+    PERMANENT,
+    DYNAMIC,
+    FIX
+}
+
+
 
