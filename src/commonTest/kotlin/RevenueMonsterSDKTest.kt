@@ -59,10 +59,21 @@ class RevenueMonsterSDKTest {
             }
 
             try {
-                val stores = sdk.merchant.getStores()
-                println("Stores ==========>")
-                println(stores)
+//                val stores = sdk.merchant.getStores()
+//                println("Stores ==========>")
+//                println(stores.items[0])
+
+                println()
+                val trans = sdk.payment.getTransactionQRURL()
+                println("PAYMENT ====>")
+
+                trans.items.forEach {
+                    println(it)
+                }
+
+
             } catch (e: Throwable) {
+                println()
                 println("debug here ============>")
                 println(e)
                 println(e.message)
