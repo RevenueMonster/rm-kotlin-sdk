@@ -6,14 +6,20 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.content.*
 import io.ktor.http.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.contextual
+import kotlinx.serialization.modules.polymorphic
 import org.rm.sdk.model.Credential
 import org.rm.sdk.model.Error
+import org.rm.sdk.model.QuickPay
 import org.rm.sdk.util.Base64Factory
 import org.rm.sdk.util.Signature
 import org.rm.sdk.util.randomString
@@ -40,7 +46,6 @@ class RevenueMonsterSDK(
     private val privateKey: String,
     private val publicKey: String,
     private val sandbox: Boolean = true,
-//    block: Config.() -> Unit = {}
 ) {
     val oauth2Url: String = domains[sandbox]?.get(0) ?: ""
     val baseUrl: String = domains[sandbox]?.get(1) ?: ""
@@ -62,7 +67,7 @@ class RevenueMonsterSDK(
         url: String,
         requestMethod: HttpMethod = HttpMethod.Get,
 //        headers: HeadersBuilder = HeadersBuilder(),
-        requestBody: Any? = null,
+         requestBody: Any ?= null,
     ): T {
         try {
             val uri = baseUrl + url
@@ -98,6 +103,12 @@ class RevenueMonsterSDK(
                     append("X-Nonce-Str", nonce)
                     append("X-Timestamp", timestamp)
                 }
+
+
+                if (requestBody != null) {
+                    body = requestBody
+                }
+
             }
         } catch (e: ClientRequestException) {
             println("ClientRequestException!!!")
