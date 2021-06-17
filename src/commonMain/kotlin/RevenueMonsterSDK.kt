@@ -11,8 +11,6 @@ import io.ktor.utils.io.core.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.rm.sdk.model.Credential
@@ -43,6 +41,7 @@ class RevenueMonsterSDK(
     private val privateKey: String,
     private val publicKey: String,
     private val sandbox: Boolean = true,
+//    block: Config.() -> Unit = {}
 ) {
     val oauth2Url: String = domains[sandbox]?.get(0) ?: ""
     val baseUrl: String = domains[sandbox]?.get(1) ?: ""
@@ -60,16 +59,16 @@ class RevenueMonsterSDK(
     val payment: PaymentModule = PaymentModule(this)
     val merchant: MerchantModule = MerchantModule(this)
 
-    internal suspend inline fun <reified T> call(
+    internal suspend inline fun <reified I, reified O> call(
         url: String,
         requestMethod: HttpMethod = HttpMethod.Get,
-        body:Any  ?= null,
 //        headers: HeadersBuilder = HeadersBuilder(),
-
-    ): T {
+        body: I? = null,
+    ): O {
         try {
             val uri = baseUrl + url
             var data = ""
+            if (body != null) data = Json.encodeToString(body)
             val signType = "sha256"
             val timestamp = Clock.System.now().epochSeconds.toString()
             val nonce = randomString(32)
@@ -91,11 +90,6 @@ class RevenueMonsterSDK(
             println("Timestamp => $timestamp")
             println("Signature => $signature")
 
-            println()
-            println("JSON TEST ++++")
-            println()
-
-
             return client.request(uri) {
                 method = requestMethod
                 headers {
@@ -106,11 +100,6 @@ class RevenueMonsterSDK(
                     append("X-Nonce-Str", nonce)
                     append("X-Timestamp", timestamp)
                 }
-
-//                if (this@HttpRequestBuilder.body != null) {
-//                    this.body = this@HttpRequestBuilder.body
-//                }
-
             }
         } catch (e: ClientRequestException) {
             println("ClientRequestException!!!")
