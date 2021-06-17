@@ -9,7 +9,7 @@ data class QuickPayTransaction(
     val store: Store,
     val referenceId: String,
     val transactionId: String,
-    val order: QuickPayOrder,
+    val order: QuickPayOrderRequest,
     val payee: Payee,
     val currencyType: String,
     val balanceAmount: UInt,

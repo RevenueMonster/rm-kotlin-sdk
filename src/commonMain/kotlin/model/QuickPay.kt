@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class QuickPay(
     val authCode : String,
-    val order : Order,
+    val order : QuickPayOrderRequest,
     val extraInfo : ExtraInfo,
     val ipAddress : String,
-    val terminalId : String,
+    val terminalId : String ?= "",
     val storeId : String
 )
