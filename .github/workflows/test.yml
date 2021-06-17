@@ -18,15 +18,16 @@ jobs:
       - uses: actions/checkout@v1
 
       # Cache gradle
-      - name: Cache Gradle and wrapper
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: cache-${{ runner.os }}-${{ matrix.jdk }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+      # - name: Cache Gradle and wrapper
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       ~/.gradle/caches
+      #       ~/.gradle/wrapper
+      #     key: cache-${{ runner.os }}-${{ matrix.jdk }}-gradle-${{ hashFiles('**/*.gradle*') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-gradle-
+
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
 
