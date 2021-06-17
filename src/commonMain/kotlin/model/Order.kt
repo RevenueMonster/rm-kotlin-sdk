@@ -7,8 +7,8 @@ import kotlinx.serialization.Serializable
 data class Order(
     val id : String,
     val title : String,
-    val details : String,
+    val detail : String,
     val additionalData : String,
-    val currencyType: String,
+    val currencyType: String ?= "",
     val amount : UInt
 )
