@@ -11,6 +11,7 @@ import io.ktor.utils.io.core.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.rm.sdk.model.Credential
 import org.rm.sdk.model.Error
@@ -58,15 +59,16 @@ class RevenueMonsterSDK(
     val payment: PaymentModule = PaymentModule(this)
     val merchant: MerchantModule = MerchantModule(this)
 
-    internal suspend inline fun <reified T> call(
+    internal suspend inline fun <reified I, reified O> call(
         url: String,
         requestMethod: HttpMethod = HttpMethod.Get,
 //        headers: HeadersBuilder = HeadersBuilder(),
-        requestBody: Any? = null,
-    ): T {
+        body: I? = null,
+    ): O {
         try {
             val uri = baseUrl + url
             var data = ""
+            if (body != null) data = Json.encodeToString(body)
             val signType = "sha256"
             val timestamp = Clock.System.now().epochSeconds.toString()
             val nonce = randomString(32)
