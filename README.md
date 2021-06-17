@@ -1,6 +1,14 @@
 # RM KMP SDK
 
+<p>
+   <a href="https://github.com/RevenueMonster/rm-kotlin-sdk/actions?query=workflow%3Atest"><img src="https://github.com/RevenueMonster/rm-kotlin-sdk/workflows/test/badge.svg?branch=main" alt="test status" title="test status"/></a>
+   <a href="https://github.com/RevenueMonster/rm-kotlin-sdk/actions?query=workflow%3Abuild"><img src="https://github.com/RevenueMonster/rm-kotlin-sdk/workflows/build/badge.svg?branch=main" alt="build status" title="build status"/></a>
+   <a href="https://github.com/si3nloong/sqlike/releases"><img src="https://img.shields.io/github/v/tag/si3nloong/sqlike" alt="semver tag" title="semver tag"/></a>
+   <a href="https://github.com/RevenueMonster/rm-kotlin-sdk/blob/main/LICENSE"><img src="https://img.shields.io/github/license/RevenueMonster/rm-kotlin-sdk" alt="license" title="license"/></a>
+</p>
+
 > Revenue Monster Kotlin Multiplatform SDK, support every possible platform, such as desktop, mobile and web
+
 
 ## 🔨 Installation
 
