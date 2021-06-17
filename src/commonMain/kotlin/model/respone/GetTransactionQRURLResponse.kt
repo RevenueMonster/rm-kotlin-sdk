@@ -1,12 +1,15 @@
-package org.rm.sdk.model
+package org.rm.sdk.model.respone
 
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
+import org.rm.sdk.model.common.Expiry
+
 
 //Get Transaction QR Code/URL
 //Get Transaction QR Code/URL By Code
+
 @Serializable
-data class TransactionQRURL(
+data class GetTransactionQRURLResponse(
     val storeId : String ?= "",
     val type : String,
     val isPreFillAmount : Boolean,
@@ -21,6 +24,7 @@ data class TransactionQRURL(
     val redirectUrl : String,
     val createAt: Instant?= null,
     val updateAt: Instant?= null
-)
 
-//after testing why every transaction storeid, createAt and updateAt is empty????
+
+
+)

@@ -6,20 +6,17 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
-import io.ktor.content.*
 import io.ktor.http.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
-import kotlinx.serialization.Contextual
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.contextual
-import kotlinx.serialization.modules.polymorphic
 import org.rm.sdk.model.Credential
 import org.rm.sdk.model.Error
-import org.rm.sdk.model.QuickPay
 import org.rm.sdk.util.Base64Factory
 import org.rm.sdk.util.Signature
 import org.rm.sdk.util.randomString
@@ -66,8 +63,9 @@ class RevenueMonsterSDK(
     internal suspend inline fun <reified T> call(
         url: String,
         requestMethod: HttpMethod = HttpMethod.Get,
+        body:Any  ?= null,
 //        headers: HeadersBuilder = HeadersBuilder(),
-         requestBody: Any ?= null,
+
     ): T {
         try {
             val uri = baseUrl + url
@@ -93,6 +91,11 @@ class RevenueMonsterSDK(
             println("Timestamp => $timestamp")
             println("Signature => $signature")
 
+            println()
+            println("JSON TEST ++++")
+            println()
+
+
             return client.request(uri) {
                 method = requestMethod
                 headers {
@@ -104,10 +107,9 @@ class RevenueMonsterSDK(
                     append("X-Timestamp", timestamp)
                 }
 
-
-                if (requestBody != null) {
-                    body = requestBody
-                }
+//                if (this@HttpRequestBuilder.body != null) {
+//                    this.body = this@HttpRequestBuilder.body
+//                }
 
             }
         } catch (e: ClientRequestException) {

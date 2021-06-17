@@ -59,17 +59,30 @@ class RevenueMonsterSDKTest {
             }
 
             try {
-//                val stores = sdk.merchant.getStores()
-//                println("Stores ==========>")
-//                println(stores.items[0])
+
 
                 println()
-                val trans = sdk.payment.getTransactionQRURL()
-                println("PAYMENT ====>")
+//                val trans = sdk.payment.getTransactionQRURL()
+//                val trans = sdk.payment.getTransactionByCode("5413b4583a9440dd351b2dde0c0ea166")
+//                println("Result ====>")
+//                println(trans.items)
 
-                trans.items.forEach {
-                    println(it)
-                }
+//                val testOrder = QuickPayOrderRequest("134850717797247290","SDKTEST","SDKTEST","","MYR", 100u)
+//                val extra = ExtraInfo("TEST","TESTE")
+//                val qp = QuickPay("134850717797247290",testOrder,extra,ipAddress = "1.1.1.1","","6170506694335521334")
+//                val pay = sdk.payment.quickPay(qp)
+
+
+                //transaction qr test
+
+//                val order = TransactionQROrder("SDK TEST","SALES TEST","JUST A TEST")
+//                val transQR = CreateStaticTransactionQRRequest(857,"MYR", listOf("WECHATPAY_MY"),null,order,"","STATIC","1623900685444294025",false)
+//                val re = sdk.payment.transactionQR(transQR)
+//
+//                println("Result ====>")
+//                println(re)
+
+
 
 
             } catch (e: Throwable) {
@@ -78,9 +91,7 @@ class RevenueMonsterSDKTest {
                 println(e)
                 println(e.message)
             }
-//            sdk.payment.find("210612084000300428219453")
-//            val result = sdk.payment.qrPay()
-//            println(result)
+
         }
     }
 }

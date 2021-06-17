@@ -1,4 +1,4 @@
-package org.rm.sdk.model
+package org.rm.sdk.model.common
 
 import kotlinx.serialization.Serializable
 
