@@ -100,6 +100,9 @@ class RevenueMonsterSDK(
                     append("X-Nonce-Str", nonce)
                     append("X-Timestamp", timestamp)
                 }
+//                if (body != null) {
+//                    this.body = body
+//                }
             }
         } catch (e: ClientRequestException) {
             println("ClientRequestException!!!")

@@ -1,4 +1,4 @@
-package model.respone
+package model.response
 
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable

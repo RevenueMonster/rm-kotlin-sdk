@@ -3,7 +3,13 @@ package org.rm.sdk
 // import kotlinx.coroutines.CoroutineScope
 // import kotlinx.coroutines.Dispatchers
 // import kotlinx.coroutines.launch
+import com.github.revenuemonster.model.request.QuickPayRequest
+import com.github.revenuemonster.model.request.QuickPayRequestOrder
 import kotlinx.coroutines.runBlocking
+import org.rm.sdk.model.common.ExtraInfo
+import org.rm.sdk.model.common.TransactionQROrder
+import org.rm.sdk.model.request.TransactionQRRequest
+import org.rm.sdk.model.request.TransactionQRType
 import kotlin.test.Test
 
 class RevenueMonsterSDKTest {
@@ -60,27 +66,46 @@ class RevenueMonsterSDKTest {
 
             try {
 
+                //quick pay test
+//                    val order = QuickPayRequestOrder(
+//                        id = "134850717797247290",
+//                        title = "SNOR TEST",
+//                        detail = "JUST A TEST",
+//                        additionalData = "NONE",
+//                        amount = 85700,
+//                        currencyType = "MYR"
+//                    )
+//
+//
+//                    val qp = QuickPayRequest(
+//                        authCode = "134850717797247290",
+//                        order = order,
+//                        ipAddress = "1.1.1.1",
+//                        terminalId = "1623500916731469951",
+//                        storeId = "1623743430847879711",
+//                        extraInfo = ExtraInfo("SALES","JUST TEST")
+//                    )
+
+                //generate transaction qr
+                    val re = TransactionQRRequest(
+                        amount = 85700,
+                        currencyType = "MYR",
+                        method = listOf("WECHATPAY","WECHATPAY_MY",
+                            "WECHATPAY_CN","PRESTO_MY",
+                            "BOOST_MY",
+                            "ALIPAY_CN"),
+                        order = TransactionQROrder("SNOR TEST","SNOR TEST","SNOR TEST"),
+                        redirectUrl = "www.google.com",
+                        type = TransactionQRType.STATIC,
+                        storeId = "1623743430847879711",
+                        isPreFillAmount = true
+                    )
+
 
                 println()
-//                val trans = sdk.payment.getTransactionQRURL()
-//                val trans = sdk.payment.getTransactionByCode("5413b4583a9440dd351b2dde0c0ea166")
-//                println("Result ====>")
-//                println(trans.items)
-
-//                val testOrder = QuickPayOrderRequest("134850717797247290","SDKTEST","SDKTEST","","MYR", 100u)
-//                val extra = ExtraInfo("TEST","TESTE")
-//                val qp = QuickPay("134850717797247290",testOrder,extra,ipAddress = "1.1.1.1","","6170506694335521334")
-//                val pay = sdk.payment.quickPay(qp)
-
-
-                //transaction qr test
-
-//                val order = TransactionQROrder("SDK TEST","SALES TEST","JUST A TEST")
-//                val transQR = CreateStaticTransactionQRRequest(857,"MYR", listOf("WECHATPAY_MY"),null,order,"","STATIC","1623900685444294025",false)
-//                val re = sdk.payment.transactionQR(transQR)
-//
-//                println("Result ====>")
-//                println(re)
+                val result = sdk.payment.generateTransactionQR(re)
+                println("Result ====>")
+                println(result)
 
 
 
