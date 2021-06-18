@@ -4,6 +4,10 @@ package org.rm.sdk
 // import kotlinx.coroutines.Dispatchers
 // import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.rm.sdk.model.common.Expiry
+import org.rm.sdk.model.common.ExpiryType
+import org.rm.sdk.model.common.TransactionQROrder
+import org.rm.sdk.model.request.TransactionQRRequest
 import kotlin.test.Test
 
 class RevenueMonsterSDKTest {
@@ -59,17 +63,51 @@ class RevenueMonsterSDKTest {
             }
 
             try {
-                val stores = sdk.merchant.getStores()
-                println("Stores ==========>")
-                println(stores)
+
+                // quick pay test
+//                    val order = QuickPayRequestOrder(
+//                        id = "134850717797247290",
+//                        title = "SNOR TEST",
+//                        detail = "JUST A TEST",
+//                        additionalData = "NONE",
+//                        amount = 85700,
+//                        currencyType = "MYR"
+//                    )
+//
+//
+//                    val qp = QuickPayRequest(
+//                        authCode = "134850717797247290",
+//                        order = order,
+//                        ipAddress = "1.1.1.1",
+//                        terminalId = "1623500916731469951",
+//                        storeId = "1623743430847879711",
+//                        extraInfo = ExtraInfo("SALES","JUST TEST")
+//                    )
+
+                // generate transaction qr
+                val re = TransactionQRRequest(
+                    amount = 10000,
+                    method = listOf(),
+                    currencyType = "MYR",
+                    order = TransactionQROrder("SNOR TEST", "SNOR TEST", "SNOR TEST"),
+                    redirectUrl = "www.google.com",
+                    type = "STATIC",
+                    storeId = "1623743430847879711",
+                    isPreFillAmount = true,
+                    expiry = Expiry(
+                        type = ExpiryType.PERMANENT
+                    ),
+                )
+
+                println()
+                val result = sdk.payment.generateTransactionQR(re)
+                println("Result ====>")
+                println(result)
             } catch (e: Throwable) {
                 println("debug here ============>")
                 println(e)
                 println(e.message)
             }
-//            sdk.payment.find("210612084000300428219453")
-//            val result = sdk.payment.qrPay()
-//            println(result)
         }
     }
 }
