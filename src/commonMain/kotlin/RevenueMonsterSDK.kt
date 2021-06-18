@@ -12,7 +12,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.*
 import org.rm.sdk.model.Credential
 import org.rm.sdk.model.Error
 import org.rm.sdk.util.Base64Factory
@@ -32,6 +32,19 @@ val client: HttpClient = HttpClient() {
                 ignoreUnknownKeys = true
             }
         )
+    }
+}
+
+private fun normalize(elem: JsonElement): JsonElement {
+    return when (elem) {
+        is JsonObject -> JsonObject(
+            elem.entries.map { it.key to normalize(it.value) }.sortedBy { it.first }.toMap()
+        )
+        is JsonArray -> JsonArray(elem.map { normalize(it) })
+        else -> {
+            print("type ====> $elem")
+            elem
+        }
     }
 }
 
@@ -61,37 +74,37 @@ class RevenueMonsterSDK(
 
     internal suspend inline fun <reified I, reified O> call(
         url: String,
-        requestMethod: HttpMethod = HttpMethod.Get,
+        method: HttpMethod = HttpMethod.Get,
 //        headers: HeadersBuilder = HeadersBuilder(),
         body: I? = null,
     ): O {
         try {
             val uri = baseUrl + url
-            var data = ""
-            if (body != null) data = Json.encodeToString(body)
+            var el: JsonElement = JsonNull
+            if (body != null) el = normalize(Json.encodeToJsonElement(body))
+            val accessToken = credential?.accessToken
             val signType = "sha256"
             val timestamp = Clock.System.now().epochSeconds.toString()
             val nonce = randomString(32)
             val signature = Signature.generateSignature(
-                data = data,
+                data = Json.encodeToString(el),
                 privateKey = privateKey,
                 requestUrl = uri,
                 nonceStr = nonce,
                 signType = signType,
-                method = requestMethod.value,
+                method = method.value,
                 timestamp = timestamp
             )
-            val accessToken = credential?.accessToken
 
             println("URL => $uri")
-            println("Method => ${requestMethod.value}")
-            println("Body => $data")
+            println("Method => ${method.value}")
+//            println("Body => $data")
             println("AccessToken => $accessToken")
             println("Timestamp => $timestamp")
             println("Signature => $signature")
 
             return client.request(uri) {
-                method = requestMethod
+                this.method = method
                 headers {
                     append(HttpHeaders.Accept, "application/json")
                     append(HttpHeaders.ContentType, "application/json")
@@ -100,9 +113,9 @@ class RevenueMonsterSDK(
                     append("X-Nonce-Str", nonce)
                     append("X-Timestamp", timestamp)
                 }
-//                if (body != null) {
-//                    this.body = body
-//                }
+                if (body != null) {
+                    this.body = el
+                }
             }
         } catch (e: ClientRequestException) {
             println("ClientRequestException!!!")

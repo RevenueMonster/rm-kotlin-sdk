@@ -1,12 +1,10 @@
-
 package org.rm.sdk.model.common
-import kotlinx.datetime.Instant
-import kotlinx.serialization.Serializable
 
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class Expiry(
     val type: ExpiryType,
-    val day: Int,
-    val expiredAt: Instant,
+//    val day: Int? = 0,
+//    val expiredAt: Instant?,
 )

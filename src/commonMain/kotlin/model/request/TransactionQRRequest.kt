@@ -7,14 +7,12 @@ import org.rm.sdk.model.common.TransactionQROrder
 @Serializable
 data class TransactionQRRequest(
     val amount: Int,
-    val currencyType: String = "MYR",
-    val method: List<String> = listOf(),
-    val expiry: Expiry? = null,
+    val currencyType: String,
+    val method: List<String>,
+    val expiry: Expiry,
     val order: TransactionQROrder,
     val redirectUrl: String,
-    val type:TransactionQRType = TransactionQRType.STATIC,
+    val type: String,
     val storeId: String,
     val isPreFillAmount: Boolean
 )
-
-
