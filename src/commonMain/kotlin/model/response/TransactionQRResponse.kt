@@ -3,6 +3,7 @@ package model.response
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 import org.rm.sdk.model.common.Store
+import org.rm.sdk.model.common.TransactionQROrder
 
 @Serializable
 data class TransactionQRResponse(

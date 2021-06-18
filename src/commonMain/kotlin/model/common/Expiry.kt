@@ -1,6 +1,7 @@
 package org.rm.sdk.model.common
 
 import kotlinx.serialization.Serializable
+import org.rm.sdk.model.enum.ExpiryType
 
 @Serializable
 data class Expiry(

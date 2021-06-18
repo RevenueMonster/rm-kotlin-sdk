@@ -1,4 +1,4 @@
-package org.rm.sdk.model.request
+package org.rm.sdk.model.enum
 
 enum class TransactionQRType(val type : String) {
     STATIC("STATIC"),

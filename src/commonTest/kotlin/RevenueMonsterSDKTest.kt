@@ -5,9 +5,10 @@ package org.rm.sdk
 // import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.rm.sdk.model.common.Expiry
-import org.rm.sdk.model.common.ExpiryType
+import org.rm.sdk.model.enum.ExpiryType
 import org.rm.sdk.model.common.TransactionQROrder
 import org.rm.sdk.model.request.TransactionQRRequest
+import org.rm.sdk.model.enum.TransactionQRType
 import kotlin.test.Test
 
 class RevenueMonsterSDKTest {
@@ -91,7 +92,7 @@ class RevenueMonsterSDKTest {
                     currencyType = "MYR",
                     order = TransactionQROrder("SNOR TEST", "SNOR TEST", "SNOR TEST"),
                     redirectUrl = "www.google.com",
-                    type = "STATIC",
+                    type = TransactionQRType.STATIC,
                     storeId = "1623743430847879711",
                     isPreFillAmount = true,
                     expiry = Expiry(
