@@ -42,7 +42,7 @@ private fun normalize(elem: JsonElement): JsonElement {
         )
         is JsonArray -> JsonArray(elem.map { normalize(it) })
         else -> {
-            print("type ====> $elem")
+//            print("type ====> $elem")
             elem
         }
     }

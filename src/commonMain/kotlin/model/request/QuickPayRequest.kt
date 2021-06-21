@@ -8,7 +8,7 @@ import org.rm.sdk.model.common.ExtraInfo
 data class QuickPayRequest(
     val authCode: String,
     val order: QuickPayRequestOrder,
-    val extraInfo: ExtraInfo?,
+    val extraInfo: ExtraInfo?=null,
     val ipAddress: String,
     val terminalId : String,
     val storeId: String
@@ -21,7 +21,7 @@ data class QuickPayRequestOrder(
     val title: String,
     val detail: String,
     val amount: Int,
-    val currencyType: String = "MYR",
+    val currencyType: String,
     val additionalData: String,
 )
 

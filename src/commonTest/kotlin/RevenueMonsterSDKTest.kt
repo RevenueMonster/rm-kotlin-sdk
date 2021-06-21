@@ -3,12 +3,18 @@ package org.rm.sdk
 // import kotlinx.coroutines.CoroutineScope
 // import kotlinx.coroutines.Dispatchers
 // import kotlinx.coroutines.launch
+import com.github.revenuemonster.model.request.QuickPayRequest
+import com.github.revenuemonster.model.request.QuickPayRequestOrder
+import io.ktor.client.request.forms.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.datetime.*
 import org.rm.sdk.model.common.Expiry
+import org.rm.sdk.model.common.ExtraInfo
 import org.rm.sdk.model.enum.ExpiryType
 import org.rm.sdk.model.common.TransactionQROrder
 import org.rm.sdk.model.request.TransactionQRRequest
 import org.rm.sdk.model.enum.TransactionQRType
+import kotlin.random.Random
 import kotlin.test.Test
 
 class RevenueMonsterSDKTest {
@@ -58,52 +64,57 @@ class RevenueMonsterSDKTest {
 
         runBlocking {
             try {
+
                 val credential = sdk.getAccessToken()
                 println(credential)
-            } catch (e: Throwable) {
-            }
-
-            try {
 
                 // quick pay test
-//                    val order = QuickPayRequestOrder(
-//                        id = "134850717797247290",
-//                        title = "SNOR TEST",
-//                        detail = "JUST A TEST",
-//                        additionalData = "NONE",
-//                        amount = 85700,
-//                        currencyType = "MYR"
-//                    )
-//
-//
 //                    val qp = QuickPayRequest(
 //                        authCode = "134850717797247290",
-//                        order = order,
+//                        order = QuickPayRequestOrder(
+//                            id = "${Random.nextInt(10946114768247530.toInt(), 90946114768247530.toInt())}",
+//                            title = "SNOR TEST",
+//                            detail = "JUST A TEST",
+//                            additionalData = "NONE",
+//                            amount = 85700,
+//                            currencyType = "MYR"
+//                        ),
 //                        ipAddress = "1.1.1.1",
 //                        terminalId = "1623500916731469951",
 //                        storeId = "1623743430847879711",
-//                        extraInfo = ExtraInfo("SALES","JUST TEST")
+//                        extraInfo = ExtraInfo("MEMBERSHIP","9182724049190314657")
 //                    )
 
                 // generate transaction qr
-                val re = TransactionQRRequest(
-                    amount = 10000,
-                    method = listOf(),
-                    currencyType = "MYR",
-                    order = TransactionQROrder("SNOR TEST", "SNOR TEST", "SNOR TEST"),
-                    redirectUrl = "www.google.com",
-                    type = TransactionQRType.STATIC,
-                    storeId = "1623743430847879711",
-                    isPreFillAmount = true,
-                    expiry = Expiry(
-                        type = ExpiryType.PERMANENT
-                    ),
-                )
+//                val re = TransactionQRRequest(
+//                    amount = 10000,
+//                    method = arrayListOf("WECHATPAY","WECHATPAY_MY",
+//                        "WECHATPAY_CN","PRESTO_MY",
+//                        "BOOST_MY",
+//                        "ALIPAY_CN"),
+//                    currencyType = "MYR",
+//                    order = TransactionQROrder("SNOR TEST", "SNOR TEST","SNOR TEST"),
+//                    redirectUrl = "www.google.com",
+//                    type = TransactionQRType.STATIC,
+//                    storeId = "1623743430847879711",
+//                    isPreFillAmount = true,
+//                    expiry = Expiry(
+//                        type = ExpiryType.PERMANENT
+//                    ),
+//                )
 
+
+//                val result = sdk.payment.quickPay(qp)
                 println()
-                val result = sdk.payment.generateTransactionQR(re)
                 println("Result ====>")
-                println(result)
+//                println(result)
+                println()
+
+
+
+
+
+
             } catch (e: Throwable) {
                 println("debug here ============>")
                 println(e)

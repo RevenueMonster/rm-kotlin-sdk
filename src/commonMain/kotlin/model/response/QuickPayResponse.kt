@@ -13,7 +13,7 @@ data class QuickPayResponse(
     val transactionId: String,
     val order: QuickPayResponseOrder,
     val terminalId: String,
-    val payee: Payee,
+    val payee: Payee?=null,
     val currencyType: String,
     val balanceAmount: Long,
     val platform: String,
