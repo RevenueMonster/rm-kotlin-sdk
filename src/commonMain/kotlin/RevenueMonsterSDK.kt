@@ -87,7 +87,7 @@ class RevenueMonsterSDK(
             val timestamp = Clock.System.now().epochSeconds.toString()
             val nonce = randomString(32)
             val signature = Signature.generateSignature(
-                data = Json.encodeToString(el),
+                data = if(body!= null) Json.encodeToString(el) else "",
                 privateKey = privateKey,
                 requestUrl = uri,
                 nonceStr = nonce,
