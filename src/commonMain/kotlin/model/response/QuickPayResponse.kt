@@ -2,6 +2,7 @@ package model.response
 
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
+import org.rm.sdk.model.common.Payee
 import org.rm.sdk.model.common.Store
 
 
@@ -12,7 +13,7 @@ data class QuickPayResponse(
     val transactionId: String,
     val order: QuickPayResponseOrder,
     val terminalId: String,
-    val payee: Payee,
+    val payee: Payee?=null,
     val currencyType: String,
     val balanceAmount: Long,
     val platform: String,
@@ -34,5 +35,3 @@ data class QuickPayResponseOrder(
     val amount: Int
 )
 
-@Serializable
-data class Payee(val userId: String)

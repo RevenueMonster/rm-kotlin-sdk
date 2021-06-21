@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TransactionQROrder(
-    val details: String,
+    val detail: String,
     val title: String,
     val additionalData: String
 )

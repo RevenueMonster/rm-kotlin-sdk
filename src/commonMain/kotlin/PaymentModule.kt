@@ -24,14 +24,6 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
         return sdk.call<Any, Items<GetTransactionResponse>>(url = "/v3/payment/transaction/qrcode/$code/transactions")
     }
 
-    suspend fun quickPay(data: QuickPayRequest): Item<QuickPayResponse> {
-        return sdk.call<QuickPayRequest, Item<QuickPayResponse>>(
-            url = "/v3/payment/quickpay",
-            method = HttpMethod.Post,
-            body = data
-        )
-    }
-
     suspend fun generateTransactionQR(data: TransactionQRRequest): Item<TransactionQRResponse> {
         return sdk.call<TransactionQRRequest, Item<TransactionQRResponse>>(
             url = "/v3/payment/transaction/qrcode",
@@ -40,21 +32,14 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
         )
     }
 
-//    suspend fun quickPay(data : QuickpayRequest): Item<QuickpayResult>{
-//        return sdk.call(
-//            url = "/v3/payment/quickpay",
-//            requestMethod = HttpMethod.Post,
-//            body = data
-//        )
-//    }
-//
-//
-//    suspend fun transactionQR(data : CreateStaticTransactionQRRequest) : Item<GenerateTransactionQRResult>{
-//        return sdk.call(
-//            url = "/v3/payment/transaction/qrcode",
-//            requestMethod = HttpMethod.Post,
-//            body = data
-//        )
-//
-//    }
+    suspend fun quickPay(data : QuickPayRequest) : Item<QuickPayResponse>{
+        return sdk.call<QuickPayRequest,Item<QuickPayResponse>>(
+            url = "/v3/payment/quickpay",
+            method = HttpMethod.Post,
+            body = data
+        )
+    }
+
+
+
 }

@@ -1,4 +1,4 @@
-package org.rm.sdk.model.common
+package org.rm.sdk.model.enum
 
 enum class ExpiryType(val type: String) {
     PERMANENT("PERMANENT"),

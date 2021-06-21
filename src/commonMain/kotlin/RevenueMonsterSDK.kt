@@ -42,7 +42,7 @@ private fun normalize(elem: JsonElement): JsonElement {
         )
         is JsonArray -> JsonArray(elem.map { normalize(it) })
         else -> {
-            print("type ====> $elem")
+//            print("type ====> $elem")
             elem
         }
     }
@@ -87,7 +87,7 @@ class RevenueMonsterSDK(
             val timestamp = Clock.System.now().epochSeconds.toString()
             val nonce = randomString(32)
             val signature = Signature.generateSignature(
-                data = Json.encodeToString(el),
+                data = if(body!= null) Json.encodeToString(el) else "",
                 privateKey = privateKey,
                 requestUrl = uri,
                 nonceStr = nonce,
