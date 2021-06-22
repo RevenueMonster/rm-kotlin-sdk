@@ -49,7 +49,7 @@ kotlin {
 
 | Platform | Architecture | Technology |Support |
 |---------------|---|-----|:-------:|
-| Android | - | JVM | ❎ |
+| Android | - | JVM | ✅ |
 | iOS | x64 | Kotlin/Native | ❎ |
 | iOS | (arm64) | Kotlin/Native | ❎ |
 | macOS | - | Kotlin/Native | ❎ |
