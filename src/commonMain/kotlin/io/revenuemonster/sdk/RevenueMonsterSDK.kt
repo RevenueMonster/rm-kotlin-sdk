@@ -1,9 +1,6 @@
 package io.revenuemonster.sdk
 
-import io.ktor.client.*
 import io.ktor.client.features.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -17,33 +14,10 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.*
-
-val client: HttpClient = HttpClient() {
-    engine {
-        threadsCount = 2
-    }
-    install(JsonFeature) {
-        serializer = KotlinxSerializer(
-            kotlinx.serialization.json.Json {
-                isLenient = true
-                ignoreUnknownKeys = true
-            }
-        )
-    }
-}
-
-private fun normalize(elem: JsonElement): JsonElement {
-    return when (elem) {
-        is JsonObject -> JsonObject(
-            elem.entries.map { it.key to normalize(it.value) }.sortedBy { it.first }.toMap()
-        )
-        is JsonArray -> JsonArray(elem.map { normalize(it) })
-        else -> {
-            elem
-        }
-    }
-}
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.encodeToJsonElement
 
 class RevenueMonsterSDK(
     private val clientID: String,

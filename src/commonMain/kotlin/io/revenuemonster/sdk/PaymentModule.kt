@@ -11,7 +11,6 @@ import io.revenuemonster.sdk.model.response.QuickPayResponse
 import io.revenuemonster.sdk.model.response.TransactionQRResponse
 
 class PaymentModule(private val sdk: RevenueMonsterSDK) {
-
     suspend fun getTransactionQRURL(): Items<GetTransactionQRURLResponse> {
         return sdk.call<Any, Items<GetTransactionQRURLResponse>>(url = "/v3/payment/transaction/qrcodes")
     }

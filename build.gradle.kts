@@ -111,6 +111,7 @@ kotlin {
         }
         // Dependencies for JVM, android mobile phone and android based application (such as tablet)
         val jvmMain by getting {
+//            dependsOn(commonMain)
             dependencies {
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
                 implementation("io.ktor:ktor-client-apache:$ktorVersion")
@@ -130,6 +131,7 @@ kotlin {
 //        }
         // Dependencies for iOS and desktop
         val nativeMain by getting {
+//            dependsOn(commonMain)
             dependencies {
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
                 implementation("io.ktor:ktor-client-curl:$ktorVersion")
