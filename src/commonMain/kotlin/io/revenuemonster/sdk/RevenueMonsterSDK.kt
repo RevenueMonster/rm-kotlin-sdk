@@ -1,4 +1,4 @@
-package io.revenuemonster
+package io.revenuemonster.sdk
 
 import io.ktor.client.*
 import io.ktor.client.features.*
