@@ -1,4 +1,4 @@
-# RM KMP SDK
+# RM Kotlin Multiplatform SDK
 
 <p>
    <a href="https://github.com/RevenueMonster/rm-kotlin-sdk/actions?query=workflow%3ATest"><img src="https://github.com/RevenueMonster/rm-kotlin-sdk/workflows/Test/badge.svg?branch=main" alt="test status" title="test status"/></a>
