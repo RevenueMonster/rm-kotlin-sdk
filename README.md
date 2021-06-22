@@ -26,7 +26,15 @@
 
 ## 🔨 Installation
 
-```kts
+### Multiplatform
+
+If you're using `multiplatform`, modify your `build.gradle.kts` file as follow
+
+```bash
+plugins {
+   kotlin("multiplatform") version "1.5.10"
+}
+
 kotlin {
    sourceSets {
       val commonMain by getting {
@@ -38,7 +46,25 @@ kotlin {
 }
 ```
 
-<p align="center"><b>build.gradle(.kts)</b></p>
+### JVM
+
+If you're using `jvm`, modify your `build.gradle.kts` file as follow
+
+```bash
+plugins {
+   kotlin("jvm") version "1.5.10"
+}
+
+kotlin {
+   sourceSets {
+      val commonMain by getting {
+         dependencies {
+            implementation("io.revenuemonster:rm-kotlin-sdk-jvm:1.0.0-alpha.0")
+         }
+      }
+   }
+}
+```
 
 ## 🪣 Requirements
 
