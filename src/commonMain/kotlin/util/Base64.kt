@@ -1,4 +1,4 @@
-package org.rm.sdk.util
+package io.revenuemonster.sdk.util
 
 interface Base64Encoder {
     fun encode(src: ByteArray): ByteArray

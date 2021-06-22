@@ -1,4 +1,4 @@
-package org.rm.sdk
+package io.revenuemonster.sdk
 
 import io.ktor.client.*
 import io.ktor.client.features.*
@@ -13,11 +13,11 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
-import org.rm.sdk.model.Credential
-import org.rm.sdk.model.Error
-import org.rm.sdk.util.Base64Factory
-import org.rm.sdk.util.Signature
-import org.rm.sdk.util.randomString
+import io.revenuemonster.sdk.model.Credential
+import io.revenuemonster.sdk.model.Error
+import io.revenuemonster.sdk.util.Base64Factory
+import io.revenuemonster.sdk.util.Signature
+import io.revenuemonster.sdk.util.randomString
 
 class Config
 
@@ -87,7 +87,7 @@ class RevenueMonsterSDK(
             val timestamp = Clock.System.now().epochSeconds.toString()
             val nonce = randomString(32)
             val signature = Signature.generateSignature(
-                data = if(body!= null) Json.encodeToString(el) else "",
+                data = if (body != null) Json.encodeToString(el) else "",
                 privateKey = privateKey,
                 requestUrl = uri,
                 nonceStr = nonce,

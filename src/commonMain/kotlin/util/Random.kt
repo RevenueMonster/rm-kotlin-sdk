@@ -1,4 +1,4 @@
-package org.rm.sdk.util
+package io.revenuemonster.sdk.util
 
 private val alphabet: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 

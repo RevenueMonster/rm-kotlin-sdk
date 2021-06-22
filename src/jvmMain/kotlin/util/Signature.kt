@@ -1,4 +1,4 @@
-package org.rm.sdk.util
+package io.revenuemonster.sdk.util
 
 import java.nio.charset.StandardCharsets
 import java.security.KeyFactory

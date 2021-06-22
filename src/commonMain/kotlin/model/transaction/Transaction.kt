@@ -1,8 +1,8 @@
 package model.transaction
 
 import kotlinx.serialization.Serializable
-import org.rm.sdk.model.common.Payee
-import org.rm.sdk.model.common.Store
+import io.revenuemonster.sdk.model.common.Payee
+import io.revenuemonster.sdk.model.common.Store
 
 
 ////For payment -> Get All Transaction

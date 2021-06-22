@@ -1,8 +1,8 @@
-package org.rm.sdk.model.respone
+package io.revenuemonster.sdk.model.respone
 
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
-import org.rm.sdk.model.common.Store
+import io.revenuemonster.sdk.model.common.Store
 
 @Serializable
 data class GetTransactionResponse(

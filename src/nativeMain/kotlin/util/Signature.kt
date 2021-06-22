@@ -1,4 +1,4 @@
-package org.rm.sdk.util
+package io.revenuemonster.sdk.util
 
 actual object Signature {
     actual fun generateSignature(
