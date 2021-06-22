@@ -9,6 +9,8 @@
 
 ![badge][badge-android]
 
+[badge-android]: http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat
+
 > Revenue Monster Kotlin Multiplatform SDK, support every possible platform, such as desktop, mobile and web
 
 
