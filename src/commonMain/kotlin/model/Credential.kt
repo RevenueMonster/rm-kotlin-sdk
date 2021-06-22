@@ -1,4 +1,4 @@
-package org.rm.sdk.model
+package io.revenuemonster.sdk.model
 
 import kotlinx.serialization.Serializable
 

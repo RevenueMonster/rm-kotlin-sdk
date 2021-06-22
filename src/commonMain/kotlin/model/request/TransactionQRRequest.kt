@@ -1,10 +1,10 @@
-package org.rm.sdk.model.request
+package io.revenuemonster.sdk.model.request
 
 import kotlinx.serialization.Serializable
 
-import org.rm.sdk.model.common.Expiry
-import org.rm.sdk.model.common.TransactionQROrder
-import org.rm.sdk.model.enum.TransactionQRType
+import io.revenuemonster.sdk.model.common.Expiry
+import io.revenuemonster.sdk.model.common.TransactionQROrder
+import io.revenuemonster.sdk.model.enum.TransactionQRType
 
 @Serializable
 data class TransactionQRRequest(

@@ -1,4 +1,4 @@
-package org.rm.sdk.util
+package io.revenuemonster.sdk.util
 
 import java.util.*
 

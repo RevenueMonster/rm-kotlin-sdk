@@ -1,4 +1,4 @@
-package org.rm.sdk.model.enum
+package io.revenuemonster.sdk.model.enum
 
 enum class PaymentMethod(val method : String) {
     WECHATPAY_MY("WECHATPAY_MY"),

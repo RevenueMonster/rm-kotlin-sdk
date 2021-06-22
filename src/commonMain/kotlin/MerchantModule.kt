@@ -1,7 +1,7 @@
-package org.rm.sdk
+package io.revenuemonster.sdk
 
-import org.rm.sdk.model.Items
-import org.rm.sdk.model.common.Store
+import io.revenuemonster.sdk.model.Items
+import io.revenuemonster.sdk.model.common.Store
 
 class MerchantModule(private val sdk: RevenueMonsterSDK) {
     suspend fun getStores(): Items<Store> {

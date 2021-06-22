@@ -1,4 +1,4 @@
-package org.rm.sdk.model.request
+package io.revenuemonster.sdk.model.request
 
 
 data class OnlinePaymentRequest(

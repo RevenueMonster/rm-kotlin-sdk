@@ -1,4 +1,4 @@
-package org.rm.sdk.model.response
+package io.revenuemonster.sdk.model.response
 
 data class OnlinePaymentResponse(
     val checkoutId: String,

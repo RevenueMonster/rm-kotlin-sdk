@@ -1,22 +1,22 @@
 package com.github.revenuemonster.model.request
 
+import io.revenuemonster.sdk.model.common.ExtraInfo
 import kotlinx.serialization.Serializable
-import org.rm.sdk.model.common.ExtraInfo
 
 
 @Serializable
 data class QuickPayRequest(
     val authCode: String,
-    val order: QuickPayRequestOrder,
-    val extraInfo: ExtraInfo?=null,
+    val order: QuickPayOrder,
+    val extraInfo: ExtraInfo? = null,
     val ipAddress: String,
-    val terminalId : String,
+    val terminalId: String,
     val storeId: String
 )
 
 
 @Serializable
-data class QuickPayRequestOrder(
+data class QuickPayOrder(
     val id: String,
     val title: String,
     val detail: String,

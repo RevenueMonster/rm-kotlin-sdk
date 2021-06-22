@@ -1,14 +1,14 @@
-package org.rm.sdk
+package io.revenuemonster.sdk
 
 import com.github.revenuemonster.model.request.QuickPayRequest
 import io.ktor.http.*
 import model.response.QuickPayResponse
 import model.response.TransactionQRResponse
-import org.rm.sdk.model.Item
-import org.rm.sdk.model.Items
-import org.rm.sdk.model.request.TransactionQRRequest
-import org.rm.sdk.model.respone.GetTransactionQRURLResponse
-import org.rm.sdk.model.respone.GetTransactionResponse
+import io.revenuemonster.sdk.model.Item
+import io.revenuemonster.sdk.model.Items
+import io.revenuemonster.sdk.model.request.TransactionQRRequest
+import io.revenuemonster.sdk.model.respone.GetTransactionQRURLResponse
+import io.revenuemonster.sdk.model.respone.GetTransactionResponse
 
 class PaymentModule(private val sdk: RevenueMonsterSDK) {
 
@@ -32,14 +32,13 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
         )
     }
 
-    suspend fun quickPay(data : QuickPayRequest) : Item<QuickPayResponse>{
-        return sdk.call<QuickPayRequest,Item<QuickPayResponse>>(
+    suspend fun quickPay(data: QuickPayRequest): Item<QuickPayResponse> {
+        return sdk.call<QuickPayRequest, Item<QuickPayResponse>>(
             url = "/v3/payment/quickpay",
             method = HttpMethod.Post,
             body = data
         )
     }
-
 
 
 }

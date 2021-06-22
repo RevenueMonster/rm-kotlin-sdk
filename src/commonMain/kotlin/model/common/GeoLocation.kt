@@ -1,5 +1,5 @@
 
-package org.rm.sdk.model.common
+package io.revenuemonster.sdk.model.common
 
 import kotlinx.serialization.Serializable
 
