@@ -1,4 +1,4 @@
-package io.revenuemonster.sdk
+package io.revenuemonster
 
 import io.ktor.client.*
 import io.ktor.client.features.*
@@ -8,16 +8,16 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.utils.io.core.*
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
-import kotlinx.datetime.Clock
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.*
 import io.revenuemonster.sdk.model.Credential
 import io.revenuemonster.sdk.model.Error
 import io.revenuemonster.sdk.util.Base64Factory
 import io.revenuemonster.sdk.util.Signature
 import io.revenuemonster.sdk.util.randomString
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlinx.datetime.Clock
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.*
 
 class Config
 

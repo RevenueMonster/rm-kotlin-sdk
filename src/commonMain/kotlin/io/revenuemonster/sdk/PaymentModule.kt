@@ -2,13 +2,13 @@ package io.revenuemonster.sdk
 
 import com.github.revenuemonster.model.request.QuickPayRequest
 import io.ktor.http.*
-import model.response.QuickPayResponse
-import model.response.TransactionQRResponse
 import io.revenuemonster.sdk.model.Item
 import io.revenuemonster.sdk.model.Items
 import io.revenuemonster.sdk.model.request.TransactionQRRequest
 import io.revenuemonster.sdk.model.respone.GetTransactionQRURLResponse
 import io.revenuemonster.sdk.model.respone.GetTransactionResponse
+import model.response.QuickPayResponse
+import model.response.TransactionQRResponse
 
 class PaymentModule(private val sdk: RevenueMonsterSDK) {
 

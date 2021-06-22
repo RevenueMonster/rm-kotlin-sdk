@@ -1,8 +1,5 @@
 package io.revenuemonster.sdk
 
-// import kotlinx.coroutines.CoroutineScope
-// import kotlinx.coroutines.Dispatchers
-// import kotlinx.coroutines.launch
 import com.github.revenuemonster.model.request.QuickPayOrder
 import com.github.revenuemonster.model.request.QuickPayRequest
 import kotlinx.coroutines.runBlocking
