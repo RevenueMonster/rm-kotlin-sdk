@@ -10,6 +10,16 @@
 ![badge][badge-android]
 
 [badge-android]: http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat
+[badge-ios]: http://img.shields.io/badge/platform-ios-CDCDCD.svg?style=flat
+[badge-js]: http://img.shields.io/badge/platform-js-F8DB5D.svg?style=flat
+[badge-jvm]: http://img.shields.io/badge/platform-jvm-DB413D.svg?style=flat
+[badge-linux]: http://img.shields.io/badge/platform-linux-2D3F6C.svg?style=flat 
+[badge-windows]: http://img.shields.io/badge/platform-windows-4D76CD.svg?style=flat
+[badge-mac]: http://img.shields.io/badge/platform-macos-111111.svg?style=flat
+[badge-watchos]: http://img.shields.io/badge/platform-watchos-C0C0C0.svg?style=flat
+[badge-tvos]: http://img.shields.io/badge/platform-tvos-808080.svg?style=flat
+[badge-wasm]: https://img.shields.io/badge/platform-wasm-624FE8.svg?style=flat
+[badge-nodejs]: https://img.shields.io/badge/platform-nodejs-68a063.svg?style=flat
 
 > Revenue Monster Kotlin Multiplatform SDK, support every possible platform, such as desktop, mobile and web
 
@@ -53,12 +63,12 @@ kotlin {
 
 | Platform | Architecture | Technology |Support |
 |---------------|---|-----|:-------:|
-| Android | - | JVM | ✅ |
-| iOS | x64 | Kotlin/Native | ❎ |
-| iOS | (arm64) | Kotlin/Native | ❎ |
-| macOS | - | Kotlin/Native | ❎ |
-| linux | - | Kotlin/Native | ❎ |
-| window | - | Kotlin/Native | ❎ |
+| ![badge][badge-android] | jvm | JVM | ✅ |
+| ![badge][badge-ios] | iosx64 | Kotlin/Native | ❎ |
+| ![badge][badge-ios] | iosarm64 | Kotlin/Native | ❎ |
+| ![badge][badge-mac] | - | Kotlin/Native | ❎ |
+| ![badge][badge-linux] | - | Kotlin/Native | ❎ |
+| ![badge][badge-windows] | - | Kotlin/Native | ❎ |
 
 ## ⚠️ Disclaimer
 
