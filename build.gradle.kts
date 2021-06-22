@@ -129,14 +129,14 @@ kotlin {
 //            }
 //        }
         // Dependencies for iOS and desktop
-        val nativeMain by getting {
-            dependencies {
+//        val nativeMain by getting {
+//            dependencies {
 //                implementation("io.ktor:ktor-client-ios:$ktorVersion")
 //                implementation("io.ktor:ktor-client-curl:$ktorVersion")
-            }
-        }
-        val nativeTest by getting {
-        }
+//            }
+//        }
+//        val nativeTest by getting {
+//        }
 //        val iosMain by creating {
 //            dependsOn(commonMain)
 //        }
