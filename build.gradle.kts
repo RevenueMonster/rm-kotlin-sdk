@@ -131,8 +131,8 @@ kotlin {
         // Dependencies for iOS and desktop
         val nativeMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-ios:$ktorVersion")
-                implementation("io.ktor:ktor-client-curl:$ktorVersion")
+//                implementation("io.ktor:ktor-client-ios:$ktorVersion")
+//                implementation("io.ktor:ktor-client-curl:$ktorVersion")
             }
         }
         val nativeTest by getting {
