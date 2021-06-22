@@ -19,8 +19,6 @@ import kotlinx.datetime.Clock
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 
-class Config
-
 val client: HttpClient = HttpClient() {
     engine {
         threadsCount = 2
@@ -42,7 +40,6 @@ private fun normalize(elem: JsonElement): JsonElement {
         )
         is JsonArray -> JsonArray(elem.map { normalize(it) })
         else -> {
-//            print("type ====> $elem")
             elem
         }
     }
@@ -54,7 +51,6 @@ class RevenueMonsterSDK(
     private val privateKey: String,
     private val publicKey: String,
     private val sandbox: Boolean = true,
-//    block: Config.() -> Unit = {}
 ) {
     val oauth2Url: String = domains[sandbox]?.get(0) ?: ""
     val baseUrl: String = domains[sandbox]?.get(1) ?: ""

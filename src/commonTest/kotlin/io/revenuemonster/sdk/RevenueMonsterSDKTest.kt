@@ -5,6 +5,8 @@ import io.revenuemonster.sdk.model.request.QuickPayRequest
 import kotlinx.coroutines.runBlocking
 import kotlin.random.Random
 import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class RevenueMonsterSDKTest {
     @Test
@@ -58,16 +60,17 @@ class RevenueMonsterSDKTest {
                 println(credential)
 
                 // quick pay test
+                val order = QuickPayOrder(
+                    id = "${Random.nextInt(10946114768247530.toInt(), 90946114768247530.toInt())}",
+                    title = "SNOR TEST",
+                    detail = "JUST A TEST",
+                    additionalData = "NONE",
+                    amount = 85700,
+                    currencyType = "MYR"
+                )
                 val qp = QuickPayRequest(
                     authCode = "134850717797247290",
-                    order = QuickPayOrder(
-                        id = "${Random.nextInt(10946114768247530.toInt(), 90946114768247530.toInt())}",
-                        title = "SNOR TEST",
-                        detail = "JUST A TEST",
-                        additionalData = "NONE",
-                        amount = 85700,
-                        currencyType = "MYR"
-                    ),
+                    order = order,
                     ipAddress = "1.1.1.1",
                     terminalId = "1623500916731469951",
                     storeId = "1623743430847879711",
@@ -93,10 +96,10 @@ class RevenueMonsterSDKTest {
 //                )
 
                 val result = sdk.payment.quickPay(qp)
-                println()
                 println("Result ====>")
                 println(result)
-                println()
+                assertEquals(order.id, result.item.order.id)
+                assertNotNull(result.item.order.id)
             } catch (e: Throwable) {
                 println("debug here ============>")
                 println(e)

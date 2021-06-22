@@ -2,6 +2,7 @@ plugins {
     kotlin("multiplatform") version "1.5.10"
     kotlin("plugin.serialization") version "1.5.10"
     id("maven-publish")
+    id("signing")
 }
 
 group = "io.revenuemonster.sdk"
@@ -15,7 +16,6 @@ val serializationVersion = "1.2.1"
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
 publishing {
@@ -28,11 +28,21 @@ publishing {
                 name.set("$artifact")
                 description.set("Revenue Monster Kotlin Multiplatform SDK")
                 url.set("$url")
+                licenses {
+                    license {
+                        name.set("MIT license")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
                 developers {
                     developer {
                         id.set("si3nloong")
                         name.set("Lee Sian Loong")
                         email.set("sianloong90@gmail.com")
+                    }
+                    developer {
+                        id.set("SnorSnor9998")
+                        name.set("Snor")
                     }
                 }
                 scm {
@@ -41,7 +51,7 @@ publishing {
                     url.set("$url")
                 }
             }
-//            from(components["java"])
+            //            from(components["java"])
         }
     }
 }
