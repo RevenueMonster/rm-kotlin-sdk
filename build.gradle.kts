@@ -28,12 +28,19 @@ publishing {
                 name.set("$artifact")
                 description.set("Revenue Monster Kotlin Multiplatform SDK")
                 url.set("$url")
+
                 licenses {
                     license {
                         name.set("MIT license")
                         url.set("https://opensource.org/licenses/MIT")
                     }
                 }
+
+                issueManagement {
+                    system.set("GitHub Issues")
+                    url.set("$url/issues")
+                }
+
                 developers {
                     developer {
                         id.set("si3nloong")
@@ -45,6 +52,7 @@ publishing {
                         name.set("Snor")
                     }
                 }
+
                 scm {
                     connection.set("scm:git:git://$gitUrl")
                     developerConnection.set("scm:git:ssh://$gitUrl")
