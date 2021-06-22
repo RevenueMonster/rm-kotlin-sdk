@@ -1,10 +1,10 @@
-package model.response
+package io.revenuemonster.sdk.model.response
 
-import kotlinx.datetime.Instant
-import kotlinx.serialization.Serializable
 import io.revenuemonster.sdk.model.common.Expiry
 import io.revenuemonster.sdk.model.common.Store
 import io.revenuemonster.sdk.model.common.TransactionQROrder
+import kotlinx.datetime.Instant
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class TransactionQRResponse(

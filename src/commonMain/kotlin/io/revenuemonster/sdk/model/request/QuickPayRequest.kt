@@ -1,8 +1,7 @@
-package com.github.revenuemonster.model.request
+package io.revenuemonster.sdk.model.request
 
 import io.revenuemonster.sdk.model.common.ExtraInfo
 import kotlinx.serialization.Serializable
-
 
 @Serializable
 data class QuickPayRequest(
@@ -14,7 +13,6 @@ data class QuickPayRequest(
     val storeId: String
 )
 
-
 @Serializable
 data class QuickPayOrder(
     val id: String,
@@ -24,7 +22,3 @@ data class QuickPayOrder(
     val currencyType: String,
     val additionalData: String,
 )
-
-
-
-

@@ -4,7 +4,7 @@ plugins {
     id("maven-publish")
 }
 
-group = "io.revenuemonster"
+group = "io.revenuemonster.sdk"
 version = "1.0.0-alpha.0"
 
 val artifact = "rm-kotlin-sdk"

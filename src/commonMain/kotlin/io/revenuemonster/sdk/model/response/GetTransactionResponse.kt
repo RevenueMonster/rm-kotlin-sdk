@@ -1,8 +1,8 @@
-package io.revenuemonster.sdk.model.respone
+package io.revenuemonster.sdk.model.response
 
+import io.revenuemonster.sdk.model.common.Store
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
-import io.revenuemonster.sdk.model.common.Store
 
 @Serializable
 data class GetTransactionResponse(
@@ -24,12 +24,11 @@ data class GetTransactionResponse(
     val updatedAt: Instant
 )
 
-
 @Serializable
 data class GetTransactionOrder(
-    val id : String,
-    val title : String,
-    val detail : String,
-    val additionalData : String,
-    val amount : Int
+    val id: String,
+    val title: String,
+    val detail: String,
+    val additionalData: String,
+    val amount: Int
 )
