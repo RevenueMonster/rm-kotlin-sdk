@@ -58,7 +58,7 @@ kotlin {
 
 ## ⚠️ Disclaimer
 
-> This package under heavily development, please don't try this yet!
+> This package under heavily development, please don't try this in production!
 
 ## 📄 License
 
