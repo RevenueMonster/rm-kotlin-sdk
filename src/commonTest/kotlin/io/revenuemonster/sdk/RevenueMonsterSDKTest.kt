@@ -13,7 +13,8 @@ import kotlin.test.assertNotNull
 class RevenueMonsterSDKTest {
     @Test
     fun initSDK() {
-        val sdk = RevenueMonsterSDK(
+
+        val auth = RMAuth(
             clientID = "1623743073701188526",
             clientSecret = "TZqprtCpGAhagCyDTFiqigAfIFjPOKHY",
             privateKey = "-----BEGIN PRIVATE KEY-----\n" +
@@ -53,57 +54,38 @@ class RevenueMonsterSDKTest {
                     "2q3RnJo3ZIQO0RHTOF3L/WfZHesgeXFrtIRW9mPsFKJ2xHrcOiXl6F9QoNNdnf9k\n" +
                     "TwIDAQAB\n" +
                     "-----END RSA PUBLIC KEY-----\n",
+            sandbox = true
         )
 
-        GlobalScope.launch { }
+
+        val sdk = RevenueMonsterSDK(auth)
 
         runBlocking {
             try {
 
-                val credential = sdk.getAccessToken()
-                println(credential)
-
                 // quick pay test
-                val order = QuickPayOrder(
-                    id = "${Random.nextInt(10946114768247530.toInt(), 90946114768247530.toInt())}",
-                    title = "SNOR TEST",
-                    detail = "JUST A TEST",
-                    additionalData = "NONE",
-                    amount = 85700,
-                    currencyType = "MYR"
-                )
-                val qp = QuickPayRequest(
+                val data = QuickPayRequest(
                     authCode = "134850717797247290",
-                    order = order,
+                    order = QuickPayOrder(
+                        id = "${Random((1..371289).random()).nextInt()}",
+                        title = "TEST",
+                        detail = "JUST A TEST",
+                        additionalData = "NONE",
+                        amount = 85700,
+                        currencyType = "MYR"),
                     ipAddress = "1.1.1.1",
                     terminalId = "1623500916731469951",
                     storeId = "1623743430847879711",
 //                    extraInfo = ExtraInfo("MEMBERSHIP", "9182724049190314657")
                 )
 
-                // generate transaction qr
-//                val re = TransactionQRRequest(
-//                    amount = 10000,
-//                    method = arrayListOf("WECHATPAY","WECHATPAY_MY",
-//                        "WECHATPAY_CN","PRESTO_MY",
-//                        "BOOST_MY",
-//                        "ALIPAY_CN"),
-//                    currencyType = "MYR",
-//                    order = TransactionQROrder("SNOR TEST", "SNOR TEST","SNOR TEST"),
-//                    redirectUrl = "www.google.com",
-//                    type = TransactionQRType.STATIC,
-//                    storeId = "1623743430847879711",
-//                    isPreFillAmount = true,
-//                    expiry = Expiry(
-//                        type = ExpiryType.PERMANENT
-//                    ),
-//                )
 
-                val result = sdk.payment.quickPay(qp)
+                val result = sdk.Payment.quickPay(data)
                 println("Result ====>")
                 println(result)
-                assertEquals(order.id, result.item.order.id)
-                assertNotNull(result.item.order.id)
+//                assertEquals(order.id, result.item.order.id)
+//                assertNotNull(result.item.order.id)
+
             } catch (e: Throwable) {
                 println("debug here ============>")
                 println(e)

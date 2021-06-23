@@ -20,14 +20,10 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.encodeToJsonElement
 
 class RevenueMonsterSDK(
-    private val clientID: String,
-    private val clientSecret: String,
-    private val privateKey: String,
-    private val publicKey: String,
-    private val sandbox: Boolean = true,
+private val auth : RMAuth
 ) {
-    val oauth2Url: String = domains[sandbox]?.get(0) ?: ""
-    val baseUrl: String = domains[sandbox]?.get(1) ?: ""
+    private val oauth2Url: String = domains[auth.sandbox]?.get(0) ?: ""
+    private val baseUrl: String = domains[auth.sandbox]?.get(1) ?: ""
 
     private val mutex = Mutex()
     internal var credential: Credential? = null
@@ -39,8 +35,8 @@ class RevenueMonsterSDK(
         )
     }
 
-    val payment: PaymentModule = PaymentModule(this)
-    val merchant: MerchantModule = MerchantModule(this)
+    val Payment: PaymentModule = PaymentModule(this)
+    val Merchant: MerchantModule = MerchantModule(this)
 
     internal suspend inline fun <reified I, reified O> call(
         url: String,
@@ -58,7 +54,7 @@ class RevenueMonsterSDK(
             val nonce = randomString(32)
             val signature = Signature.generateSignature(
                 data = if (body != null) Json.encodeToString(el) else "",
-                privateKey = privateKey,
+                privateKey = auth.privateKey,
                 requestUrl = uri,
                 nonceStr = nonce,
                 signType = signType,
@@ -103,7 +99,7 @@ class RevenueMonsterSDK(
 
     suspend fun getAccessToken(): Credential {
         try {
-            val b64 = String(Base64Factory.createEncoder().encode("$clientID:$clientSecret".toByteArray()))
+            val b64 = String(Base64Factory.createEncoder().encode("${auth.clientID}:${auth.clientSecret}".toByteArray()))
             val item: Credential =
                 client.post<Credential>("$oauth2Url/v1/token") {
                     headers {
@@ -135,4 +131,5 @@ class RevenueMonsterSDK(
             throw e
         }
     }
+
 }
