@@ -105,8 +105,6 @@ import kotlin.random.Random
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-...
-
 val sdk = RevenueMonsterSDK(
    clientID = "1623743073701188526",
    clientSecret = "TZqprtCpGAhagCyDTFiqigAfIFjPOKHY",
