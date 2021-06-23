@@ -119,11 +119,7 @@ publishing {
     repositories {
         maven {
             name = "SonatypeOSS"
-            setUrl {
-                val repositoryId =
-                    System.getenv("SONATYPE_REPOSITORY_ID") ?: artifact
-                "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/$repositoryId/"
-            }
+            setUrl { "https://s01.oss.sonatype.org/content/groups/staging/" }
             credentials {
                 username = System.getenv("SONATYPE_USERNAME")
                 password = System.getenv("SONATYPE_PASSWORD")

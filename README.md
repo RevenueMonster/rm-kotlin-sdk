@@ -12,7 +12,7 @@
 [badge-ios]: http://img.shields.io/badge/platform-ios-CDCDCD.svg?style=flat
 [badge-js]: http://img.shields.io/badge/platform-js-F8DB5D.svg?style=flat
 [badge-jvm]: http://img.shields.io/badge/platform-jvm-DB413D.svg?style=flat
-[badge-linux]: http://img.shields.io/badge/platform-linux-2D3F6C.svg?style=flat 
+[badge-linux]: http://img.shields.io/badge/platform-linux-2D3F6C.svg?style=flat
 [badge-windows]: http://img.shields.io/badge/platform-windows-4D76CD.svg?style=flat
 [badge-mac]: http://img.shields.io/badge/platform-macos-111111.svg?style=flat
 [badge-watchos]: http://img.shields.io/badge/platform-watchos-C0C0C0.svg?style=flat
@@ -22,10 +22,11 @@
 
 > Revenue Monster Kotlin Multiplatform SDK, support every possible platform, such as desktop, mobile and web
 
-
 ## 🔨 Installation
 
-### Multiplatform
+### Maven Central
+
+#### Multiplatform
 
 If you're using `multiplatform`, modify your `build.gradle.kts` file as follow
 
@@ -34,18 +35,23 @@ plugins {
    kotlin("multiplatform") version "1.5.10"
 }
 
+repositories {
+   ...
+   mavenCentral()
+}
+
 kotlin {
    sourceSets {
       val commonMain by getting {
          dependencies {
-            implementation("io.revenuemonster:rm-kotlin-sdk:1.0.0-alpha.4")
+            implementation("io.revenuemonster:rm-kotlin-sdk:0.1.0")
          }
       }
    }
 }
 ```
 
-### JVM
+#### JVM
 
 If you're using `jvm`, modify your `build.gradle.kts` file as follow
 
@@ -54,32 +60,37 @@ plugins {
    kotlin("jvm") version "1.5.10"
 }
 
+repositories {
+   ...
+   mavenCentral()
+}
+
 kotlin {
    sourceSets {
       val commonMain by getting {
          dependencies {
-            implementation("io.revenuemonster:rm-kotlin-sdk-jvm:1.0.0-alpha.4")
+            implementation("io.revenuemonster:rm-kotlin-sdk-jvm:0.1.0")
          }
       }
    }
 }
 ```
 
-###Jitpack
+### Jitpack
+
 ```bash
 allprojects {
-  repositories {
-	...
-    maven { url 'https://jitpack.io' }
-  }
+   repositories {
+      ...
+      maven { url 'https://jitpack.io' }
+   }
 }
 
 dependencies {
-    implementation("com.github.RevenueMonster:rm-kotlin-sdk:v1.0.0-alpha.4")
+    implementation("com.github.RevenueMonster:rm-kotlin-sdk:v0.1.0")
 }
 
 ```
-
 
 ## 🪣 Requirements
 
@@ -93,23 +104,23 @@ dependencies {
 
 ## 📦️ Dependencies
 
-| Package name | Version |
-|--------------|---------|
-| [ktor](https://github.com/ktorio/ktor) | 1.6.0 |
-| [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) | 1.2.1 |
+| Package name                                                             | Version |
+| ------------------------------------------------------------------------ | ------- |
+| [ktor](https://github.com/ktorio/ktor)                                   | 1.6.0   |
+| [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) | 1.2.1   |
 
 ## 🤖 Supported Platforms
 
 > The idea is to support every possible platforms without pain
 
-| Platform | Architecture | Technology |Support |
-|---------------|---|-----|:-------:|
-| ![badge][badge-android] | jvm | JVM | ✅ |
-| ![badge][badge-ios] | iosx64 | Kotlin/Native | ❎ |
-| ![badge][badge-ios] | iosarm64 | Kotlin/Native | ❎ |
-| ![badge][badge-mac] | - | Kotlin/Native | ❎ |
-| ![badge][badge-linux] | - | Kotlin/Native | ❎ |
-| ![badge][badge-windows] | - | Kotlin/Native | ❎ |
+| Platform                | Architecture | Technology    | Support |
+| ----------------------- | ------------ | ------------- | :-----: |
+| ![badge][badge-android] | jvm          | JVM           |   ✅    |
+| ![badge][badge-ios]     | iosx64       | Kotlin/Native |   ❎    |
+| ![badge][badge-ios]     | iosarm64     | Kotlin/Native |   ❎    |
+| ![badge][badge-mac]     | -            | Kotlin/Native |   ❎    |
+| ![badge][badge-linux]   | -            | Kotlin/Native |   ❎    |
+| ![badge][badge-windows] | -            | Kotlin/Native |   ❎    |
 
 ## 🙈 Example
 
@@ -134,7 +145,7 @@ val auth = RMAuth(
 // sdk function is coroutine support, you need to launch using Coroutine package
 GlobalScope.launch {
    try {
-       
+
        val sdk = RevenueMonsterSDK(auth)
        val data = QuickPayRequest(
            authCode = "134850717797247290",
@@ -153,7 +164,7 @@ GlobalScope.launch {
        // create quick pay order
        val result = sdk.Payment.quickPay(data)
        println(result)
-       
+
    } catch(e: Throwable) {
       println(e)
    }
@@ -166,4 +177,4 @@ GlobalScope.launch {
 
 ## 📄 License
 
-MIT
+[MIT](https://github.com/RevenueMonster/rm-kotlin-sdk/blob/main/LICENSE)
