@@ -20,10 +20,11 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.encodeToJsonElement
 
 class RevenueMonsterSDK(
-private val auth : RMAuth
+    private val config: Config,
 ) {
-    private val oauth2Url: String = domains[auth.sandbox]?.get(0) ?: ""
-    private val baseUrl: String = domains[auth.sandbox]?.get(1) ?: ""
+
+    private val oauth2Url: String = domains[config.sandbox]?.get(0) ?: ""
+    private val baseUrl: String = domains[config.sandbox]?.get(1) ?: ""
 
     private val mutex = Mutex()
     internal var credential: Credential? = null
@@ -54,7 +55,7 @@ private val auth : RMAuth
             val nonce = randomString(32)
             val signature = Signature.generateSignature(
                 data = if (body != null) Json.encodeToString(el) else "",
-                privateKey = auth.privateKey,
+                privateKey = config.privateKey,
                 requestUrl = uri,
                 nonceStr = nonce,
                 signType = signType,
@@ -84,22 +85,19 @@ private val auth : RMAuth
                 }
             }
         } catch (e: ClientRequestException) {
-            println("ClientRequestException!!!")
-            println(e)
             throw Json {
                 ignoreUnknownKeys = true
                 coerceInputValues = true
             }.decodeFromString(Error.serializer(), e.response.readText())
         } catch (e: Exception) {
-            println("Exception!!!")
-            println(e)
             throw e
         }
     }
 
     suspend fun getAccessToken(): Credential {
         try {
-            val b64 = String(Base64Factory.createEncoder().encode("${auth.clientID}:${auth.clientSecret}".toByteArray()))
+            val b64 =
+                String(Base64Factory.createEncoder().encode("${config.clientID}:${config.clientSecret}".toByteArray()))
             val item: Credential =
                 client.post<Credential>("$oauth2Url/v1/token") {
                     headers {
@@ -116,18 +114,12 @@ private val auth : RMAuth
 
             return item
         } catch (e: ClientRequestException) {
-            println("ClientRequestException !!!")
-            println(e)
             val err = Json {
                 ignoreUnknownKeys = true
                 coerceInputValues = true
             }.decodeFromString(Error.serializer(), e.response.readText())
-            println("debug ${err.message}")
-            println(e.response.readText())
             throw err
         } catch (e: Exception) {
-            println("Exception !!!")
-            println(e)
             throw e
         }
     }

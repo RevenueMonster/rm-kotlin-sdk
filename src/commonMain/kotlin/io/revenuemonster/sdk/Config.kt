@@ -1,9 +1,6 @@
 package io.revenuemonster.sdk
 
-import kotlinx.serialization.Serializable
-
-
-data class RMAuth(
+data class Config(
     val clientID: String,
     val clientSecret: String,
     val privateKey: String,

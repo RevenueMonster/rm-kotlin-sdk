@@ -10,7 +10,7 @@ class RevenueMonsterSDKTest {
     @Test
     fun initSDK() {
 
-        val auth = RMAuth(
+        val auth = Config(
             clientID = "1623743073701188526",
             clientSecret = "TZqprtCpGAhagCyDTFiqigAfIFjPOKHY",
             privateKey = "-----BEGIN PRIVATE KEY-----\n" +
