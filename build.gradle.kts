@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "io.revenuemonster"
-version = "1.0.0-alpha.2"
+version = "1.0.0-alpha.3"
 
 val artifact = "rm-kotlin-sdk"
 val url = "https://github.com/RevenueMonster/rm-kotlin-sdk"
@@ -118,11 +118,11 @@ val javadocJar = tasks.register<Jar>("javadocJar") {
 publishing {
     repositories {
         maven {
-            name = "Sonatype-oss"
+            name = "SonatypeOSS"
             setUrl {
                 val repositoryId =
                     System.getenv("SONATYPE_REPOSITORY_ID") ?: artifact
-                "https://oss.sonatype.org/service/local/staging/deployByRepositoryId/${repositoryId}/"
+                "https://oss.sonatype.org/service/local/staging/deployByRepositoryId/$repositoryId/"
             }
             credentials {
                 username = System.getenv("SONATYPE_USERNAME")
@@ -135,6 +135,14 @@ publishing {
             credentials {
                 username = System.getenv("SONATYPE_USERNAME")
                 password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/RevenueMonster/rm-kotlin-sdk")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }
@@ -181,15 +189,14 @@ publishing {
                     url.set("$url")
                 }
             }
-            //            from(components["java"])
         }
     }
 }
 
-// signing {
-//     useInMemoryPgpKeys(
-//         System.getenv("GPG_PRIVATE_KEY"),
-//         System.getenv("GPG_PRIVATE_PASSWORD")
-//     )
-//     sign(publishing.publications)
-// }
+signing {
+    useInMemoryPgpKeys(
+        System.getenv("GPG_PRIVATE_KEY"),
+        System.getenv("GPG_PRIVATE_PASSWORD")
+    )
+    sign(publishing.publications)
+}

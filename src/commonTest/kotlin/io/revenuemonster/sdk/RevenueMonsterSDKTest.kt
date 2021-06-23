@@ -2,13 +2,9 @@ package io.revenuemonster.sdk
 
 import io.revenuemonster.sdk.model.request.QuickPayOrder
 import io.revenuemonster.sdk.model.request.QuickPayRequest
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlin.random.Random
 import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 
 class RevenueMonsterSDKTest {
     @Test
@@ -72,7 +68,8 @@ class RevenueMonsterSDKTest {
                         detail = "JUST A TEST",
                         additionalData = "NONE",
                         amount = 85700,
-                        currencyType = "MYR"),
+                        currencyType = "MYR",
+                    ),
                     ipAddress = "1.1.1.1",
                     terminalId = "1623500916731469951",
                     storeId = "1623743430847879711",
