@@ -1,11 +1,12 @@
 plugins {
     kotlin("multiplatform") version "1.5.10"
     kotlin("plugin.serialization") version "1.5.10"
+    id("org.jetbrains.dokka") version "1.4.32"
     id("maven-publish")
     id("signing")
 }
 
-group = "io.revenuemonster.sdk"
+group = "io.revenuemonster"
 version = "1.0.0-alpha.0"
 
 val artifact = "rm-kotlin-sdk"
@@ -98,37 +99,54 @@ kotlin {
     }
 }
 
+val dokkaOutputDir = "$buildDir/dokka"
+
+tasks.dokkaHtml {
+    outputDirectory.set(file(dokkaOutputDir))
+}
+
+val deleteDokkaOutputDir by tasks.register<Delete>("deleteDokkaOutputDirectory") {
+    delete(dokkaOutputDir)
+}
+
+val javadocJar = tasks.register<Jar>("javadocJar") {
+    dependsOn(deleteDokkaOutputDir, tasks.dokkaHtml)
+    archiveClassifier.set("javadoc")
+    from(dokkaOutputDir)
+}
+
 publishing {
-//    repositories {
-//        maven {
-//            name = "Oss"
-//            setUrl {
-//                val repositoryId =
-//                    System.getenv("SONATYPE_REPOSITORY_ID") ?: error("Missing env variable: SONATYPE_REPOSITORY_ID")
-//                "https://oss.sonatype.org/service/local/staging/deployByRepositoryId/${repositoryId}/"
-//            }
-//            credentials {
-//                username = System.getenv("SONATYPE_USERNAME")
-//                password = System.getenv("SONATYPE_PASSWORD")
-//            }
-//        }
-//        maven {
-//            name = "Snapshot"
-//            setUrl { "https://oss.sonatype.org/content/repositories/snapshots/" }
-//            credentials {
-//                username = System.getenv("SONATYPE_USERNAME")
-//                password = System.getenv("SONATYPE_PASSWORD")
-//            }
-//        }
-//    }
+    repositories {
+        maven {
+            name = "Sonatype-oss"
+            setUrl {
+                val repositoryId =
+                    System.getenv("SONATYPE_REPOSITORY_ID") ?: artifact
+                "https://oss.sonatype.org/service/local/staging/deployByRepositoryId/${repositoryId}/"
+            }
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME")
+                password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
+        maven {
+            name = "Snapshot"
+            setUrl { "https://oss.sonatype.org/content/repositories/snapshots/" }
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME")
+                password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
+    }
 
     publications {
-        create<MavenPublication>("maven") {
+        withType<MavenPublication> {
+            artifact(javadocJar)
+            version = "$version"
             groupId = "$group"
             artifactId = "$artifact"
-            version = "$version"
             pom {
-                name.set("$artifact")
+                name.set(artifact)
                 description.set("Revenue Monster Kotlin Multiplatform SDK")
                 url.set("$url")
 
@@ -168,9 +186,9 @@ publishing {
 }
 
 // signing {
-//    useInMemoryPgpKeys(
-//        System.getenv("GPG_PRIVATE_KEY"),
-//        System.getenv("GPG_PRIVATE_PASSWORD")
-//    )
-//    sign(publishing.publications)
+//     useInMemoryPgpKeys(
+//         System.getenv("GPG_PRIVATE_KEY"),
+//         System.getenv("GPG_PRIVATE_PASSWORD")
+//     )
+//     sign(publishing.publications)
 // }
