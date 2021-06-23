@@ -151,10 +151,10 @@ val sdk = RevenueMonsterSDK(
 // sdk function is coroutine support, you need to launch using Coroutine package
 GlobalScope.launch {
    try {
+      // get access token and replace the old one
       val credential = sdk.getAccessToken()
       println(credential)
 
-      // quick pay test
       val order = QuickPayOrder(
          id = "${Random.nextInt(10946114768247530.toInt(), 90946114768247530.toInt())}",
          title = "SNOR TEST",
@@ -171,7 +171,7 @@ GlobalScope.launch {
          storeId = "1623743430847879711",
       )
 
-      // find your desire function in `sdk`
+      // create quick pay order
       val result = sdk.payment.quickPay(qp)
       println(result)
    } catch(e: Throwable) {
