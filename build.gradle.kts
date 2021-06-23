@@ -18,52 +18,6 @@ repositories {
     mavenCentral()
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = "$group"
-            artifactId = "$artifact"
-            version = "$version"
-            pom {
-                name.set("$artifact")
-                description.set("Revenue Monster Kotlin Multiplatform SDK")
-                url.set("$url")
-
-                licenses {
-                    license {
-                        name.set("MIT license")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-                }
-
-                issueManagement {
-                    system.set("GitHub Issues")
-                    url.set("$url/issues")
-                }
-
-                developers {
-                    developer {
-                        id.set("si3nloong")
-                        name.set("Lee Sian Loong")
-                        email.set("sianloong90@gmail.com")
-                    }
-                    developer {
-                        id.set("SnorSnor9998")
-                        name.set("Snor")
-                    }
-                }
-
-                scm {
-                    connection.set("scm:git:git://$gitUrl")
-                    developerConnection.set("scm:git:ssh://$gitUrl")
-                    url.set("$url")
-                }
-            }
-            //            from(components["java"])
-        }
-    }
-}
-
 kotlin {
     // setup for JVM
     jvm {
@@ -142,4 +96,81 @@ kotlin {
 //            dependsOn(commonMain)
 //        }
     }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "Oss"
+            setUrl {
+                val repositoryId =
+                    System.getenv("SONATYPE_REPOSITORY_ID") ?: error("Missing env variable: SONATYPE_REPOSITORY_ID")
+                "https://oss.sonatype.org/service/local/staging/deployByRepositoryId/${repositoryId}/"
+            }
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME")
+                password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
+        maven {
+            name = "Snapshot"
+            setUrl { "https://oss.sonatype.org/content/repositories/snapshots/" }
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME")
+                password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
+    }
+
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "$group"
+            artifactId = "$artifact"
+            version = "$version"
+            pom {
+                name.set("$artifact")
+                description.set("Revenue Monster Kotlin Multiplatform SDK")
+                url.set("$url")
+
+                licenses {
+                    license {
+                        name.set("MIT license")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
+
+                issueManagement {
+                    system.set("GitHub Issues")
+                    url.set("$url/issues")
+                }
+
+                developers {
+                    developer {
+                        id.set("si3nloong")
+                        name.set("Lee Sian Loong")
+                        email.set("sianloong90@gmail.com")
+                    }
+                    developer {
+                        id.set("SnorSnor9998")
+                        name.set("Snor")
+                    }
+                }
+
+                scm {
+                    connection.set("scm:git:git://$gitUrl")
+                    developerConnection.set("scm:git:ssh://$gitUrl")
+                    url.set("$url")
+                }
+            }
+            //            from(components["java"])
+        }
+    }
+}
+
+signing {
+    useInMemoryPgpKeys(
+        System.getenv("GPG_PRIVATE_KEY"),
+        System.getenv("GPG_PRIVATE_PASSWORD")
+    )
+    sign(publishing.publications)
 }
