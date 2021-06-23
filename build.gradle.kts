@@ -122,7 +122,7 @@ publishing {
             setUrl {
                 val repositoryId =
                     System.getenv("SONATYPE_REPOSITORY_ID") ?: artifact
-                "https://oss.sonatype.org/service/local/staging/deployByRepositoryId/${repositoryId}/"
+                "https://oss.sonatype.org/service/local/staging/deployByRepositoryId/$repositoryId/"
             }
             credentials {
                 username = System.getenv("SONATYPE_USERNAME")
@@ -185,10 +185,10 @@ publishing {
     }
 }
 
-// signing {
+signing {
 //     useInMemoryPgpKeys(
 //         System.getenv("GPG_PRIVATE_KEY"),
 //         System.getenv("GPG_PRIVATE_PASSWORD")
 //     )
-//     sign(publishing.publications)
-// }
+    sign(publishing.publications)
+}
