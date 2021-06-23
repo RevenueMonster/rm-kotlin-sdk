@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "io.revenuemonster"
-version = "1.0.0-alpha.3"
+version = "1.0.0-alpha.4"
 
 val artifact = "rm-kotlin-sdk"
 val url = "https://github.com/RevenueMonster/rm-kotlin-sdk"
@@ -122,7 +122,7 @@ publishing {
             setUrl {
                 val repositoryId =
                     System.getenv("SONATYPE_REPOSITORY_ID") ?: artifact
-                "https://oss.sonatype.org/service/local/staging/deployByRepositoryId/$repositoryId/"
+                "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/$repositoryId/"
             }
             credentials {
                 username = System.getenv("SONATYPE_USERNAME")
@@ -131,7 +131,7 @@ publishing {
         }
         maven {
             name = "Snapshot"
-            setUrl { "https://oss.sonatype.org/content/repositories/snapshots/" }
+            setUrl { "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
             credentials {
                 username = System.getenv("SONATYPE_USERNAME")
                 password = System.getenv("SONATYPE_PASSWORD")
