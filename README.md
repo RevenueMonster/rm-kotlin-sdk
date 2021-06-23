@@ -100,6 +100,7 @@ kotlin {
 ```kotlin
 import io.revenuemonster.sdk.model.request.QuickPayOrder
 import io.revenuemonster.sdk.model.request.QuickPayRequest
+import io.revenuemonster.sdk.RevenueMonsterSDK
 import kotlin.random.Random
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
