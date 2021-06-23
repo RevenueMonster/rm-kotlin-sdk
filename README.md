@@ -108,7 +108,7 @@ import kotlinx.coroutines.launch
 val sdk = RevenueMonsterSDK(
    clientID = "1623743073701188526",
    clientSecret = "TZqprtCpGAhagCyDTFiqigAfIFjPOKHY",
-   // pkcs8 private key, https://decoder.link/rsa_converter
+   // Pkcs8 private key. If you using pem format, please convert it to pkcs8 using https://decoder.link/rsa_converter
    privateKey = "-----BEGIN PRIVATE KEY-----\n" +
          "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCPdfakYApwp0kz\n" +
          "uTTb1EzvmM39HWnlwfrKkmpt+alYkV3h9rT5HKoRHCRewAzRFXYm5vV1srHrXBfc\n" +
