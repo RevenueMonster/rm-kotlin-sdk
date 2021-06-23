@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "io.revenuemonster"
-version = "1.0.0-alpha.0"
+version = "1.0.0-alpha.1"
 
 val artifact = "rm-kotlin-sdk"
 val url = "https://github.com/RevenueMonster/rm-kotlin-sdk"
@@ -170,7 +170,8 @@ publishing {
                     }
                     developer {
                         id.set("SnorSnor9998")
-                        name.set("Snor")
+                        name.set("SnorSnor")
+                        email.set("snorsnor9998@gmail.com")
                     }
                 }
 
