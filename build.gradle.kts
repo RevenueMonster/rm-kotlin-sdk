@@ -118,7 +118,7 @@ val javadocJar = tasks.register<Jar>("javadocJar") {
 publishing {
     repositories {
         maven {
-            name = "Sonatype-oss"
+            name = "SonatypeOSS"
             setUrl {
                 val repositoryId =
                     System.getenv("SONATYPE_REPOSITORY_ID") ?: artifact
@@ -135,6 +135,14 @@ publishing {
             credentials {
                 username = System.getenv("SONATYPE_USERNAME")
                 password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/RevenueMonster/rm-kotlin-sdk")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }
@@ -181,7 +189,6 @@ publishing {
                     url.set("$url")
                 }
             }
-            //            from(components["java"])
         }
     }
 }
