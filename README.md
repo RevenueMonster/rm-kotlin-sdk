@@ -38,7 +38,7 @@ kotlin {
    sourceSets {
       val commonMain by getting {
          dependencies {
-            implementation("io.revenuemonster:rm-kotlin-sdk:1.0.0-alpha.1")
+            implementation("io.revenuemonster:rm-kotlin-sdk:1.0.0-alpha.2")
          }
       }
    }
@@ -58,7 +58,7 @@ kotlin {
    sourceSets {
       val commonMain by getting {
          dependencies {
-            implementation("io.revenuemonster:rm-kotlin-sdk-jvm:1.0.0-alpha.1")
+            implementation("io.revenuemonster:rm-kotlin-sdk-jvm:1.0.0-alpha.2")
          }
       }
    }
@@ -75,7 +75,7 @@ allprojects {
 }
 
 dependencies {
-    implementation("com.github.RevenueMonster:rm-kotlin-sdk:v1.0.0-alpha.1")
+    implementation("com.github.RevenueMonster:rm-kotlin-sdk:v1.0.0-alpha.2")
 }
 
 ```
