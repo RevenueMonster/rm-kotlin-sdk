@@ -37,14 +37,14 @@ kotlin {
 //    }
 //    ios()
 
-    val hostOs = System.getProperty("os.name")
-    val isMingwX64 = hostOs.startsWith("Windows")
-    val nativeTarget = when {
-        hostOs == "Mac OS X" -> macosX64("native")
-        hostOs == "Linux" -> linuxX64("native")
-        isMingwX64 -> mingwX64("native")
-        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
-    }
+//    val hostOs = System.getProperty("os.name")
+//    val isMingwX64 = hostOs.startsWith("Windows")
+//    val nativeTarget = when {
+//        hostOs == "Mac OS X" -> macosX64("native")
+//        hostOs == "Linux" -> linuxX64("native")
+//        isMingwX64 -> mingwX64("native")
+//        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
+//    }
 
     sourceSets {
         // Dependencies for common
@@ -99,28 +99,28 @@ kotlin {
 }
 
 publishing {
-    repositories {
-        maven {
-            name = "Oss"
-            setUrl {
-                val repositoryId =
-                    System.getenv("SONATYPE_REPOSITORY_ID") ?: error("Missing env variable: SONATYPE_REPOSITORY_ID")
-                "https://oss.sonatype.org/service/local/staging/deployByRepositoryId/${repositoryId}/"
-            }
-            credentials {
-                username = System.getenv("SONATYPE_USERNAME")
-                password = System.getenv("SONATYPE_PASSWORD")
-            }
-        }
-        maven {
-            name = "Snapshot"
-            setUrl { "https://oss.sonatype.org/content/repositories/snapshots/" }
-            credentials {
-                username = System.getenv("SONATYPE_USERNAME")
-                password = System.getenv("SONATYPE_PASSWORD")
-            }
-        }
-    }
+//    repositories {
+//        maven {
+//            name = "Oss"
+//            setUrl {
+//                val repositoryId =
+//                    System.getenv("SONATYPE_REPOSITORY_ID") ?: error("Missing env variable: SONATYPE_REPOSITORY_ID")
+//                "https://oss.sonatype.org/service/local/staging/deployByRepositoryId/${repositoryId}/"
+//            }
+//            credentials {
+//                username = System.getenv("SONATYPE_USERNAME")
+//                password = System.getenv("SONATYPE_PASSWORD")
+//            }
+//        }
+//        maven {
+//            name = "Snapshot"
+//            setUrl { "https://oss.sonatype.org/content/repositories/snapshots/" }
+//            credentials {
+//                username = System.getenv("SONATYPE_USERNAME")
+//                password = System.getenv("SONATYPE_PASSWORD")
+//            }
+//        }
+//    }
 
     publications {
         create<MavenPublication>("maven") {
@@ -167,10 +167,10 @@ publishing {
     }
 }
 
-signing {
-    useInMemoryPgpKeys(
-        System.getenv("GPG_PRIVATE_KEY"),
-        System.getenv("GPG_PRIVATE_PASSWORD")
-    )
-    sign(publishing.publications)
-}
+// signing {
+//    useInMemoryPgpKeys(
+//        System.getenv("GPG_PRIVATE_KEY"),
+//        System.getenv("GPG_PRIVATE_PASSWORD")
+//    )
+//    sign(publishing.publications)
+// }
