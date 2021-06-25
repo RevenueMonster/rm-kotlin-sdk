@@ -6,5 +6,4 @@ class OAuthCredential(
     val accessToken: String,
     val refreshToken: String,
     val expireDateTime: Instant,
-) {
-}
+)
