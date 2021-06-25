@@ -1,6 +1,5 @@
 package io.revenuemonster.sdk.model.response
 
-import io.revenuemonster.sdk.model.common.Payee
 import io.revenuemonster.sdk.model.common.Store
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
@@ -12,7 +11,6 @@ data class QuickPayResponse(
     val transactionId: String,
     val order: QuickPayResponseOrder,
     val terminalId: String,
-    val payee: Payee? = null,
     val currencyType: String,
     val balanceAmount: Long,
     val platform: String,

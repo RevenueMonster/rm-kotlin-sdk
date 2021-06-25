@@ -6,8 +6,8 @@ plugins {
     id("signing")
 }
 
-group = "io.revenuemonster"
-version = "1.0.0-alpha.5"
+group = "io.revenuemonster.sdk"
+version = "1.0.0-alpha.6"
 
 val artifact = "rm-kotlin-sdk"
 val url = "https://github.com/RevenueMonster/rm-kotlin-sdk"
@@ -116,15 +116,15 @@ val javadocJar = tasks.register<Jar>("javadocJar") {
 }
 
 publishing {
-    repositories {
-        maven {
-            name = "SonatypeOSS"
-            setUrl { "https://s01.oss.sonatype.org/content/groups/staging/" }
-            credentials {
-                username = System.getenv("SONATYPE_USERNAME")
-                password = System.getenv("SONATYPE_PASSWORD")
-            }
-        }
+//    repositories {
+//        maven {
+//            name = "SonatypeOSS"
+//            setUrl { "https://s01.oss.sonatype.org/content/groups/staging/" }
+//            credentials {
+//                username = System.getenv("SONATYPE_USERNAME")
+//                password = System.getenv("SONATYPE_PASSWORD")
+//            }
+//        }
 //        maven {
 //            name = "Snapshot"
 //            setUrl { "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
@@ -133,15 +133,15 @@ publishing {
 //                password = System.getenv("SONATYPE_PASSWORD")
 //            }
 //        }
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/RevenueMonster/rm-kotlin-sdk")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
+//        maven {
+//            name = "GitHubPackages"
+//            url = uri("https://maven.pkg.github.com/RevenueMonster/rm-kotlin-sdk")
+//            credentials {
+//                username = System.getenv("GITHUB_ACTOR")
+//                password = System.getenv("GITHUB_TOKEN")
+//            }
+//        }
+//    }
 
     publications {
         withType<MavenPublication> {
@@ -189,10 +189,10 @@ publishing {
     }
 }
 
-signing {
-    useInMemoryPgpKeys(
-        System.getenv("GPG_PRIVATE_KEY"),
-        System.getenv("GPG_PRIVATE_PASSWORD")
-    )
-    sign(publishing.publications)
-}
+//signing {
+//    useInMemoryPgpKeys(
+//        System.getenv("GPG_PRIVATE_KEY"),
+//        System.getenv("GPG_PRIVATE_PASSWORD")
+//    )
+//    sign(publishing.publications)
+//}

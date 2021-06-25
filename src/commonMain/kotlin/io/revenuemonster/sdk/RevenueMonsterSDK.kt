@@ -46,6 +46,8 @@ class RevenueMonsterSDK(
         body: I? = null,
     ): O {
         try {
+            getAccessToken()
+
             val uri = baseUrl + url
             var el: JsonElement = JsonNull
             if (body != null) el = normalize(Json.encodeToJsonElement(body))
