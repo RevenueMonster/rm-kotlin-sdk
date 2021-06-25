@@ -13,11 +13,15 @@ import io.revenuemonster.sdk.util.randomString
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.plus
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.encodeToJsonElement
+import kotlin.time.ExperimentalTime
 
 class RevenueMonsterSDK(
     private val config: Config,
@@ -27,7 +31,7 @@ class RevenueMonsterSDK(
     private val baseUrl: String = domains[config.sandbox]?.get(1) ?: ""
 
     private val mutex = Mutex()
-    internal var credential: Credential? = null
+    private var credential: OAuthCredential? = null
 
     private companion object {
         private val domains = mapOf<Boolean, Array<String>>(
@@ -46,12 +50,11 @@ class RevenueMonsterSDK(
         body: I? = null,
     ): O {
         try {
-            getAccessToken()
-
+            val cred = getAccessToken()
             val uri = baseUrl + url
             var el: JsonElement = JsonNull
             if (body != null) el = normalize(Json.encodeToJsonElement(body))
-            val accessToken = credential?.accessToken
+            val accessToken = cred.accessToken
             val signType = "sha256"
             val timestamp = Clock.System.now().epochSeconds.toString()
             val nonce = randomString(32)
@@ -91,30 +94,46 @@ class RevenueMonsterSDK(
                 ignoreUnknownKeys = true
                 coerceInputValues = true
             }.decodeFromString(Error.serializer(), e.response.readText())
+        } catch (e: SerializationException) {
+            println("deserialize")
+            throw e
         } catch (e: Exception) {
             throw e
         }
     }
 
-    suspend fun getAccessToken(): Credential {
+    @OptIn(ExperimentalTime::class)
+    suspend fun getAccessToken(): OAuthCredential {
+        if (credential != null && Clock.System.now() < credential!!.expireDateTime) {
+            return credential!!
+        }
+
         try {
+            var cred: OAuthCredential
             val b64 =
-                String(Base64Factory.createEncoder().encode("${config.clientID}:${config.clientSecret}".toByteArray()))
-            val item: Credential =
-                client.post<Credential>("$oauth2Url/v1/token") {
-                    headers {
-                        append(HttpHeaders.Accept, "application/json")
-                        append(HttpHeaders.ContentType, "application/json")
-                        append(HttpHeaders.Authorization, "Basic $b64")
-                    }
-                    body = mapOf("grantType" to "client_credentials")
-                }
+                String(
+                    Base64Factory.createEncoder().encode("${config.clientID}:${config.clientSecret}".toByteArray())
+                )
 
             mutex.withLock {
-                credential = item
+                val item =
+                    client.post<Credential>("$oauth2Url/v1/token") {
+                        headers {
+                            append(HttpHeaders.Accept, "application/json")
+                            append(HttpHeaders.ContentType, "application/json")
+                            append(HttpHeaders.Authorization, "Basic $b64")
+                        }
+                        body = mapOf("grantType" to "client_credentials")
+                    }
+
+                cred = OAuthCredential(
+                    accessToken = item.accessToken,
+                    refreshToken = item.refreshToken,
+                    expireDateTime = Clock.System.now().plus(item.expiresIn, DateTimeUnit.SECOND)
+                )
             }
 
-            return item
+            return cred
         } catch (e: ClientRequestException) {
             val err = Json {
                 ignoreUnknownKeys = true

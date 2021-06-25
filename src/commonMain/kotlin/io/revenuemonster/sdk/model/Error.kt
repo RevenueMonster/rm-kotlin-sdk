@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 data class ErrorDetail(
     val code: String,
     val message: String,
-//    @Contextual val debug: Any?,
 )
 
 @Serializable

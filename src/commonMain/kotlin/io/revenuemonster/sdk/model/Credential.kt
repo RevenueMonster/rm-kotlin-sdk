@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class Credential(
     val accessToken: String,
     val tokenType: String,
-    val expiresIn: UInt,
+    val expiresIn: Int,
     val refreshToken: String,
-    val refreshTokenExpiresIn: UInt,
+    val refreshTokenExpiresIn: Int,
 )
