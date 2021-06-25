@@ -103,7 +103,7 @@ class RevenueMonsterSDK(
     }
 
     @OptIn(ExperimentalTime::class)
-    suspend fun getAccessToken(): OAuthCredential {
+    private suspend fun getAccessToken(): OAuthCredential {
         if (credential != null && Clock.System.now() < credential!!.expireDateTime) {
             return credential!!
         }
