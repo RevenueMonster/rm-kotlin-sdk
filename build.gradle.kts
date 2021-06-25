@@ -1,16 +1,15 @@
 plugins {
     kotlin("multiplatform") version "1.5.10"
     kotlin("plugin.serialization") version "1.5.10"
-    id("org.jetbrains.dokka") version "1.4.32"
     id("maven-publish")
     id("signing")
 }
 
 group = "io.revenuemonster.sdk"
-version = "1.0.0-alpha.6"
+version = "1.0.0-alpha.7"
 
 val artifact = "rm-kotlin-sdk"
-val url = "https://github.com/RevenueMonster/rm-kotlin-sdk"
+val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
 val gitUrl = "github.com:RevenueMonster/rm-kotlin-sdk.git"
 val ktorVersion = "1.6.0"
 val serializationVersion = "1.2.1"
@@ -99,27 +98,15 @@ kotlin {
     }
 }
 
-val dokkaOutputDir = "$buildDir/dokka"
-
-tasks.dokkaHtml {
-    outputDirectory.set(file(dokkaOutputDir))
-}
-
-val deleteDokkaOutputDir by tasks.register<Delete>("deleteDokkaOutputDirectory") {
-    delete(dokkaOutputDir)
-}
-
-val javadocJar = tasks.register<Jar>("javadocJar") {
-    dependsOn(deleteDokkaOutputDir, tasks.dokkaHtml)
-    archiveClassifier.set("javadoc")
-    from(dokkaOutputDir)
-}
-
 publishing {
 //    repositories {
 //        maven {
-//            name = "SonatypeOSS"
-//            setUrl { "https://s01.oss.sonatype.org/content/groups/staging/" }
+//            name = "Oss"
+//            setUrl {
+//                val repositoryId =
+//                    System.getenv("SONATYPE_REPOSITORY_ID") ?: error("Missing env variable: SONATYPE_REPOSITORY_ID")
+//                "https://oss.sonatype.org/service/local/staging/deployByRepositoryId/${repositoryId}/"
+//            }
 //            credentials {
 //                username = System.getenv("SONATYPE_USERNAME")
 //                password = System.getenv("SONATYPE_PASSWORD")
@@ -127,32 +114,23 @@ publishing {
 //        }
 //        maven {
 //            name = "Snapshot"
-//            setUrl { "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+//            setUrl { "https://oss.sonatype.org/content/repositories/snapshots/" }
 //            credentials {
 //                username = System.getenv("SONATYPE_USERNAME")
 //                password = System.getenv("SONATYPE_PASSWORD")
 //            }
 //        }
-//        maven {
-//            name = "GitHubPackages"
-//            url = uri("https://maven.pkg.github.com/RevenueMonster/rm-kotlin-sdk")
-//            credentials {
-//                username = System.getenv("GITHUB_ACTOR")
-//                password = System.getenv("GITHUB_TOKEN")
-//            }
-//        }
 //    }
 
     publications {
-        withType<MavenPublication> {
-            artifact(javadocJar)
-            version = "$version"
+        create<MavenPublication>("maven") {
             groupId = "$group"
             artifactId = "$artifact"
+            version = "$version"
             pom {
-                name.set(artifact)
+                name.set("$artifact")
                 description.set("Revenue Monster Kotlin Multiplatform SDK")
-                url.set("$url")
+                url.set("$pkgUrl")
 
                 licenses {
                     license {
@@ -163,7 +141,7 @@ publishing {
 
                 issueManagement {
                     system.set("GitHub Issues")
-                    url.set("$url/issues")
+                    url.set("$pkgUrl/issues")
                 }
 
                 developers {
@@ -174,7 +152,7 @@ publishing {
                     }
                     developer {
                         id.set("SnorSnor9998")
-                        name.set("SnorSnor")
+                        name.set("Snor")
                         email.set("snorsnor9998@gmail.com")
                     }
                 }
@@ -182,17 +160,18 @@ publishing {
                 scm {
                     connection.set("scm:git:git://$gitUrl")
                     developerConnection.set("scm:git:ssh://$gitUrl")
-                    url.set("$url")
+                    url.set("$pkgUrl")
                 }
             }
+            //            from(components["java"])
         }
     }
 }
 
-//signing {
+// signing {
 //    useInMemoryPgpKeys(
 //        System.getenv("GPG_PRIVATE_KEY"),
 //        System.getenv("GPG_PRIVATE_PASSWORD")
 //    )
 //    sign(publishing.publications)
-//}
+// }
