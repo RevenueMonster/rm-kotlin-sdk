@@ -44,7 +44,7 @@ kotlin {
    sourceSets {
       val commonMain by getting {
          dependencies {
-            implementation("io.revenuemonster:rm-kotlin-sdk:1.0.0-alpha.5")
+            implementation("io.revenuemonster:rm-kotlin-sdk:1.0.0-alpha.7")
          }
       }
    }
@@ -69,7 +69,7 @@ kotlin {
    sourceSets {
       val commonMain by getting {
          dependencies {
-            implementation("io.revenuemonster:rm-kotlin-sdk-jvm:1.0.0-alpha.5")
+            implementation("io.revenuemonster:rm-kotlin-sdk-jvm:1.0.0-alpha.7")
          }
       }
    }
@@ -87,7 +87,7 @@ allprojects {
 }
 
 dependencies {
-    implementation("com.github.RevenueMonster:rm-kotlin-sdk:v1.0.0-alpha.5")
+    implementation("com.github.RevenueMonster:rm-kotlin-sdk:v1.0.0-alpha.7")
 }
 
 ```
@@ -133,7 +133,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-val auth = RMAuth(
+val config = Config(
     clientID = "<<<Client ID>>>",
     clientSecret = "<<<Client Secret>>>",
     privateKey = "<<<YOUR PRIVATE KEY>>>",
@@ -146,7 +146,7 @@ val auth = RMAuth(
 GlobalScope.launch {
    try {
 
-       val sdk = RevenueMonsterSDK(auth)
+       val sdk = RevenueMonsterSDK(config)
        val data = QuickPayRequest(
            authCode = "134850717797247290",
            order = QuickPayOrder(
@@ -154,7 +154,7 @@ GlobalScope.launch {
                title = "TEST",
                detail = "JUST A TEST",
                additionalData = "NONE",
-               amount = 12300,
+               amount = 123,
                currencyType = "MYR"),
            ipAddress = "1.1.1.1",
            terminalId = "1623500916731469951",
