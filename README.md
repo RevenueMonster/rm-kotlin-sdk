@@ -7,6 +7,9 @@
 </p>
 
 ![badge][badge-android]
+![badge][badge-mac]
+![badge][badge-linux]
+![badge][badge-windows]
 
 [badge-android]: http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat
 [badge-ios]: http://img.shields.io/badge/platform-ios-CDCDCD.svg?style=flat
@@ -115,12 +118,12 @@ dependencies {
 
 | Platform                | Architecture | Technology    | Support |
 | ----------------------- | ------------ | ------------- | :-----: |
+| ![badge][badge-mac]     | macOS        | JVM           |   ✅    |
+| ![badge][badge-linux]   | linux        | JVM           |   ✅    |
+| ![badge][badge-windows] | window       | JVM           |   ✅    |
 | ![badge][badge-android] | jvm          | JVM           |   ✅    |
 | ![badge][badge-ios]     | iosx64       | Kotlin/Native |   ❎    |
 | ![badge][badge-ios]     | iosarm64     | Kotlin/Native |   ❎    |
-| ![badge][badge-mac]     | -            | Kotlin/Native |   ❎    |
-| ![badge][badge-linux]   | -            | Kotlin/Native |   ❎    |
-| ![badge][badge-windows] | -            | Kotlin/Native |   ❎    |
 
 ## 🙈 Example
 
