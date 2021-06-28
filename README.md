@@ -90,7 +90,7 @@ allprojects {
 }
 
 dependencies {
-    implementation("com.github.RevenueMonster:rm-kotlin-sdk:v1.0.0-alpha.7")
+    implementation("com.github.RevenueMonster:rm-kotlin-sdk:v1.0.0-alpha.8")
 }
 
 ```
@@ -128,10 +128,11 @@ dependencies {
 ## 🙈 Example
 
 ```kotlin
+import io.revenuemonster.sdk.model.Error
 import io.revenuemonster.sdk.model.request.QuickPayOrder
 import io.revenuemonster.sdk.model.request.QuickPayRequest
+import io.revenuemonster.sdk.Config
 import io.revenuemonster.sdk.RevenueMonsterSDK
-import kotlin.random.Random
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -168,8 +169,12 @@ GlobalScope.launch {
        val result = sdk.Payment.quickPay(data)
        println(result)
 
-   } catch(e: Throwable) {
-      println(e)
+   } catch (e: Error) {
+       println("Debug 1 ====>")
+       println(e)
+   } catch (e: Throwable) {
+       println("Debug 2 ====>")
+       println(e)
    }
 }
 ```

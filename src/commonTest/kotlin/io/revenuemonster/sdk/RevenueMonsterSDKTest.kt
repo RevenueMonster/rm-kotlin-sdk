@@ -1,7 +1,9 @@
 package io.revenuemonster.sdk
 
+import io.revenuemonster.sdk.model.Error
 import io.revenuemonster.sdk.model.request.QuickPayOrder
 import io.revenuemonster.sdk.model.request.QuickPayRequest
+import io.revenuemonster.sdk.Config
 import kotlinx.coroutines.runBlocking
 import kotlin.random.Random
 import kotlin.test.Test
@@ -58,35 +60,33 @@ class RevenueMonsterSDKTest {
 
         runBlocking {
             try {
-
                 // quick pay test
                 val data = QuickPayRequest(
-                    authCode = "134850717797247290",
+                    authCode = "123",
                     order = QuickPayOrder(
                         id = "${Random((1..371289).random()).nextInt()}",
                         title = "TEST",
                         detail = "JUST A TEST",
                         additionalData = "NONE",
-                        amount = 85700,
+                        amount = 100,
                         currencyType = "MYR",
                     ),
                     ipAddress = "1.1.1.1",
                     terminalId = "1623500916731469951",
                     storeId = "1623743430847879711",
-//                    extraInfo = ExtraInfo("MEMBERSHIP", "9182724049190314657")
                 )
 
 
                 val result = sdk.Payment.quickPay(data)
                 println("Result ====>")
                 println(result)
-//                assertEquals(order.id, result.item.order.id)
-//                assertNotNull(result.item.order.id)
 
-            } catch (e: Throwable) {
-                println("debug here ============>")
+            }catch (e: Error) {
+                println("Debug 1 ====>")
                 println(e)
-                println(e.message)
+            }catch (e: Throwable) {
+                println("Debug 2 ====>")
+                println(e)
             }
         }
     }
