@@ -11,7 +11,7 @@ version = "1.0.0-alpha.7"
 val artifact = "rm-kotlin-sdk"
 val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
 val gitUrl = "github.com:RevenueMonster/rm-kotlin-sdk.git"
-val ktorVersion = "1.6.0"
+val ktorVersion = "1.6.1"
 val serializationVersion = "1.2.1"
 
 repositories {
