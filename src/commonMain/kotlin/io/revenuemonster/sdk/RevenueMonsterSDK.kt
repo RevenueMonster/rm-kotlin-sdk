@@ -46,7 +46,6 @@ class RevenueMonsterSDK(
     internal suspend inline fun <reified I, reified O> call(
         url: String,
         method: HttpMethod = HttpMethod.Get,
-//        headers: HeadersBuilder = HeadersBuilder(),
         body: I? = null,
     ): O {
         try {
@@ -68,13 +67,6 @@ class RevenueMonsterSDK(
                 timestamp = timestamp
             )
 
-            println("URL => $uri")
-            println("Method => ${method.value}")
-//            println("Body => $data")
-            println("AccessToken => $accessToken")
-            println("Timestamp => $timestamp")
-            println("Signature => $signature")
-
             return client.request(uri) {
                 this.method = method
                 headers {
@@ -95,7 +87,6 @@ class RevenueMonsterSDK(
                 coerceInputValues = true
             }.decodeFromString(Error.serializer(), e.response.readText())
         } catch (e: SerializationException) {
-            println("deserialize")
             throw e
         } catch (e: Exception) {
             throw e
