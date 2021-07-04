@@ -111,6 +111,7 @@ dependencies {
 | ------------------------------------------------------------------------ | ------- |
 | [ktor](https://github.com/ktorio/ktor)                                   | 1.6.0   |
 | [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) | 1.2.1   |
+| [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)           | 0.2.1   |
 
 ## 🤖 Supported Platforms
 
@@ -170,11 +171,9 @@ GlobalScope.launch {
        println(result)
 
    } catch (e: Error) {
-       println("Debug 1 ====>")
-       println(e)
+       println(e.printStackTrace())
    } catch (e: Throwable) {
-       println("Debug 2 ====>")
-       println(e)
+       println(e.printStackTrace())
    }
 }
 ```
