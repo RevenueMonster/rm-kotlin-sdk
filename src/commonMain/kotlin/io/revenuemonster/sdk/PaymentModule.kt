@@ -61,5 +61,24 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
         )
     }
 
+    suspend fun queryStatusByOrderID(orderId : String)  : Item<Transaction>{
+        return sdk.call<Any,  Item<Transaction>>(
+            url = "/$version/payment/transaction/order/$orderId"
+        )
+    }
+
+    suspend fun queryStatusByTransactionID(transactionId : String)  : Item<Transaction>{
+        return sdk.call<Any,  Item<Transaction>>(
+            url = "/$version/payment/transaction/$transactionId"
+        )
+    }
+
+    suspend fun getAllTransactions() : Items<Transaction> {
+        return sdk.call<Any, Items<Transaction>>(
+            url = "/$version/payment/transactions"
+        )
+    }
+
+
 
 }
