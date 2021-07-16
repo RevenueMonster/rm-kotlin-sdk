@@ -5,6 +5,7 @@ import io.revenuemonster.sdk.model.Item
 import io.revenuemonster.sdk.model.Items
 import io.revenuemonster.sdk.model.request.QuickPayRequest
 import io.revenuemonster.sdk.model.request.RefundRequest
+import io.revenuemonster.sdk.model.request.ReverseRequest
 import io.revenuemonster.sdk.model.request.TransactionQRRequest
 import io.revenuemonster.sdk.model.response.*
 
@@ -43,6 +44,18 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     suspend fun refund(data: RefundRequest): Item<RefundResponse> {
         return sdk.call<RefundRequest, Item<RefundResponse>>(
             url = "/$version/payment/refund",
+            method = HttpMethod.Post,
+            body = data
+        )
+    }
+
+//    suspend fun getFpxBanks() : Any{
+//        return sdk.call<Any,Any>(url = "/$version/payment/fpx-bank")
+//    }
+
+    suspend fun reverse(data : ReverseRequest) : Item<GetTransactionResponse>{
+        return sdk.call<ReverseRequest,Item<GetTransactionResponse>>(
+            url = "/$version/payment/reverse",
             method = HttpMethod.Post,
             body = data
         )
