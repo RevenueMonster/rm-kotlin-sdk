@@ -1,10 +1,11 @@
 package io.revenuemonster.sdk.model.request
 
+import io.revenuemonster.sdk.model.common.Order
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class OnlinePaymentRequest(
-    val order: OnlinePaymentOrder,
+    val order: Order,
     val customer: OnlinePaymentCustomer,
     val method: List<String> = listOf(),
     val type: String,
@@ -22,12 +23,4 @@ data class OnlinePaymentCustomer(
     val phoneNumber: String
 )
 
-@Serializable
-data class OnlinePaymentOrder(
-    val id: String,
-    val title: String,
-    val detail: String,
-    val amount: Int,
-    val currencyType: String = "MYR",
-    val additionalData: String,
-)
+
