@@ -3,10 +3,7 @@ package io.revenuemonster.sdk
 import io.ktor.http.*
 import io.revenuemonster.sdk.model.Item
 import io.revenuemonster.sdk.model.Items
-import io.revenuemonster.sdk.model.request.QuickPayRequest
-import io.revenuemonster.sdk.model.request.RefundRequest
-import io.revenuemonster.sdk.model.request.ReverseRequest
-import io.revenuemonster.sdk.model.request.TransactionQRRequest
+import io.revenuemonster.sdk.model.request.*
 import io.revenuemonster.sdk.model.response.*
 
 class PaymentModule(private val sdk: RevenueMonsterSDK) {
@@ -76,6 +73,38 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     suspend fun getAllTransactions() : Items<Transaction> {
         return sdk.call<Any, Items<Transaction>>(
             url = "/$version/payment/transactions"
+        )
+    }
+
+    suspend fun webMobilePayment(data : WebMobilePaymentRequest) : Item<WebMobilePaymentResponse>{
+        return sdk.call<WebMobilePaymentRequest,Item<WebMobilePaymentResponse>>(
+            url = "/$version/payment/online",
+            method = HttpMethod.Post,
+            body = data
+        )
+    }
+
+    suspend fun getQRCodeByCheckoutID(data: GetQRCodeByCheckoutIDRequest) : Item<GetQRCodeByCheckoutIDResponse>{
+        return sdk.call<GetQRCodeByCheckoutIDRequest,Item<GetQRCodeByCheckoutIDResponse>>(
+            url = "/$version/online/checkout",
+            method = HttpMethod.Post,
+            body = data
+        )
+    }
+
+    suspend fun getURLByCheckoutID(data: GetURLByCheckoutIDRequest) : Item<GetURLByCheckoutIDResponse>{
+        return sdk.call<GetURLByCheckoutIDRequest, Item<GetURLByCheckoutIDResponse>>(
+            url = "/$version/online/checkout",
+            method = HttpMethod.Post,
+            body = data
+        )
+    }
+
+    suspend fun dailySettlementReport(data : DailySettlementReportRequest): Items<DailySettlementReportResponse>{
+        return sdk.call<DailySettlementReportRequest, Items<DailySettlementReportResponse>>(
+            url = "/$version/payment/reconciliation",
+            method = HttpMethod.Post,
+            body = data
         )
     }
 
