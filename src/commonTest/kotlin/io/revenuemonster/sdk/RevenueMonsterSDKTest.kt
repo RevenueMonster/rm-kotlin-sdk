@@ -1,9 +1,12 @@
 package io.revenuemonster.sdk
 
+import io.ktor.http.*
 import io.revenuemonster.sdk.model.Error
-import io.revenuemonster.sdk.model.request.QuickPayOrder
-import io.revenuemonster.sdk.model.request.QuickPayRequest
 import io.revenuemonster.sdk.Config
+import io.revenuemonster.sdk.model.common.GeoLocation
+import io.revenuemonster.sdk.model.common.Order
+import io.revenuemonster.sdk.model.enum.TransactionType
+import io.revenuemonster.sdk.model.request.*
 import kotlinx.coroutines.runBlocking
 import kotlin.random.Random
 import kotlin.test.Test
@@ -60,26 +63,57 @@ class RevenueMonsterSDKTest {
 
         runBlocking {
             try {
-                // quick pay test
-                val data = QuickPayRequest(
-                    authCode = "123",
-                    order = QuickPayOrder(
-                        id = "${Random((1..371289).random()).nextInt()}",
-                        title = "TEST",
-                        detail = "JUST A TEST",
-                        additionalData = "NONE",
-                        amount = 100,
-                        currencyType = "MYR",
-                    ),
-                    ipAddress = "1.1.1.1",
-                    terminalId = "1623500916731469951",
-                    storeId = "1623743430847879711",
+
+//                val data2 = WebMobilePaymentRequest(
+//                    order = Order(
+//                        id = "${Random((1..371289).random()).nextInt()}",
+//                        title = "SALES",
+//                        detail = "TEST123",
+//                        amount = 100,
+//                        currencyType = "MYR",
+//                        additionalData = "TEST"
+//                    ),
+//                    customer = WebMobilePaymentCustomer(
+//                        "12345689","123@hotmail.com","MY","0123456789"
+//                    ),
+//                    method = listOf("BOOST_MY"),
+//                    type = "WEB_PAYMENT",
+//                    storeId = "1623743430847879711",
+//                    redirectUrl = "https://google.com",
+//                    notifyUrl = "https://google.com",
+//                    layoutVersion = "v3"
+//                )
+//
+//                val data = DailySettlementReportRequest(
+//                    transactionType = "PAYMENT",
+//                    date = "2021-07-19",
+//                    method = "BOOST",
+//                    region = "MALAYSIA",
+//                    cursor = ""
+//                )
+
+                //id 1626685912814237246
+                val store = StoreDetails(
+                    name = "SNOR TEST 2",
+                    addressLine1 = "B-5-30, 5th Floor, Block Bougainvillea,",
+                    addressLine2 = "PJU 6A, Lebuhraya SPRINT, 10 Boulevard,",
+                    postCode = "47400",
+                    city = "Petaling Jaya",
+                    state = "Selangor",
+                    country = "Malaysia",
+                    countryCode = "60",
+                    phoneNumber = "377334080",
+                    geoLocation = GeoLocation(3.1349237f,102.6136659f)
                 )
 
 
-                val result = sdk.Payment.quickPay(data)
+
+                val result = sdk.Merchant.getSubscriptions()
                 println("Result ====>")
                 println(result)
+//                result.items.forEach {
+//                    println(it)
+//                }
 
             }catch (e: Error) {
                 println("Debug 1 ====>")
@@ -88,6 +122,8 @@ class RevenueMonsterSDKTest {
                 println("Debug 2 ====>")
                 println(e)
             }
+
+
         }
     }
 }
