@@ -1,7 +1,5 @@
 package io.revenuemonster.sdk.model.response
 
-import io.revenuemonster.sdk.model.ErrorCode
-import io.revenuemonster.sdk.model.common.Order
 import io.revenuemonster.sdk.model.common.Store
 import kotlinx.serialization.Serializable
 import kotlinx.datetime.Instant
@@ -18,7 +16,7 @@ data class RefundResponse(
     val balanceAmount : Int,
     val platform : String,
     val method: String,
-    val  transactionAt : Instant,
+    val transactionAt : Instant,
     val type : String,
     val status : String,
     val region : String,
