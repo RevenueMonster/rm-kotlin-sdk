@@ -4,19 +4,19 @@ import io.revenuemonster.sdk.model.common.Order
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class OnlinePaymentRequest(
+data class WebMobilePaymentRequest(
     val order: Order,
-    val customer: OnlinePaymentCustomer,
+    val customer: WebMobilePaymentCustomer,
     val method: List<String> = listOf(),
     val type: String,
     val storeId: String,
     val redirectUrl: String,
     val notifyUrl: String,
-    val layoutVersion: String = "v3"
+    val layoutVersion: String
 )
 
 @Serializable
-data class OnlinePaymentCustomer(
+data class WebMobilePaymentCustomer(
     val userId: String,
     val email: String,
     val countryCode: String,
