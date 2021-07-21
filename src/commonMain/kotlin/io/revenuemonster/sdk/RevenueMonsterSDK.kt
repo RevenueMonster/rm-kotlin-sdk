@@ -7,6 +7,7 @@ import io.ktor.http.*
 import io.ktor.utils.io.core.*
 import io.revenuemonster.sdk.model.Credential
 import io.revenuemonster.sdk.model.Error
+import io.revenuemonster.sdk.module.*
 import io.revenuemonster.sdk.util.Base64Factory
 import io.revenuemonster.sdk.util.Signature
 import io.revenuemonster.sdk.util.randomString

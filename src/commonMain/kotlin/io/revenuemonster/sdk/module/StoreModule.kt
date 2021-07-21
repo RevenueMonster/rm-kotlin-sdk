@@ -1,6 +1,7 @@
-package io.revenuemonster.sdk
+package io.revenuemonster.sdk.module
 
 import io.ktor.http.*
+import io.revenuemonster.sdk.RevenueMonsterSDK
 import io.revenuemonster.sdk.model.Item
 import io.revenuemonster.sdk.model.Items
 import io.revenuemonster.sdk.model.Response

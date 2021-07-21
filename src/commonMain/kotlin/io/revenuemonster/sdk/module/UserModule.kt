@@ -1,7 +1,7 @@
-package io.revenuemonster.sdk
+package io.revenuemonster.sdk.module
 
+import io.revenuemonster.sdk.RevenueMonsterSDK
 import io.revenuemonster.sdk.model.Item
-import io.revenuemonster.sdk.model.Items
 import io.revenuemonster.sdk.model.response.UserProfile
 
 class UserModule(private val sdk : RevenueMonsterSDK){
