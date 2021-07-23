@@ -1,14 +1,10 @@
 package io.revenuemonster.sdk
 
-import io.ktor.http.*
 import io.revenuemonster.sdk.model.Error
-import io.revenuemonster.sdk.Config
-import io.revenuemonster.sdk.model.common.GeoLocation
-import io.revenuemonster.sdk.model.common.Order
-import io.revenuemonster.sdk.model.enum.TransactionType
+import io.revenuemonster.sdk.model.common.Address
 import io.revenuemonster.sdk.model.request.*
 import kotlinx.coroutines.runBlocking
-import kotlin.random.Random
+import kotlinx.datetime.toInstant
 import kotlin.test.Test
 
 class RevenueMonsterSDKTest {
@@ -93,22 +89,43 @@ class RevenueMonsterSDKTest {
 //                )
 
                 //id 1626685912814237246
-                val store = StoreDetails(
-                    name = "SNOR TEST 2",
-                    addressLine1 = "B-5-30, 5th Floor, Block Bougainvillea,",
-                    addressLine2 = "PJU 6A, Lebuhraya SPRINT, 10 Boulevard,",
-                    postCode = "47400",
-                    city = "Petaling Jaya",
-                    state = "Selangor",
-                    country = "Malaysia",
-                    countryCode = "60",
-                    phoneNumber = "377334080",
-                    geoLocation = GeoLocation(3.1349237f,102.6136659f)
+//                val store = StoreDetails(
+//                    name = "SNOR TEST",
+//                    addressLine1 = "B-5-30, 5th Floor, Block Bougainvillea,",
+//                    addressLine2 = "PJU 6A, Lebuhraya SPRINT, 10 Boulevard,",
+//                    postCode = "47400",
+//                    city = "Petaling Jaya",
+//                    state = "Selangor",
+//                    country = "Malaysia",
+//                    countryCode = "60",
+//                    phoneNumber = "377334080",
+//                    geoLocation = GeoLocation(3.1349237f,102.6136659f)
+//                )
+
+                //1626838602884748395
+                val member = RegisterMemberRequest(
+                    "Snor3",
+                    "60",
+                    "128534569",
+                    "snorsnor9998@gmail.com",
+                    "981245135468",
+                    "1995-07-11T00:00:00Z".toInstant(),
+                    "MALE",
+                    0,
+                    Address(
+                        "17, Jalan Pertanian 25",
+                        "Taman Universiti",
+                        "81301",
+                        "SKUDAI",
+                        "JOHOR",
+                        "MALAYSIA"
+                    )
                 )
 
 
 
-                val result = sdk.Merchant.getSubscriptions()
+                val result = sdk.Loyalty.topUpBalanceOnline("1626838502220135674",
+                    TopUpBalanceOnlineRequest("https://revenuemonster.my",123))
                 println("Result ====>")
                 println(result)
 //                result.items.forEach {

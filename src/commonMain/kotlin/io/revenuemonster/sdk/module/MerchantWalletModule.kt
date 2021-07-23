@@ -31,7 +31,7 @@ class MerchantWalletModule(private val sdk: RevenueMonsterSDK) {
         )
     }
 
-    //method not allow
+    //FIXME : method (POST) not allow
 //    suspend fun checkWalletHistory(data : CheckWalletHistoryRequest) : ItemsC<CheckWalletHistory>{
 //        return sdk.call<CheckWalletHistoryRequest, ItemsC<CheckWalletHistory>>(
 //            url = "/$version/wallet/history",

@@ -1,11 +1,11 @@
-package io.revenuemonster.sdk.model.response
+package io.revenuemonster.sdk.model.common
 
 import io.revenuemonster.sdk.model.common.Address
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RegisterMemberResponse(
+data class MemberProfile(
     val id : String,
     val key : String,
     val name : String,
