@@ -1,15 +1,17 @@
 package io.revenuemonster.sdk
 
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
+import io.ktor.client.features.observer.*
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 internal val client: HttpClient = HttpClient() {
     engine {
-        threadsCount = 2
+        threadsCount = 4
     }
     install(JsonFeature) {
         serializer = KotlinxSerializer(
@@ -18,6 +20,9 @@ internal val client: HttpClient = HttpClient() {
                 ignoreUnknownKeys = true
             }
         )
+    }
+    this.ResponseObserver {
+        println("HttpResponse => ${it.receive<String>()}")
     }
 }
 
