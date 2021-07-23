@@ -47,9 +47,9 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
         )
     }
 
-//    suspend fun getFpxBanks() : Any{
-//        return sdk.call<Any,Any>(url = "/$version/payment/fpx-bank")
-//    }
+    suspend fun getFpxBanks() : Item<Map<String,Banks>>{
+        return sdk.call<Any,Item<Map<String,Banks>>>(url = "/$version/payment/fpx-bank")
+    }
 
     suspend fun reverse(data : ReverseRequest) : Item<GetTransactionResponse>{
         return sdk.call<ReverseRequest,Item<GetTransactionResponse>>(
