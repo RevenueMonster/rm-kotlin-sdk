@@ -52,6 +52,7 @@ class LoyaltyModule(private val sdk : RevenueMonsterSDK) {
         )
     }
 
+    //FIXME : docs https://doc.revenuemonster.my/docs/campaign/loyalty/loyalty-members/topup-offline
     suspend fun topUpBalanceOffline(data : TopUpBalanceOfflineRequest): Item<TopUpBalanceOfflineResponse>{
         return sdk.call<TopUpBalanceOfflineRequest,Item<TopUpBalanceOfflineResponse>>(
             url = "/loyalty/member/${data.memberId}/topup-offline",
