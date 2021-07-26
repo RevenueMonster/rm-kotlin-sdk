@@ -14,30 +14,8 @@ import io.revenuemonster.sdk.model.response.*
 
 class LoyaltyModule(private val sdk : RevenueMonsterSDK) {
 
-    //FIXME : email didnt insert into db (backend)
-    suspend fun registerLoyaltyMember(data : RegisterMemberRequest) : Item<MemberProfile> {
-        return sdk.call<RegisterMemberRequest, Item<MemberProfile>>(
-            url = "/loyalty/member",
-            method = HttpMethod.Post,
-            body = data
-        )
-    }
 
-    suspend fun checkLoyaltyMember(countryCode : String,phoneNumber : String): Item<CheckMemberResponse>{
-        val data = CheckMemberRequest(countryCode,phoneNumber)
-        return sdk.call<CheckMemberRequest, Item<CheckMemberResponse>>(
-            url = "/loyalty/member/check",
-            method = HttpMethod.Post,
-            body = data
-        )
-    }
-
-    suspend fun getMemberProfile(countryCode : String,phoneNumber : String) : Item<MemberProfile>{
-        return sdk.call<Any, Item<MemberProfile>>(
-            url = "/loyalty/me?countryCode=$countryCode&phoneNumber=$phoneNumber"
-        )
-    }
-
+    //loyalty members
     suspend fun memberAuthorize(countryCode : String,phoneNumber : String) : MemberAuthorizeResponse{
         val data = CheckMemberRequest(countryCode,phoneNumber)
         return sdk.call<CheckMemberRequest, MemberAuthorizeResponse>(
@@ -81,6 +59,8 @@ class LoyaltyModule(private val sdk : RevenueMonsterSDK) {
             body = data
         )
     }
+
+    //loyalty points
 
 
 }
