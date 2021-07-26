@@ -18,7 +18,6 @@ data class TopUpBalanceOfflineResponse(
     val type: String,
     val status: String,
     val region: String,
-    val error : String,
     val createdAt : Instant,
     val updatedAt : Instant
 )
@@ -27,6 +26,6 @@ data class TopUpBalanceOfflineResponse(
 data class TopUpBalanceOrderResponse(
     val id : String,
     val title : String,
-    val details: String,
+    val detail: String,
     val amount : Int
 )
