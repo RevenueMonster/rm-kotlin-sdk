@@ -5,8 +5,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class TopUpBalanceOfflineRequest(
     val authCode : String,
+    val storeId : String,
+    val memberId : String,
     val order : TopUpBalanceOrderRequest,
-    val storeId : String
 )
 
 @Serializable

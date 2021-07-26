@@ -52,9 +52,9 @@ class LoyaltyModule(private val sdk : RevenueMonsterSDK) {
         )
     }
 
-    suspend fun topUpBalanceOffline(memberId: String,data : TopUpBalanceOfflineRequest): Item<TopUpBalanceOfflineResponse>{
+    suspend fun topUpBalanceOffline(data : TopUpBalanceOfflineRequest): Item<TopUpBalanceOfflineResponse>{
         return sdk.call<TopUpBalanceOfflineRequest,Item<TopUpBalanceOfflineResponse>>(
-            url = "/loyalty/member/$memberId/topup-offline",
+            url = "/loyalty/member/${data.memberId}/topup-offline",
             method = HttpMethod.Post,
             body = data
         )
