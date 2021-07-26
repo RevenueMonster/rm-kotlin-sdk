@@ -22,7 +22,8 @@ internal val client: HttpClient = HttpClient() {
         )
     }
     this.ResponseObserver {
-        println("HttpResponse => ${it.receive<String>()}")
+        println("HttpResponse => ")
+        println(it.receive<String>())
     }
 }
 
