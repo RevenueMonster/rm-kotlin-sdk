@@ -17,7 +17,7 @@ class LoyaltyModule(private val sdk : RevenueMonsterSDK) {
     //FIXME : email didnt insert into db (backend)
     suspend fun registerLoyaltyMember(data : RegisterMemberRequest) : Item<MemberProfile> {
         return sdk.call<RegisterMemberRequest, Item<MemberProfile>>(
-            url = "/v3/loyalty/member",
+            url = "/loyalty/member",
             method = HttpMethod.Post,
             body = data
         )
@@ -26,7 +26,7 @@ class LoyaltyModule(private val sdk : RevenueMonsterSDK) {
     suspend fun checkLoyaltyMember(countryCode : String,phoneNumber : String): Item<CheckMemberResponse>{
         val data = CheckMemberRequest(countryCode,phoneNumber)
         return sdk.call<CheckMemberRequest, Item<CheckMemberResponse>>(
-            url = "/v3/loyalty/member/check",
+            url = "/loyalty/member/check",
             method = HttpMethod.Post,
             body = data
         )
@@ -34,14 +34,14 @@ class LoyaltyModule(private val sdk : RevenueMonsterSDK) {
 
     suspend fun getMemberProfile(countryCode : String,phoneNumber : String) : Item<MemberProfile>{
         return sdk.call<Any, Item<MemberProfile>>(
-            url = "/v3/loyalty/me?countryCode=$countryCode&phoneNumber=$phoneNumber"
+            url = "/loyalty/me?countryCode=$countryCode&phoneNumber=$phoneNumber"
         )
     }
 
     suspend fun memberAuthorize(countryCode : String,phoneNumber : String) : MemberAuthorizeResponse{
         val data = CheckMemberRequest(countryCode,phoneNumber)
         return sdk.call<CheckMemberRequest, MemberAuthorizeResponse>(
-            url = "/v3/loyalty/member/authorize",
+            url = "/loyalty/member/authorize",
             method = HttpMethod.Post,
             body = data
         )
@@ -50,25 +50,25 @@ class LoyaltyModule(private val sdk : RevenueMonsterSDK) {
     //FIXME: member tier
     suspend fun getLoyaltyMembers() : Items<LoyaltyMember>{
         return sdk.call<Any, Items<LoyaltyMember>>(
-            url = "/v3/loyalty/members"
+            url = "/loyalty/members"
         )
     }
 
     suspend fun getLoyaltyMemberByID(id : String): Item<LoyaltyMember>{
         return sdk.call<Any,Item<LoyaltyMember>>(
-            url = "/v3/loyalty/member/$id"
+            url = "/loyalty/member/$id"
         )
     }
 
     suspend fun getLoyaltyMemberHistory(id : String): Items<LoyaltyMemberHistory>{
         return sdk.call<Any, Items<LoyaltyMemberHistory>>(
-            url = "/v3/loyalty/member/$id/history"
+            url = "/loyalty/member/$id/history"
         )
     }
 
     suspend fun topUpBalanceOnline(memberId: String, data: TopUpBalanceOnlineRequest): Item<TopUpBalanceOnlineResponse> {
         return sdk.call<TopUpBalanceOnlineRequest, Item<TopUpBalanceOnlineResponse>>(
-            url = "/v3/loyalty/member/$memberId/topup-online",
+            url = "/loyalty/member/$memberId/topup-online",
             method = HttpMethod.Post,
             body = data
         )
@@ -76,7 +76,7 @@ class LoyaltyModule(private val sdk : RevenueMonsterSDK) {
 
     suspend fun topUpBalanceOffline(memberId: String,data : TopUpBalanceOfflineRequest): Item<TopUpBalanceOfflineResponse>{
         return sdk.call<TopUpBalanceOfflineRequest,Item<TopUpBalanceOfflineResponse>>(
-            url = "/v3/loyalty/member/$memberId/topup-offline",
+            url = "/loyalty/member/$memberId/topup-offline",
             method = HttpMethod.Post,
             body = data
         )

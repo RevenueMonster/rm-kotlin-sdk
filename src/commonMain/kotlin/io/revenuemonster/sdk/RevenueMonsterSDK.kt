@@ -30,6 +30,7 @@ class RevenueMonsterSDK(
 
     private val oauth2Url: String = domains[config.sandbox]?.get(0) ?: ""
     private val baseUrl: String = domains[config.sandbox]?.get(1) ?: ""
+    private val version: String = "/v3"
 
     private val mutex = Mutex()
     private var credential: OAuthCredential? = null
@@ -55,7 +56,7 @@ class RevenueMonsterSDK(
     ): O {
         try {
             val cred = getAccessToken()
-            val uri = baseUrl + url
+            val uri = baseUrl + version + url
             var el: JsonElement = JsonNull
             if (body != null) el = normalize(Json.encodeToJsonElement(body))
             val accessToken = cred.accessToken

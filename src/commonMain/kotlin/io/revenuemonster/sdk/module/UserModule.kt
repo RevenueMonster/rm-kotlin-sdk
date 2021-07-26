@@ -8,7 +8,7 @@ class UserModule(private val sdk : RevenueMonsterSDK){
 
     suspend fun getUserProfile(): Item<UserProfile> {
         return sdk.call<Any, Item<UserProfile>>(
-            url = "/v3/user"
+            url = "/user"
         )
     }
 

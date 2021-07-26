@@ -8,18 +8,16 @@ import io.revenuemonster.sdk.model.response.MerchantSubscriptions
 
 class MerchantModule(private val sdk: RevenueMonsterSDK) {
 
-    private val version = "v3"
-
     //FIXME: typo on back end ("item" -> "items")
     suspend fun getSubscriptions(): Items<MerchantSubscriptions> {
         return sdk.call<Any, Items<MerchantSubscriptions>>(
-            url = "/$version/merchant/subscriptions"
+            url = "/merchant/subscriptions"
         )
     }
 
     suspend fun getProfile() : Item<MerchantProfile>{
         return sdk.call<Any,Item<MerchantProfile>>(
-            url = "/$version/merchant"
+            url = "/merchant"
         )
     }
 
