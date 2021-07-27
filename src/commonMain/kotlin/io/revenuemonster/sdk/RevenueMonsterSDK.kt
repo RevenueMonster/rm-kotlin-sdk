@@ -50,6 +50,7 @@ class RevenueMonsterSDK(
     val Loyalty : LoyaltyModule = LoyaltyModule(this)
     val MemberModule : MemberModule = MemberModule(this)
     val Voucher : VoucherModule = VoucherModule(this)
+    val Campaign : CampaignModule = CampaignModule(this)
 
     internal suspend inline fun <reified I, reified O> call(
         url: String,
