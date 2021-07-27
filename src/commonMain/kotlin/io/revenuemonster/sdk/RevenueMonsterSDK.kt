@@ -48,7 +48,7 @@ class RevenueMonsterSDK(
     val User : UserModule = UserModule(this)
     val MerchantWallet : MerchantWalletModule = MerchantWalletModule(this)
     val Loyalty : LoyaltyModule = LoyaltyModule(this)
-    val MemberModule : MemberModule = MemberModule(this)
+    val Member : MemberModule = MemberModule(this)
     val Voucher : VoucherModule = VoucherModule(this)
     val Campaign : CampaignModule = CampaignModule(this)
 

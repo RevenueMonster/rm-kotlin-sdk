@@ -3,10 +3,14 @@ package io.revenuemonster.sdk.module
 import io.ktor.http.*
 import io.revenuemonster.sdk.RevenueMonsterSDK
 import io.revenuemonster.sdk.model.Item
+import io.revenuemonster.sdk.model.Items
 import io.revenuemonster.sdk.model.common.MemberProfile
 import io.revenuemonster.sdk.model.request.CheckMemberRequest
 import io.revenuemonster.sdk.model.request.RegisterMemberRequest
 import io.revenuemonster.sdk.model.response.CheckMemberResponse
+import io.revenuemonster.sdk.model.response.Voucher
+import io.revenuemonster.sdk.model.response.Vouchers
+import kotlinx.serialization.json.JsonNull
 
 class MemberModule(private val sdk : RevenueMonsterSDK) {
 
@@ -37,8 +41,24 @@ class MemberModule(private val sdk : RevenueMonsterSDK) {
     }
 
     //member -> vouchers
+    suspend fun getVouchers(countryCode : String,phoneNumber : String) : Items<Voucher>{
+        return sdk.call<Any,Items<Voucher>>(
+            url = "/loyalty/me/vouchers?countryCode=$countryCode&phoneNumber=$phoneNumber"
+        )
+    }
 
+    suspend fun getVouchersByCode(code : String, countryCode : String,phoneNumber : String) : Item<Voucher>{
+        return sdk.call<Any,Item<Voucher>>(
+            url = "/loyalty/me/voucher/$code?countryCode=$countryCode&phoneNumber=$phoneNumber"
+        )
+    }
 
+    suspend fun redeemVoucher(code : String, countryCode : String,phoneNumber : String) : Item<Voucher>{
+        return sdk.call<JsonNull,Item<Voucher>>(
+            url = "/loyalty/me/voucher/$code/redeem?countryCode=$countryCode&phoneNumber=$phoneNumber",
+            method = HttpMethod.Post
+        )
+    }
     //member -> rewards
 
 

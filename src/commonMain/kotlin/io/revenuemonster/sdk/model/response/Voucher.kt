@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 data class Voucher(
     val key : String,
     val label : String,
-    val voucherBatchKey : String,
+    val voucherBatchKey : String?,
     val type : String,
     val amount : Int?= null,
     val discountRate : Int,
