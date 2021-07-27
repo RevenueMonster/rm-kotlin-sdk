@@ -18,9 +18,9 @@ data class WebMobilePaymentRequest(
 @Serializable
 data class WebMobilePaymentCustomer(
     val userId: String,
-    val email: String,
-    val countryCode: String,
-    val phoneNumber: String
+    val email: String? = null,
+    val countryCode: String? = null,
+    val phoneNumber: String? = null
 )
 
 
