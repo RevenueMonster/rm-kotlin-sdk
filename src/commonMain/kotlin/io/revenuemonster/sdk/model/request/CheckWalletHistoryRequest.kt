@@ -1,4 +1,4 @@
-package io.revenuemonster.sdk.model.response
+package io.revenuemonster.sdk.model.request
 
 import kotlinx.serialization.Serializable
 
