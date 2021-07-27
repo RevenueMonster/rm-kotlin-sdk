@@ -1,10 +1,15 @@
 package io.revenuemonster.sdk.module
 
+import io.ktor.client.utils.*
+import io.ktor.http.*
 import io.revenuemonster.sdk.RevenueMonsterSDK
 import io.revenuemonster.sdk.model.Item
 import io.revenuemonster.sdk.model.Items
+import io.revenuemonster.sdk.model.response.IssueVoucherResponse
 import io.revenuemonster.sdk.model.response.Voucher
 import io.revenuemonster.sdk.model.response.Vouchers
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.modules.EmptySerializersModule
 
 class VoucherModule(private val sdk : RevenueMonsterSDK) {
 
@@ -27,6 +32,19 @@ class VoucherModule(private val sdk : RevenueMonsterSDK) {
         )
     }
 
+    suspend fun issueVoucher(key: String): Item<IssueVoucherResponse>{
+        return sdk.call<JsonNull,Item<IssueVoucherResponse>>(
+            url = "/voucher-batch/$key/issue",
+            method = HttpMethod.Post,
+        )
+    }
+
+    suspend fun voidVoucher(code:String) : Item<Voucher>{
+        return sdk.call<JsonNull, Item<Voucher>>(
+            url = "/voucher/$code/void",
+            method = HttpMethod.Post
+        )
+    }
 
 
 }
