@@ -4,10 +4,12 @@ import io.ktor.http.*
 import io.revenuemonster.sdk.RevenueMonsterSDK
 import io.revenuemonster.sdk.model.Item
 import io.revenuemonster.sdk.model.Items
+import io.revenuemonster.sdk.model.Response
 import io.revenuemonster.sdk.model.common.MemberProfile
 import io.revenuemonster.sdk.model.request.CheckMemberRequest
 import io.revenuemonster.sdk.model.request.RegisterMemberRequest
 import io.revenuemonster.sdk.model.response.CheckMemberResponse
+import io.revenuemonster.sdk.model.response.Reward
 import io.revenuemonster.sdk.model.response.Voucher
 import io.revenuemonster.sdk.model.response.Vouchers
 import kotlinx.serialization.json.JsonNull
@@ -61,7 +63,25 @@ class MemberModule(private val sdk : RevenueMonsterSDK) {
     }
     //member -> rewards
 
+    //FIXME : End point not found
+    suspend fun getRewards(countryCode: String, phoneNumber: String): Items<Reward> {
+        return sdk.call<Any, Items<Reward>>(
+            url = "/loyalty/me/reward?countryCode=$countryCode&phoneNumber=$phoneNumber"
+        )
+    }
 
+    suspend fun getRewardByID(rewardId: String, countryCode: String, phoneNumber: String): Item<Reward> {
+        return sdk.call<Any, Item<Reward>>(
+            url = "/loyalty/me/reward/$rewardId?countryCode=$countryCode&phoneNumber=$phoneNumber"
+        )
+    }
+
+    suspend fun redeemReward(rewardId: String, countryCode: String, phoneNumber: String): Response {
+        return sdk.call<JsonNull, Response>(
+            url = "/loyalty/me/reward/$rewardId/redeem?countryCode=$countryCode&phoneNumber=$phoneNumber",
+            method = HttpMethod.Post
+        )
+    }
 
 
 }
