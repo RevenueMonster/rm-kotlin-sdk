@@ -15,7 +15,7 @@ data class QuickPayResponse(
     val balanceAmount: Long,
     val platform: String,
     val method: String,
-    val transactionAt: String,
+    val transactionAt: Instant,
     val type: String,
     val status: String,
     val region: String,
