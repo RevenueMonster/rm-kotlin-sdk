@@ -86,8 +86,9 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     }
 
     //Reverse
-    suspend fun reverse(data : ReverseRequest) : Item<GetTransactionResponse>{
-        return sdk.call<ReverseRequest,Item<GetTransactionResponse>>(
+    suspend fun reverse(orderId: String ) : Item<ReverseResponse>{
+        val data = ReverseRequest(orderId = orderId)
+        return sdk.call<ReverseRequest,Item<ReverseResponse>>(
             url = "/payment/reverse",
             method = HttpMethod.Post,
             body = data
