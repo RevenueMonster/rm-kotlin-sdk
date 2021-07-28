@@ -12,8 +12,7 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.modules.EmptySerializersModule
 
 class VoucherModule(private val sdk: RevenueMonsterSDK) {
-
-    //FIXME : docs missing attribute
+    
     suspend fun getVoucherBatches(): Items<Vouchers> {
         return sdk.call<Any, Items<Vouchers>>(
             url = "/voucher-batches"
