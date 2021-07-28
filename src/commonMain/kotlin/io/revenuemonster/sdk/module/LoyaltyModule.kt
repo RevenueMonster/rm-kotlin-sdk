@@ -141,7 +141,6 @@ class LoyaltyModule(private val sdk: RevenueMonsterSDK) {
         )
     }
 
-
     suspend fun cancelSpendingLoyaltyPoint(id: String): Response {
         val data = CancelSpendingLoyaltyPointRequest(id = id)
         return sdk.call<CancelSpendingLoyaltyPointRequest, Response>(

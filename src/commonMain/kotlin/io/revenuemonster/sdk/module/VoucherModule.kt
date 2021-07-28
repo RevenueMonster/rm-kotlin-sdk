@@ -11,40 +11,39 @@ import io.revenuemonster.sdk.model.response.Vouchers
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.modules.EmptySerializersModule
 
-class VoucherModule(private val sdk : RevenueMonsterSDK) {
+class VoucherModule(private val sdk: RevenueMonsterSDK) {
 
     //FIXME : docs missing attribute
-    suspend fun getVoucherBatches() : Items<Vouchers>{
-        return sdk.call<Any,Items<Vouchers>>(
+    suspend fun getVoucherBatches(): Items<Vouchers> {
+        return sdk.call<Any, Items<Vouchers>>(
             url = "/voucher-batches"
         )
     }
 
-    suspend fun getVoucherByCode(code: String):Item<Voucher>{
+    suspend fun getVoucherByCode(code: String): Item<Voucher> {
         return sdk.call<Any, Item<Voucher>>(
             url = "/voucher/$code"
         )
     }
 
-    suspend fun getVoucherBatchByKey(key : String): Items<Voucher>{
-        return sdk.call<Any,Items<Voucher>>(
+    suspend fun getVoucherBatchByKey(key: String): Items<Voucher> {
+        return sdk.call<Any, Items<Voucher>>(
             url = "/voucher-batch/$key/vouchers"
         )
     }
 
-    suspend fun issueVoucher(key: String): Item<IssueVoucherResponse>{
-        return sdk.call<JsonNull,Item<IssueVoucherResponse>>(
+    suspend fun issueVoucher(key: String): Item<IssueVoucherResponse> {
+        return sdk.call<JsonNull, Item<IssueVoucherResponse>>(
             url = "/voucher-batch/$key/issue",
             method = HttpMethod.Post,
         )
     }
 
-    suspend fun voidVoucher(code:String) : Item<Voucher>{
+    suspend fun voidVoucher(code: String): Item<Voucher> {
         return sdk.call<JsonNull, Item<Voucher>>(
             url = "/voucher/$code/void",
             method = HttpMethod.Post
         )
     }
-
 
 }

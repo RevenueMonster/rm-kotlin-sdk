@@ -41,8 +41,8 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     }
 
     //Web Mobile Payment
-    suspend fun webMobilePayment(data : WebMobilePaymentRequest) : Item<WebMobilePaymentResponse>{
-        return sdk.call<WebMobilePaymentRequest,Item<WebMobilePaymentResponse>>(
+    suspend fun webMobilePayment(data: WebMobilePaymentRequest): Item<WebMobilePaymentResponse> {
+        return sdk.call<WebMobilePaymentRequest, Item<WebMobilePaymentResponse>>(
             url = "/payment/online",
             method = HttpMethod.Post,
             body = data
@@ -70,8 +70,8 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     }
 
     //Get Online Transaction By Checkout ID
-    suspend fun getOnlineTransactionByCheckoutID(checkoutId : String) : Item<OnlineTransaction>{
-        return sdk.call<Any,Item<OnlineTransaction>>(
+    suspend fun getOnlineTransactionByCheckoutID(checkoutId: String): Item<OnlineTransaction> {
+        return sdk.call<Any, Item<OnlineTransaction>>(
             url = "/payment/online?checkoutId=$checkoutId"
         )
     }
@@ -86,9 +86,9 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     }
 
     //Reverse
-    suspend fun reverse(orderId: String ) : Item<ReverseResponse>{
+    suspend fun reverse(orderId: String): Item<ReverseResponse> {
         val data = ReverseRequest(orderId = orderId)
-        return sdk.call<ReverseRequest,Item<ReverseResponse>>(
+        return sdk.call<ReverseRequest, Item<ReverseResponse>>(
             url = "/payment/reverse",
             method = HttpMethod.Post,
             body = data
@@ -96,33 +96,33 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     }
 
     //Query Status By Order ID
-    suspend fun queryStatusByOrderID(orderId : String)  : Item<Transaction>{
-        return sdk.call<Any,  Item<Transaction>>(
+    suspend fun queryStatusByOrderID(orderId: String): Item<Transaction> {
+        return sdk.call<Any, Item<Transaction>>(
             url = "/payment/transaction/order/$orderId"
         )
     }
 
     //Query Status by Transaction ID
-    suspend fun queryStatusByTransactionID(transactionId : String)  : Item<Transaction>{
-        return sdk.call<Any,  Item<Transaction>>(
+    suspend fun queryStatusByTransactionID(transactionId: String): Item<Transaction> {
+        return sdk.call<Any, Item<Transaction>>(
             url = "/payment/transaction/$transactionId"
         )
     }
 
     //Get Fpx Bank List
-    suspend fun getFpxBanks() : Item<Map<String,Banks>>{
-        return sdk.call<Any,Item<Map<String,Banks>>>(url = "/payment/fpx-bank")
+    suspend fun getFpxBanks(): Item<Map<String, Banks>> {
+        return sdk.call<Any, Item<Map<String, Banks>>>(url = "/payment/fpx-bank")
     }
 
     //Get All Transactions
-    suspend fun getAllTransactions() : Items<Transaction> {
+    suspend fun getAllTransactions(): Items<Transaction> {
         return sdk.call<Any, Items<Transaction>>(
             url = "/payment/transactions"
         )
     }
 
     //Daily Settlement Report
-    suspend fun dailySettlementReport(data : DailySettlementReportRequest): Items<DailySettlementReportResponse>{
+    suspend fun dailySettlementReport(data: DailySettlementReportRequest): Items<DailySettlementReportResponse> {
         return sdk.call<DailySettlementReportRequest, Items<DailySettlementReportResponse>>(
             url = "/payment/reconciliation",
             method = HttpMethod.Post,

@@ -8,13 +8,13 @@ import io.revenuemonster.sdk.model.response.*
 
 class MerchantWalletModule(private val sdk: RevenueMonsterSDK) {
 
-    suspend fun checkBalance() : Item<CheckBalance> {
-        return sdk.call<Any,Item<CheckBalance>>(
+    suspend fun checkBalance(): Item<CheckBalance> {
+        return sdk.call<Any, Item<CheckBalance>>(
             url = "/wallet/credit"
         )
     }
 
-    suspend fun topUpWallet(data : TopUpWalletRequest) : Item<String>{
+    suspend fun topUpWallet(data: TopUpWalletRequest): Item<String> {
         return sdk.call<TopUpWalletRequest, Item<String>>(
             url = "/wallet/topup",
             method = HttpMethod.Post,
@@ -22,11 +22,11 @@ class MerchantWalletModule(private val sdk: RevenueMonsterSDK) {
         )
     }
 
-    suspend fun checkWalletHistory() : ItemsC<CheckWalletHistory>{
+    suspend fun checkWalletHistory(): ItemsC<CheckWalletHistory> {
         return sdk.call<Any, ItemsC<CheckWalletHistory>>(
             url = "/wallet/history",
 
-        )
+            )
     }
 
     //FIXME : method (POST) not allow
@@ -38,11 +38,10 @@ class MerchantWalletModule(private val sdk: RevenueMonsterSDK) {
 //        )
 //    }
 
-    suspend fun topUpHistory() : ItemsC<TopUpHistory>{
+    suspend fun topUpHistory(): ItemsC<TopUpHistory> {
         return sdk.call<Any, ItemsC<TopUpHistory>>(
             url = "/wallet/transaction"
         )
     }
-
 
 }

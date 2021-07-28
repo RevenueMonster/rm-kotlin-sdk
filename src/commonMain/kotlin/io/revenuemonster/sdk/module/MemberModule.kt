@@ -14,12 +14,11 @@ import io.revenuemonster.sdk.model.response.Voucher
 import io.revenuemonster.sdk.model.response.Vouchers
 import kotlinx.serialization.json.JsonNull
 
-class MemberModule(private val sdk : RevenueMonsterSDK) {
-
+class MemberModule(private val sdk: RevenueMonsterSDK) {
 
     //member
     //FIXME : email didnt insert into db (backend)
-    suspend fun registerLoyaltyMember(data : RegisterMemberRequest) : Item<MemberProfile> {
+    suspend fun registerLoyaltyMember(data: RegisterMemberRequest): Item<MemberProfile> {
         return sdk.call<RegisterMemberRequest, Item<MemberProfile>>(
             url = "/loyalty/member",
             method = HttpMethod.Post,
@@ -27,8 +26,8 @@ class MemberModule(private val sdk : RevenueMonsterSDK) {
         )
     }
 
-    suspend fun checkLoyaltyMember(countryCode : String,phoneNumber : String): Item<CheckMemberResponse>{
-        val data = CheckMemberRequest(countryCode,phoneNumber)
+    suspend fun checkLoyaltyMember(countryCode: String, phoneNumber: String): Item<CheckMemberResponse> {
+        val data = CheckMemberRequest(countryCode, phoneNumber)
         return sdk.call<CheckMemberRequest, Item<CheckMemberResponse>>(
             url = "/loyalty/member/check",
             method = HttpMethod.Post,
@@ -36,27 +35,27 @@ class MemberModule(private val sdk : RevenueMonsterSDK) {
         )
     }
 
-    suspend fun getMemberProfile(countryCode : String,phoneNumber : String) : Item<MemberProfile>{
+    suspend fun getMemberProfile(countryCode: String, phoneNumber: String): Item<MemberProfile> {
         return sdk.call<Any, Item<MemberProfile>>(
             url = "/loyalty/me?countryCode=$countryCode&phoneNumber=$phoneNumber"
         )
     }
 
     //member -> vouchers
-    suspend fun getVouchers(countryCode : String,phoneNumber : String) : Items<Voucher>{
-        return sdk.call<Any,Items<Voucher>>(
+    suspend fun getVouchers(countryCode: String, phoneNumber: String): Items<Voucher> {
+        return sdk.call<Any, Items<Voucher>>(
             url = "/loyalty/me/vouchers?countryCode=$countryCode&phoneNumber=$phoneNumber"
         )
     }
 
-    suspend fun getVouchersByCode(code : String, countryCode : String,phoneNumber : String) : Item<Voucher>{
-        return sdk.call<Any,Item<Voucher>>(
+    suspend fun getVouchersByCode(code: String, countryCode: String, phoneNumber: String): Item<Voucher> {
+        return sdk.call<Any, Item<Voucher>>(
             url = "/loyalty/me/voucher/$code?countryCode=$countryCode&phoneNumber=$phoneNumber"
         )
     }
 
-    suspend fun redeemVoucher(code : String, countryCode : String,phoneNumber : String) : Item<Voucher>{
-        return sdk.call<JsonNull,Item<Voucher>>(
+    suspend fun redeemVoucher(code: String, countryCode: String, phoneNumber: String): Item<Voucher> {
+        return sdk.call<JsonNull, Item<Voucher>>(
             url = "/loyalty/me/voucher/$code/redeem?countryCode=$countryCode&phoneNumber=$phoneNumber",
             method = HttpMethod.Post
         )
@@ -82,6 +81,5 @@ class MemberModule(private val sdk : RevenueMonsterSDK) {
             method = HttpMethod.Post
         )
     }
-
 
 }
