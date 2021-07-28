@@ -21,7 +21,12 @@ data class MerchantProfile(
     val state : String,
     val country : String,
     val invoiceAddress : InvoiceAddress,
+    val isActive : Boolean,
+    val status : String,
+    val isMasterMerchant: Boolean,
+    val masterMerchantId : String,
     val isPartner : Boolean,
+    val partnerId : String,
     val gstNo : String,
     val createdAt : Instant,
     val updatedAt : Instant
