@@ -4,6 +4,7 @@ import io.ktor.http.*
 import io.revenuemonster.sdk.RevenueMonsterSDK
 import io.revenuemonster.sdk.model.Item
 import io.revenuemonster.sdk.model.Items
+import io.revenuemonster.sdk.model.enum.PaymentMethod
 import io.revenuemonster.sdk.model.request.*
 import io.revenuemonster.sdk.model.response.*
 
@@ -18,6 +19,7 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     }
 
     //Transaction  QR
+    //FIXME : having problem with other method (except BOOST_MY)
     suspend fun generateTransactionQR(data: TransactionQRRequest): Item<TransactionQRResponse> {
         return sdk.call<TransactionQRRequest, Item<TransactionQRResponse>>(
             url = "/payment/transaction/qrcode",
@@ -48,7 +50,7 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     }
 
     //Get QR Code & URL By Checkout ID (QR Code)
-    suspend fun getQRCodeByCheckoutID(checkoutId: String, method: String): Item<GetQRCodeByCheckoutIDResponse> {
+    suspend fun getQRCodeByCheckoutID(checkoutId: String, method: PaymentMethod): Item<GetQRCodeByCheckoutIDResponse> {
         val data = GetQRURLByCheckoutID(checkoutId, method, "QRCODE")
         return sdk.call<GetQRURLByCheckoutID, Item<GetQRCodeByCheckoutIDResponse>>(
             url = "/payment/online/checkout",
@@ -58,7 +60,7 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     }
 
     //Get QR Code & URL By Checkout ID (URL)
-    suspend fun getURLByCheckoutID(checkoutId: String, method: String): Item<GetURLByCheckoutIDResponse> {
+    suspend fun getURLByCheckoutID(checkoutId: String, method: PaymentMethod): Item<GetURLByCheckoutIDResponse> {
         val data = GetQRURLByCheckoutID(checkoutId, method, "URL")
         return sdk.call<GetQRURLByCheckoutID, Item<GetURLByCheckoutIDResponse>>(
             url = "/payment/online/checkout",
