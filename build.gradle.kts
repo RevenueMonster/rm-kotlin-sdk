@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "io.revenuemonster.sdk"
-version = "1.0.0-alpha.7"
+version = "1.0.0-alpha.15"
 
 val artifact = "rm-kotlin-sdk"
 val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
@@ -67,7 +67,6 @@ kotlin {
         val jvmMain by getting {
 //            dependsOn(commonMain)
             dependencies {
-                implementation("io.ktor:ktor-client-android:$ktorVersion")
                 implementation("io.ktor:ktor-client-apache:$ktorVersion")
             }
         }

@@ -5,14 +5,13 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class QuickPayResponse(
-    val store: Store,
+data class ReverseResponse (
     val referenceId: String,
     val transactionId: String,
-    val order: QuickPayResponseOrder,
+    val order: TransactionOrder,
     val terminalId: String,
     val currencyType: String,
-    val balanceAmount: Long,
+    val balanceAmount: Int,
     val platform: String,
     val method: String,
     val transactionAt: Instant,
@@ -23,10 +22,3 @@ data class QuickPayResponse(
     val updatedAt: Instant
 )
 
-@Serializable
-data class QuickPayResponseOrder(
-    val id: String,
-    val title: String,
-    val detail: String,
-    val amount: Int
-)

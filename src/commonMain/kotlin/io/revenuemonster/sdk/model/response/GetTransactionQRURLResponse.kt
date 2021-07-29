@@ -10,7 +10,7 @@ data class GetTransactionQRURLResponse(
     val type: String,
     val isPreFillAmount: Boolean,
     val currencyType: String,
-    val amount: UInt,
+    val amount: Int,
     val platform: String,
     val method: List<String>,
     val expiry: Expiry,
