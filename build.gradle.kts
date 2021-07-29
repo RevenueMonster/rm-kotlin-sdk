@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "io.revenuemonster.sdk"
-version = "1.0.0-beta.1"
+version = "1.0.0-alpha.15"
 
 val artifact = "rm-kotlin-sdk"
 val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
