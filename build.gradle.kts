@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform") version "1.5.21"
     kotlin("plugin.serialization") version "1.5.21"
+    id("com.android.library")
     id("maven-publish")
     id("signing")
 }
@@ -15,10 +16,34 @@ val ktorVersion = "1.6.1"
 val serializationVersion = "1.2.2"
 
 repositories {
+    google()
     mavenCentral()
 }
 
+apply(plugin = "maven-publish")
+apply(plugin = "com.android.library")
+
+android {
+    compileSdkVersion(30)
+    buildToolsVersion = "30.0.3"
+    defaultConfig{
+        minSdkVersion(22)
+        targetSdkVersion(30)
+    }
+    compileOptions {
+        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+    }
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+}
+
+
 kotlin {
+
+    android {
+        publishLibraryVariants("debug")
+    }
+
     // setup for JVM
     jvm {
         compilations.all {
@@ -55,6 +80,8 @@ kotlin {
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.1")
+                implementation("org.apache.commons:commons-collections4:4.4")
+                implementation("io.ktor:ktor-client-cio:$ktorVersion")
             }
         }
         val commonTest by getting {
@@ -72,6 +99,19 @@ kotlin {
         }
         val jvmTest by getting {
             dependencies {
+                implementation(kotlin("test-junit"))
+            }
+        }
+
+        val androidMain by getting {
+            dependencies {
+                implementation(kotlin("stdlib-jdk8"))
+                implementation("io.ktor:ktor-client-android:$ktorVersion")
+            }
+        }
+        val androidTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
             }
         }
@@ -95,6 +135,15 @@ kotlin {
 //            dependsOn(commonMain)
 //        }
     }
+
+    configure(listOf(targets["metadata"], android())) {
+        mavenPublication {
+            val targetPublication = this@mavenPublication
+            tasks.withType<AbstractPublishToMaven>()
+                .matching { it.publication == targetPublication }
+        }
+    }
+
 }
 
 publishing {
@@ -124,12 +173,12 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "$group"
-            artifactId = "$artifact"
-            version = "$version"
+            artifactId = artifact
+            version = version
             pom {
-                name.set("$artifact")
+                name.set(artifact)
                 description.set("Revenue Monster Kotlin Multiplatform SDK")
-                url.set("$pkgUrl")
+                url.set(pkgUrl)
 
                 licenses {
                     license {
@@ -159,7 +208,7 @@ publishing {
                 scm {
                     connection.set("scm:git:git://$gitUrl")
                     developerConnection.set("scm:git:ssh://$gitUrl")
-                    url.set("$pkgUrl")
+                    url.set(pkgUrl)
                 }
             }
             //            from(components["java"])
