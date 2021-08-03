@@ -4,11 +4,10 @@ import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.utils.io.core.*
+import io.ktor.util.*
 import io.revenuemonster.sdk.model.Credential
 import io.revenuemonster.sdk.model.Error
 import io.revenuemonster.sdk.module.*
-import io.revenuemonster.sdk.util.Base64Factory
 import io.revenuemonster.sdk.util.Signature
 import io.revenuemonster.sdk.util.randomString
 import kotlinx.coroutines.sync.Mutex
@@ -102,7 +101,8 @@ class RevenueMonsterSDK(
         }
     }
 
-    @OptIn(ExperimentalTime::class)
+
+    @OptIn(ExperimentalTime::class, io.ktor.util.InternalAPI::class)
     private suspend fun getAccessToken(): OAuthCredential {
         if (credential != null && Clock.System.now() < credential!!.expireDateTime) {
             return credential!!
@@ -110,10 +110,7 @@ class RevenueMonsterSDK(
 
         try {
             var cred: OAuthCredential
-            val b64 =
-                String(
-                    Base64Factory.createEncoder().encode("${config.clientID}:${config.clientSecret}".toByteArray())
-                )
+            val b64 = "${config.clientID}:${config.clientSecret}".encodeBase64()
 
             mutex.withLock {
                 val item =
@@ -125,7 +122,6 @@ class RevenueMonsterSDK(
                         }
                         body = mapOf("grantType" to "client_credentials")
                     }
-
                 cred = OAuthCredential(
                     accessToken = item.accessToken,
                     refreshToken = item.refreshToken,
