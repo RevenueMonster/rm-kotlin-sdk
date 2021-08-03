@@ -123,7 +123,7 @@ kotlin {
 
 | Package name                                                             | Version |
 | ------------------------------------------------------------------------ | ------- |
-| [ktor](https://github.com/ktorio/ktor)                                   | 1.6.1   |
+| [ktor](https://github.com/ktorio/ktor)                                   | 1.6.2   |
 | [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) | 1.2.2   |
 | [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)           | 0.2.1   |
 
