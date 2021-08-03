@@ -1,16 +1,12 @@
 package io.revenuemonster.sdk
 
-import io.revenuemonster.sdk.model.Error
-import io.revenuemonster.sdk.model.common.Address
-import io.revenuemonster.sdk.model.request.*
 import kotlinx.coroutines.runBlocking
-import kotlinx.datetime.toInstant
-import kotlin.test.Test
+import org.junit.Test
 
-class RevenueMonsterSDKTest {
+class RMSDKTEST {
+
     @Test
-    fun initSDK() {
-
+    fun test(){
         val auth = Config(
             clientID = "1623743073701188526",
             clientSecret = "TZqprtCpGAhagCyDTFiqigAfIFjPOKHY",
@@ -54,18 +50,15 @@ class RevenueMonsterSDKTest {
             sandbox = true
         )
 
+
         val sdk = RevenueMonsterSDK(auth)
 
         runBlocking {
             try {
 
-
                 val result = sdk.Store.getStores()
                 println("Result ====>")
                 println(result)
-//                result.items.forEach {
-//                    println(it)
-//                }
 
             }catch (e: Error) {
                 println("Debug 1 ====>")
@@ -76,4 +69,6 @@ class RevenueMonsterSDKTest {
             }
         }
     }
+
+
 }

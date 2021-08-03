@@ -1,11 +1,12 @@
 package io.revenuemonster.sdk.util
 
-import java.util.*
+import io.ktor.util.*
 
-actual object Base64Factory {
-    actual fun createEncoder(): Base64Encoder = JvmBase64Encoder
-}
-
-object JvmBase64Encoder : Base64Encoder {
-    override fun encode(src: ByteArray): ByteArray = Base64.getEncoder().encode(src)
-}
+//actual object Base64Factory {
+//    actual fun createEncoder(): Base64Encoder = JvmBase64Encoder
+//}
+//
+//object JvmBase64Encoder : Base64Encoder {
+//    @InternalAPI
+//    override fun encode(src: ByteArray): ByteArray =  src.encodeBase64().toByteArray()
+//}

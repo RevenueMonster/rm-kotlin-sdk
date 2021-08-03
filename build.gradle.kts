@@ -1,12 +1,16 @@
 plugins {
     kotlin("multiplatform") version "1.5.21"
     kotlin("plugin.serialization") version "1.5.21"
+    id("com.android.library")
     id("maven-publish")
     id("signing")
 }
 
+apply(plugin = "maven-publish")
+apply(plugin = "com.android.library")
+
 group = "io.revenuemonster.sdk"
-version = "1.0.0-alpha.15"
+version = "1.0.0-beta.1"
 
 val artifact = "rm-kotlin-sdk"
 val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
@@ -15,10 +19,31 @@ val ktorVersion = "1.6.1"
 val serializationVersion = "1.2.2"
 
 repositories {
+    google()
     mavenCentral()
 }
 
+
+android {
+    compileSdkVersion(30)
+    buildToolsVersion = "30.0.3"
+    defaultConfig{
+        minSdkVersion(22)
+        targetSdkVersion(30)
+    }
+    compileOptions {
+        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+    }
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+}
+
+
 kotlin {
+    // setup for android
+    android {
+        publishLibraryVariants("debug")
+    }
     // setup for JVM
     jvm {
         compilations.all {
@@ -55,17 +80,17 @@ kotlin {
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.1")
+                implementation("org.apache.commons:commons-collections4:4.4")
+                implementation("io.ktor:ktor-client-cio:$ktorVersion")
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test-common"))
+                implementation(kotlin("test-junit"))
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        // Dependencies for JVM, android mobile phone and android based application (such as tablet)
         val jvmMain by getting {
-//            dependsOn(commonMain)
             dependencies {
                 implementation("io.ktor:ktor-client-apache:$ktorVersion")
             }
@@ -75,8 +100,19 @@ kotlin {
                 implementation(kotlin("test-junit"))
             }
         }
-//        val jsMain by getting {
-//        }
+        val androidMain by getting {
+            dependencies {
+                implementation(kotlin("stdlib-jdk8"))
+                implementation("io.ktor:ktor-client-android:$ktorVersion")
+            }
+        }
+        val androidTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation(kotlin("test-junit"))
+            }
+        }
+//        val jsMain by getting {}
 //        val jsTest by getting {
 //            dependencies {
 //                implementation(kotlin("test-js"))
@@ -85,16 +121,22 @@ kotlin {
         // Dependencies for iOS and desktop
 //        val nativeMain by getting {
 //            dependencies {
-//                implementation("io.ktor:ktor-client-ios:$ktorVersion")
-//                implementation("io.ktor:ktor-client-curl:$ktorVersion")
 //            }
 //        }
-//        val nativeTest by getting {
-//        }
+//        val nativeTest by getting {}
 //        val iosMain by creating {
 //            dependsOn(commonMain)
 //        }
     }
+
+    configure(listOf(targets["metadata"], android())) {
+        mavenPublication {
+            val targetPublication = this@mavenPublication
+            tasks.withType<AbstractPublishToMaven>()
+                .matching { it.publication == targetPublication }
+        }
+    }
+
 }
 
 publishing {
@@ -124,12 +166,12 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "$group"
-            artifactId = "$artifact"
-            version = "$version"
+            artifactId = artifact
+            version = version
             pom {
-                name.set("$artifact")
+                name.set(artifact)
                 description.set("Revenue Monster Kotlin Multiplatform SDK")
-                url.set("$pkgUrl")
+                url.set(pkgUrl)
 
                 licenses {
                     license {
@@ -159,7 +201,7 @@ publishing {
                 scm {
                     connection.set("scm:git:git://$gitUrl")
                     developerConnection.set("scm:git:ssh://$gitUrl")
-                    url.set("$pkgUrl")
+                    url.set(pkgUrl)
                 }
             }
             //            from(components["java"])

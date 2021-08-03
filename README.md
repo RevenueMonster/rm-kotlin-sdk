@@ -29,6 +29,58 @@
 
 ### Maven Central
 
+
+### Gradle
+
+```bash
+dependencies {
+    implementation("io.revenuemonster:rm-kotlin-sdk:1.0.0-beta.1")
+}
+```
+
+### Android
+
+For Android, RM-Kotlin-SDK work on Android 5.1 (API 22) or greater.\
+If your target Android devices running **lower** than Android 8 (API 26)⚠\
+Please config your `build.gradle` as shown below
+
+```bash
+android {
+  defaultConfig {
+      multiDexEnabled = true
+  }
+
+  compileOptions {
+      coreLibraryDesugaringEnabled = true
+    
+      sourceCompatibility = JavaVersion.VERSION_1_8
+      targetCompatibility = JavaVersion.VERSION_1_8
+  }
+
+  dependencies {
+    implementation 'io.revenuemonster.sdk:rm-kotlin-sdk:1.0.0-beta.1'
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
+  }
+  
+}
+```
+
+And make sure your 
+[Android Gradle plugin](https://developer.android.com/studio/releases/gradle-plugin#updating-plugin)
+set to 4.0.0 or higher (recommended version 4.2.0).
+```bash
+buildscript {
+    repositories {
+        google()
+        ...
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:4.2.0")
+    }
+}
+```
+
+
 #### Multiplatform
 
 If you're using `multiplatform`, modify your `build.gradle.kts` file as follow
@@ -47,53 +99,15 @@ kotlin {
    sourceSets {
       val commonMain by getting {
          dependencies {
-            implementation("io.revenuemonster:rm-kotlin-sdk:1.0.0-alpha.7")
+            implementation("io.revenuemonster:rm-kotlin-sdk:1.0.0-beta.1")
          }
       }
    }
 }
 ```
 
-#### JVM
 
-If you're using `jvm`, modify your `build.gradle.kts` file as follow
 
-```bash
-plugins {
-   kotlin("jvm") version "1.5.10"
-}
-
-repositories {
-   ...
-   mavenCentral()
-}
-
-kotlin {
-   sourceSets {
-      val commonMain by getting {
-         dependencies {
-            implementation("io.revenuemonster:rm-kotlin-sdk-jvm:1.0.0-alpha.7")
-         }
-      }
-   }
-}
-```
-
-### Jitpack
-
-```bash
-allprojects {
-   repositories {
-      ...
-      maven { url 'https://jitpack.io' }
-   }
-}
-
-dependencies {
-    implementation("com.github.RevenueMonster:rm-kotlin-sdk:v1.0.0-alpha.8")
-}
-
-```
 
 ## 🪣 Requirements
 
@@ -109,8 +123,8 @@ dependencies {
 
 | Package name                                                             | Version |
 | ------------------------------------------------------------------------ | ------- |
-| [ktor](https://github.com/ktorio/ktor)                                   | 1.6.0   |
-| [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) | 1.2.1   |
+| [ktor](https://github.com/ktorio/ktor)                                   | 1.6.1   |
+| [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) | 1.2.2   |
 | [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)           | 0.2.1   |
 
 ## 🤖 Supported Platforms
@@ -122,9 +136,9 @@ dependencies {
 | ![badge][badge-mac]     | macOS        | JVM           |   ✅    |
 | ![badge][badge-linux]   | linux        | JVM           |   ✅    |
 | ![badge][badge-windows] | window       | JVM           |   ✅    |
-| ![badge][badge-android] | jvm          | JVM           |   ✅    |
-| ![badge][badge-ios]     | iosx64       | Kotlin/Native |   ❎    |
-| ![badge][badge-ios]     | iosarm64     | Kotlin/Native |   ❎    |
+| ![badge][badge-android] | android      | JVM           |   ✅    |
+| ![badge][badge-ios]     | iosx64       | Kotlin/Native |   ❌    |
+| ![badge][badge-ios]     | iosarm64     | Kotlin/Native |   ❌    |
 
 ## 🙈 Example
 
@@ -154,7 +168,7 @@ GlobalScope.launch {
        val sdk = RevenueMonsterSDK(config)
        val data = QuickPayRequest(
            authCode = "134850717797247290",
-           order = QuickPayOrder(
+           order = Order(
                id = "${Random((1..371289).random()).nextInt()}",
                title = "TEST",
                detail = "JUST A TEST",
