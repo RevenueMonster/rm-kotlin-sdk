@@ -6,8 +6,11 @@ plugins {
     id("signing")
 }
 
+apply(plugin = "maven-publish")
+apply(plugin = "com.android.library")
+
 group = "io.revenuemonster.sdk"
-version = "1.0.0-alpha.15"
+version = "1.0.0-beta.1"
 
 val artifact = "rm-kotlin-sdk"
 val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
@@ -20,8 +23,6 @@ repositories {
     mavenCentral()
 }
 
-apply(plugin = "maven-publish")
-apply(plugin = "com.android.library")
 
 android {
     compileSdkVersion(30)
@@ -39,11 +40,10 @@ android {
 
 
 kotlin {
-
+    // setup for android
     android {
         publishLibraryVariants("debug")
     }
-
     // setup for JVM
     jvm {
         compilations.all {
@@ -90,9 +90,7 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        // Dependencies for JVM, android mobile phone and android based application (such as tablet)
         val jvmMain by getting {
-//            dependsOn(commonMain)
             dependencies {
                 implementation("io.ktor:ktor-client-apache:$ktorVersion")
             }
@@ -102,7 +100,6 @@ kotlin {
                 implementation(kotlin("test-junit"))
             }
         }
-
         val androidMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
@@ -115,8 +112,7 @@ kotlin {
                 implementation(kotlin("test-junit"))
             }
         }
-//        val jsMain by getting {
-//        }
+//        val jsMain by getting {}
 //        val jsTest by getting {
 //            dependencies {
 //                implementation(kotlin("test-js"))
@@ -125,12 +121,9 @@ kotlin {
         // Dependencies for iOS and desktop
 //        val nativeMain by getting {
 //            dependencies {
-//                implementation("io.ktor:ktor-client-ios:$ktorVersion")
-//                implementation("io.ktor:ktor-client-curl:$ktorVersion")
 //            }
 //        }
-//        val nativeTest by getting {
-//        }
+//        val nativeTest by getting {}
 //        val iosMain by creating {
 //            dependsOn(commonMain)
 //        }

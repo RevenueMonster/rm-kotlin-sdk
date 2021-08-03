@@ -61,7 +61,6 @@ class MemberModule(private val sdk: RevenueMonsterSDK) {
         )
     }
     //member -> rewards
-
     //FIXME : End point not found
     suspend fun getRewards(countryCode: String, phoneNumber: String): Items<Reward> {
         return sdk.call<Any, Items<Reward>>(

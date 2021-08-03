@@ -54,78 +54,12 @@ class RevenueMonsterSDKTest {
             sandbox = true
         )
 
-
         val sdk = RevenueMonsterSDK(auth)
 
         runBlocking {
             try {
 
-//                val data2 = WebMobilePaymentRequest(
-//                    order = Order(
-//                        id = "${Random((1..371289).random()).nextInt()}",
-//                        title = "SALES",
-//                        detail = "TEST123",
-//                        amount = 100,
-//                        currencyType = "MYR",
-//                        additionalData = "TEST"
-//                    ),
-//                    customer = WebMobilePaymentCustomer(
-//                        "12345689","123@hotmail.com","MY","0123456789"
-//                    ),
-//                    method = listOf("BOOST_MY"),
-//                    type = "WEB_PAYMENT",
-//                    storeId = "1623743430847879711",
-//                    redirectUrl = "https://google.com",
-//                    notifyUrl = "https://google.com",
-//                    layoutVersion = "v3"
-//                )
-//
-//                val data = DailySettlementReportRequest(
-//                    transactionType = "PAYMENT",
-//                    date = "2021-07-19",
-//                    method = "BOOST",
-//                    region = "MALAYSIA",
-//                    cursor = ""
-//                )
 
-                //id 1626685912814237246
-//                val store = StoreDetails(
-//                    name = "SNOR TEST",
-//                    addressLine1 = "B-5-30, 5th Floor, Block Bougainvillea,",
-//                    addressLine2 = "PJU 6A, Lebuhraya SPRINT, 10 Boulevard,",
-//                    postCode = "47400",
-//                    city = "Petaling Jaya",
-//                    state = "Selangor",
-//                    country = "Malaysia",
-//                    countryCode = "60",
-//                    phoneNumber = "377334080",
-//                    geoLocation = GeoLocation(3.1349237f,102.6136659f)
-//                )
-
-                //1626838602884748395
-                val member = RegisterMemberRequest(
-                    "Snor3",
-                    "60",
-                    "128534569",
-                    "snorsnor9998@gmail.com",
-                    "981245135468",
-                    "1995-07-11T00:00:00Z".toInstant(),
-                    "MALE",
-                    0,
-                    Address(
-                        "17, Jalan Pertanian 25",
-                        "Taman Universiti",
-                        "81301",
-                        "SKUDAI",
-                        "JOHOR",
-                        "MALAYSIA"
-                    )
-                )
-
-
-
-//                val result = sdk.Loyalty.topUpBalanceOnline("1626838502220135674",
-//                    TopUpBalanceOnlineRequest("https://revenuemonster.my",123))
                 val result = sdk.Store.getStores()
                 println("Result ====>")
                 println(result)
@@ -140,8 +74,6 @@ class RevenueMonsterSDKTest {
                 println("Debug 2 ====>")
                 println(e)
             }
-
-
         }
     }
 }

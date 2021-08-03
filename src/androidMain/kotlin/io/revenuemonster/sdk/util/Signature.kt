@@ -38,21 +38,19 @@ actual object Signature {
                         )
             }
             println("Text => $plainText")
-//            val plainTextByte = plainText.toByteArray(StandardCharsets.UTF_8)
             val plainTextByte = plainText.toByteArray()
-            var privKey: PrivateKey? = null
+            var pKey: PrivateKey? = null
             if (privateKey.contains("-----BEGIN PRIVATE KEY-----")) {
-                privKey = readPCKS1Key(privateKey)
+                pKey = readPCKS1Key(privateKey)
             } else if (privateKey.contains("-----BEGIN RSA PRIVATE KEY-----")) {
-                privKey = readPCKS1Key(privateKey)
+                pKey = readPCKS1Key(privateKey)
             }
             val sig = Signature.getInstance("SHA256WithRSA")
-            sig.initSign(privKey)
+            sig.initSign(pKey)
             sig.update(plainTextByte)
             val signatureBytes = sig.sign()
             result = signatureBytes.encodeBase64()
 
-//            result = String(Base64.encode(signatureBytes, Base64.DEFAULT),StandardCharsets.UTF_8)
         } catch (ex: Exception) {
             ex.printStackTrace()
         }
