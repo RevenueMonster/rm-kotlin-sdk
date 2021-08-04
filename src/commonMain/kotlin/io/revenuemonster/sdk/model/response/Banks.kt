@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Banks(
-    val code : String,
-    val isOnline : Boolean,
-    val name : String
+    val code: String,
+    val isOnline: Boolean,
+    val name: String
 )

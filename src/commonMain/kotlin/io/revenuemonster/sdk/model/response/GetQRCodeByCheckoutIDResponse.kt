@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GetQRCodeByCheckoutIDResponse(
     val type: String,
-    val qrcode : QRData
+    val qrcode: QRData
 )
 
 @Serializable

@@ -11,9 +11,9 @@ import io.revenuemonster.sdk.model.response.GourmetCardResponse
 class CampaignModule(private val sdk: RevenueMonsterSDK) {
 
     suspend fun giveChopStamp(code: String): Item<ChopStampResponse> {
-        //reuse dont mind me 🍺
+        // reuse dont mind me 🍺
         val data = Response(code = code)
-        return sdk.call<Response, Item<ChopStampResponse>>(
+        return sdk.call(
             url = "/loyalty/chop-stamp/card/scan",
             method = HttpMethod.Post,
             body = data
@@ -21,7 +21,7 @@ class CampaignModule(private val sdk: RevenueMonsterSDK) {
     }
 
     suspend fun gourmetCard(data: GourmetCardRequest): Item<GourmetCardResponse> {
-        return sdk.call<GourmetCardRequest, Item<GourmetCardResponse>>(
+        return sdk.call(
             url = "/membership/verify",
             method = HttpMethod.Post,
             body = data

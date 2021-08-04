@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Point(
-    val orderAmount : Int,
-    val point : Int,
+    val orderAmount: Int,
+    val point: Int,
 )

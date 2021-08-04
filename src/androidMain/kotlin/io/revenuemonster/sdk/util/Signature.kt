@@ -22,40 +22,33 @@ actual object Signature {
         timestamp: String
     ): String {
         var result = ""
-        try {
-            val encodedData: String = data.encodeBase64()
-            val plainText: String = if (data != "") {
-                (
-                        "data=" + encodedData + "&method=" + method.lowercase() + "&nonceStr=" +
-                                nonceStr + "&requestUrl=" + requestUrl + "&signType=" + signType +
-                                "&timestamp=" + timestamp
-                        )
-            } else {
-                (
-                        "method=" + method.lowercase() + "&nonceStr=" +
-                                nonceStr + "&requestUrl=" + requestUrl + "&signType=" + signType +
-                                "&timestamp=" + timestamp
-                        )
-            }
-            println("Text => $plainText")
-            val plainTextByte = plainText.toByteArray()
-            var pKey: PrivateKey? = null
-            if (privateKey.contains("-----BEGIN PRIVATE KEY-----")) {
-                pKey = readPCKS1Key(privateKey)
-            } else if (privateKey.contains("-----BEGIN RSA PRIVATE KEY-----")) {
-                pKey = readPCKS1Key(privateKey)
-            }
-            val sig = Signature.getInstance("SHA256WithRSA")
-            sig.initSign(pKey)
-            sig.update(plainTextByte)
-            val signatureBytes = sig.sign()
-            result = signatureBytes.encodeBase64()
-
-        } catch (ex: Exception) {
-            ex.printStackTrace()
+        val encodedData: String = data.encodeBase64()
+        val plainText: String = if (data != "") {
+            (
+                    "data=" + encodedData + "&method=" + method.lowercase() + "&nonceStr=" +
+                            nonceStr + "&requestUrl=" + requestUrl + "&signType=" + signType +
+                            "&timestamp=" + timestamp
+                    )
+        } else {
+            (
+                    "method=" + method.lowercase() + "&nonceStr=" +
+                            nonceStr + "&requestUrl=" + requestUrl + "&signType=" + signType +
+                            "&timestamp=" + timestamp
+                    )
         }
-        return result
-
+        println("Text => $plainText")
+        val plainTextByte = plainText.toByteArray()
+        var pKey: PrivateKey? = null
+        if (privateKey.contains("-----BEGIN PRIVATE KEY-----")) {
+            pKey = readPCKS1Key(privateKey)
+        } else if (privateKey.contains("-----BEGIN RSA PRIVATE KEY-----")) {
+            pKey = readPCKS1Key(privateKey)
+        }
+        val sig = Signature.getInstance("SHA256WithRSA")
+        sig.initSign(pKey)
+        sig.update(plainTextByte)
+        val signatureBytes = sig.sign()
+        return signatureBytes.encodeBase64()
     }
 
     @OptIn(InternalAPI::class)

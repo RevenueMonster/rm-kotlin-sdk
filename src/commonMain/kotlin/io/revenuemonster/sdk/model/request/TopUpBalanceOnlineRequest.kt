@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TopUpBalanceOnlineRequest(
-    val redirectUrl : String,
-    val topUpAmount : Int
+    val redirectUrl: String,
+    val topUpAmount: Int
 )

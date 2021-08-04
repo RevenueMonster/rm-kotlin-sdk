@@ -5,9 +5,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class MerchantSubscriptions(
-    val id : Int,
-    val gracePeriod : Int,
-    val expiryAt : Instant,
+    val id: Int,
+    val gracePeriod: Int,
+    val expiryAt: Instant,
     val terminateAt: Instant,
-    val status : String
+    val status: String
 )

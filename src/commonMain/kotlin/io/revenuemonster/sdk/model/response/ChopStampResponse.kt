@@ -5,12 +5,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ChopStampResponse(
-    val id : String,
-    val key : String,
-    val noOfChoppedStamp : Int,
-    val isCompleted : Boolean,
-    val startAt : Instant,
-    val endAt : Instant,
-    val createdAt : Instant,
-    val updatedAt : Instant
+    val id: String,
+    val key: String,
+    val noOfChoppedStamp: Int,
+    val isCompleted: Boolean,
+    val startAt: Instant,
+    val endAt: Instant,
+    val createdAt: Instant,
+    val updatedAt: Instant
 )

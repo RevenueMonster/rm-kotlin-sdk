@@ -16,7 +16,6 @@ val artifact = "rm-kotlin-sdk"
 val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
 val gitUrl = "github.com:RevenueMonster/rm-kotlin-sdk.git"
 val ktorVersion = "1.6.2"
-val serializationVersion = "1.2.2"
 
 repositories {
     google()
@@ -78,7 +77,7 @@ kotlin {
                 implementation(kotlin("stdlib"))
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.1")
                 implementation("org.apache.commons:commons-collections4:4.4")
                 implementation("io.ktor:ktor-client-cio:$ktorVersion")

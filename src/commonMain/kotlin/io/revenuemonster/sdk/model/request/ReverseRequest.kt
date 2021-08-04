@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ReverseRequest(
-    val orderId : String
+    val orderId: String
 )

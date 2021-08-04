@@ -6,13 +6,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RegisterMemberRequest(
-    val name : String,
-    val countryCode : String,
-    val phoneNumber : String,
-    val email : String,
-    val nric : String,
-    val birthDate : Instant,
-    val gender : String,
-    val point : Int,
-    val address : Address
+    val name: String,
+    val countryCode: String,
+    val phoneNumber: String,
+    val email: String,
+    val nric: String,
+    val birthDate: Instant,
+    val gender: String,
+    val point: Int,
+    val address: Address
 )
