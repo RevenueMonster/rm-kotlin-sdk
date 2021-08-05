@@ -9,6 +9,7 @@ import io.revenuemonster.sdk.model.Credential
 import io.revenuemonster.sdk.model.Error
 import io.revenuemonster.sdk.module.*
 import io.revenuemonster.sdk.util.Signature
+import io.revenuemonster.sdk.util.client
 import io.revenuemonster.sdk.util.randomString
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -17,10 +18,7 @@ import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.plus
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonNull
-import kotlinx.serialization.json.encodeToJsonElement
+import kotlinx.serialization.json.*
 import kotlin.time.ExperimentalTime
 
 class RevenueMonsterSDK(
@@ -137,6 +135,18 @@ class RevenueMonsterSDK(
             throw err
         } catch (e: Exception) {
             throw e
+        }
+    }
+
+    internal fun normalize(elem: JsonElement): JsonElement {
+        return when (elem) {
+            is JsonObject -> JsonObject(
+                elem.entries.map { it.key to normalize(it.value) }.sortedBy { it.first }.toMap()
+            )
+            is JsonArray -> JsonArray(elem.map { normalize(it) })
+            else -> {
+                elem
+            }
         }
     }
 

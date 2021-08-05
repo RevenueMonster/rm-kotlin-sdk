@@ -1,4 +1,4 @@
-package io.revenuemonster.sdk
+package io.revenuemonster.sdk.util
 
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -6,11 +6,9 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.observer.*
-import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.Json
 
-internal val client: HttpClient = HttpClient(CIO) {
+actual val client: HttpClient = HttpClient(CIO) {
     engine {
         threadsCount = 4
     }
@@ -25,17 +23,5 @@ internal val client: HttpClient = HttpClient(CIO) {
     this.ResponseObserver {
         println("HttpResponse => ")
         println(it.receive<String>())
-    }
-}
-
-internal fun normalize(elem: JsonElement): JsonElement {
-    return when (elem) {
-        is JsonObject -> JsonObject(
-            elem.entries.map { it.key to normalize(it.value) }.sortedBy { it.first }.toMap()
-        )
-        is JsonArray -> JsonArray(elem.map { normalize(it) })
-        else -> {
-            elem
-        }
     }
 }
