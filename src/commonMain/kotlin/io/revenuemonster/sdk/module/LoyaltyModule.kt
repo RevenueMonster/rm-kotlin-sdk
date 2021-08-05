@@ -159,5 +159,4 @@ class LoyaltyModule(private val sdk: RevenueMonsterSDK) {
         )
     }
 
-
 }

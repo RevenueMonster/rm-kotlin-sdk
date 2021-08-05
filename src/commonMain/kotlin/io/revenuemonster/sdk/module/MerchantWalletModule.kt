@@ -29,7 +29,7 @@ class MerchantWalletModule(private val sdk: RevenueMonsterSDK) {
         )
     }
 
-        //FIXME : Still buggy
+    //FIXME : Still buggy
 //    suspend fun checkWalletHistory(data : CheckWalletHistoryRequest) : ItemsC<CheckWalletHistory>{
 //        return sdk.call<Any, ItemsC<CheckWalletHistory>>(
 //            url = "/wallet/history?cursor=${data.cursor}&transactionAt=${data.startAt}&transactionAt=${data.endAt}&referenceType=${data.referenceType}",

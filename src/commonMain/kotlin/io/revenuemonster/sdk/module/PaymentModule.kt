@@ -128,5 +128,5 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
             body = data
         )
     }
-    
+
 }

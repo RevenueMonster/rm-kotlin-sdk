@@ -33,9 +33,12 @@
 
 ```bash
 dependencies {
-    implementation("io.revenuemonster:rm-kotlin-sdk:1.0.0-beta.1")
+    implementation("io.revenuemonster:rm-kotlin-sdk:1.0.0-beta.2")
 }
 ```
+⚠ Don't forget to implement [Kotlin Coroutines](https://github.com/Kotlin/kotlinx.coroutines) ⚠
+
+
 
 #### Android
 
@@ -59,7 +62,7 @@ android {
   }
 
   dependencies {
-    implementation 'io.revenuemonster.sdk:rm-kotlin-sdk:1.0.0-beta.1'
+    implementation 'io.revenuemonster.sdk:rm-kotlin-sdk:1.0.0-beta.2'
     # add this line
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
   }
@@ -99,7 +102,7 @@ kotlin {
    sourceSets {
       val commonMain by getting {
          dependencies {
-            implementation("io.revenuemonster:rm-kotlin-sdk:1.0.0-beta.1")
+            implementation("io.revenuemonster:rm-kotlin-sdk:1.0.0-beta.2")
          }
       }
    }
@@ -141,7 +144,7 @@ kotlin {
 
 ```kotlin
 import io.revenuemonster.sdk.model.Error
-import io.revenuemonster.sdk.model.request.QuickPayOrder
+import io.revenuemonster.sdk.model.common.Order
 import io.revenuemonster.sdk.model.request.QuickPayRequest
 import io.revenuemonster.sdk.Config
 import io.revenuemonster.sdk.RevenueMonsterSDK
