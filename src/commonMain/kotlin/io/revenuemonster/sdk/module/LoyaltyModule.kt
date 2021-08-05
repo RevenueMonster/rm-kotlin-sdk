@@ -150,9 +150,8 @@ class LoyaltyModule(private val sdk: RevenueMonsterSDK) {
         )
     }
 
-    //FIXME : get method -> request currencyType, orderAmount but switch to post method -> method not allow
-    suspend fun calculateSpendingReward(orderAmount: Int): Item<Point> {
-        val data = CalculateSpendingRewardRequest("MYR", orderAmount)
+    suspend fun calculateSpendingReward(amount: Int): Item<Point> {
+        val data = CalculateSpendingRewardRequest("MYR", amount)
         return sdk.call<CalculateSpendingRewardRequest, Item<Point>>(
             url = "/loyalty/spending-reward/calculate",
             method = HttpMethod.Post,

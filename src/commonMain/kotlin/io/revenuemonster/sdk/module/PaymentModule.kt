@@ -19,7 +19,6 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     }
 
     // Transaction  QR
-    // FIXME : having problem with other method (except BOOST_MY)
     suspend fun generateTransactionQR(data: TransactionQRRequest): Item<TransactionQRResponse> {
         return sdk.call(
             url = "/payment/transaction/qrcode",

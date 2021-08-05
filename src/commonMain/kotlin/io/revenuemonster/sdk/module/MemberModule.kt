@@ -16,7 +16,6 @@ import kotlinx.serialization.json.JsonNull
 class MemberModule(private val sdk: RevenueMonsterSDK) {
 
     // member
-    // FIXME : email didn't insert into db (backend)
     suspend fun registerLoyaltyMember(data: RegisterMemberRequest): Item<MemberProfile> {
         return sdk.call(
             url = "/loyalty/member",
@@ -64,7 +63,7 @@ class MemberModule(private val sdk: RevenueMonsterSDK) {
     // FIXME : Endpoint not found
     suspend fun getRewards(countryCode: String, phoneNumber: String): Items<Reward> {
         return sdk.call<Any, Items<Reward>>(
-            url = "/loyalty/me/reward?countryCode=$countryCode&phoneNumber=$phoneNumber"
+            url = "/loyalty/me/rewards?countryCode=$countryCode&phoneNumber=$phoneNumber"
         )
     }
 

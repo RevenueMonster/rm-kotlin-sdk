@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CalculateSpendingRewardRequest(
     val currencyType: String,
-    val orderAmount: Int
+    val amount: Int
 )

@@ -7,7 +7,6 @@ import io.revenuemonster.sdk.model.response.MerchantSubscriptions
 
 class MerchantModule(private val sdk: RevenueMonsterSDK) {
 
-    // FIXME: typo on backend ("item" -> "items")
     suspend fun getSubscriptions(): Item<List<MerchantSubscriptions>> {
         return sdk.call<Any, Item<List<MerchantSubscriptions>>>(
             url = "/merchant/subscriptions"

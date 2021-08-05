@@ -8,5 +8,5 @@ import kotlinx.serialization.Serializable
 data class Expiry(
     val type: ExpiryType,
     val day: Int? = null,
-    val expiredAt: Instant? = null,
+    val expiredAt: String? = null,
 )
