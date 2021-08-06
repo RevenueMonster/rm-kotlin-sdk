@@ -10,7 +10,7 @@ apply(plugin = "maven-publish")
 apply(plugin = "com.android.library")
 
 group = "io.revenuemonster.sdk"
-version = "1.0.0-beta.2"
+version = "1.0.0-beta.4"
 
 val artifact = "rm-kotlin-sdk"
 val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
@@ -80,7 +80,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.1")
                 implementation("org.apache.commons:commons-collections4:4.4")
-
+                implementation("io.ktor:ktor-client-cio:$ktorVersion")
             }
         }
         val commonTest by getting {
@@ -91,7 +91,7 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-cio:$ktorVersion")
+
             }
         }
         val jvmTest by getting {
@@ -102,7 +102,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
-                implementation("io.ktor:ktor-client-cio:$ktorVersion")
+//                implementation("io.ktor:ktor-client-cio:$ktorVersion")
             }
         }
         val androidTest by getting {
