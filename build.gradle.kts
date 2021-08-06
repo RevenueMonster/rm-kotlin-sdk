@@ -40,7 +40,7 @@ android {
 kotlin {
     // setup for android
     android {
-        publishLibraryVariants("debug")
+        publishLibraryVariants("debug", "release")
     }
     // setup for JVM
     jvm {
