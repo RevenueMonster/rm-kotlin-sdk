@@ -51,14 +51,6 @@ kotlin {
             useJUnit()
         }
     }
-//    js(LEGACY) {
-//        browser {
-//            commonWebpackConfig {
-//                cssSupport.enabled = true
-//            }
-//        }
-//    }
-//    ios()
 
 //    val hostOs = System.getProperty("os.name")
 //    val isMingwX64 = hostOs.startsWith("Windows")
