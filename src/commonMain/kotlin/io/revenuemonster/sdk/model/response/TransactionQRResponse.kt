@@ -14,7 +14,7 @@ data class TransactionQRResponse(
     val currencyType: String,
     val amount: Long,
     val platform: String,
-    val method: List<String>,
+    val method: List<String>?,
     val expiry: Expiry?,
     val code: String,
     val status: String,

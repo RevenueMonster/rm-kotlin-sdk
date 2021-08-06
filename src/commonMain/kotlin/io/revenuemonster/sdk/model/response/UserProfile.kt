@@ -5,16 +5,16 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserProfile(
-    val id : String,
-    val firstName : String,
-    val lastName : String,
-    val countryCode : String,
-    val phoneNumber : String,
-    val email : String,
-    val avatarUrl : String,
-    val status : String,
-    val storeId : String?,
-    val isActive : Boolean,
-    val createdAt : Instant,
-    val updatedAt : Instant
+    val id: String,
+    val firstName: String,
+    val lastName: String,
+    val countryCode: String,
+    val phoneNumber: String,
+    val email: String,
+    val avatarUrl: String,
+    val status: String,
+    val storeId: String?,
+    val isActive: Boolean,
+    val createdAt: Instant,
+    val updatedAt: Instant
 )

@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CheckMemberResponse(
-    val exist : Boolean
+    val exist: Boolean
 )

@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GourmetCardRequest(
-    val memberCardId : String,
-    val storeId : String
+    val memberCardId: String,
+    val storeId: String
 )

@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TransactionQRRequest(
-    val amount: Int,
+    val amount: Int?=null,
     val currencyType: String,
-    val method: List<String>,
+    val method: List<String>?=null,
     val expiry: Expiry,
     val order: TransactionQROrder,
     val redirectUrl: String,

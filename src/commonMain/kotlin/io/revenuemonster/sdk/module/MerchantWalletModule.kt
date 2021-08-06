@@ -4,6 +4,7 @@ import io.ktor.http.*
 import io.revenuemonster.sdk.RevenueMonsterSDK
 import io.revenuemonster.sdk.model.Item
 import io.revenuemonster.sdk.model.ItemsC
+import io.revenuemonster.sdk.model.request.CheckWalletHistoryRequest
 import io.revenuemonster.sdk.model.response.*
 
 class MerchantWalletModule(private val sdk: RevenueMonsterSDK) {
@@ -25,16 +26,13 @@ class MerchantWalletModule(private val sdk: RevenueMonsterSDK) {
     suspend fun checkWalletHistory(): ItemsC<CheckWalletHistory> {
         return sdk.call<Any, ItemsC<CheckWalletHistory>>(
             url = "/wallet/history",
-
-            )
+        )
     }
 
-    //FIXME : method (POST) not allow
+    //FIXME : Still buggy
 //    suspend fun checkWalletHistory(data : CheckWalletHistoryRequest) : ItemsC<CheckWalletHistory>{
-//        return sdk.call<CheckWalletHistoryRequest, ItemsC<CheckWalletHistory>>(
-//            url = "/wallet/history",
-//            method = HttpMethod.Post,
-//            body = data
+//        return sdk.call<Any, ItemsC<CheckWalletHistory>>(
+//            url = "/wallet/history?cursor=${data.cursor}&transactionAt=${data.startAt}&transactionAt=${data.endAt}&referenceType=${data.referenceType}",
 //        )
 //    }
 

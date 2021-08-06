@@ -9,19 +9,18 @@ import io.revenuemonster.sdk.model.request.*
 import io.revenuemonster.sdk.model.response.*
 
 class PaymentModule(private val sdk: RevenueMonsterSDK) {
-    //quick pay
+    // quick pay
     suspend fun quickPay(data: QuickPayRequest): Item<QuickPayResponse> {
-        return sdk.call<QuickPayRequest, Item<QuickPayResponse>>(
+        return sdk.call(
             url = "/payment/quickpay",
             method = HttpMethod.Post,
             body = data
         )
     }
 
-    //Transaction  QR
-    //FIXME : having problem with other method (except BOOST_MY)
+    // Transaction  QR
     suspend fun generateTransactionQR(data: TransactionQRRequest): Item<TransactionQRResponse> {
-        return sdk.call<TransactionQRRequest, Item<TransactionQRResponse>>(
+        return sdk.call(
             url = "/payment/transaction/qrcode",
             method = HttpMethod.Post,
             body = data
@@ -40,19 +39,19 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
         return sdk.call<Any, Items<GetTransactionResponse>>(url = "/payment/transaction/qrcode/$code/transactions")
     }
 
-    //Web Mobile Payment
+    // Web Mobile Payment
     suspend fun webMobilePayment(data: WebMobilePaymentRequest): Item<WebMobilePaymentResponse> {
-        return sdk.call<WebMobilePaymentRequest, Item<WebMobilePaymentResponse>>(
+        return sdk.call(
             url = "/payment/online",
             method = HttpMethod.Post,
             body = data
         )
     }
 
-    //Get QR Code & URL By Checkout ID (QR Code)
+    // Get QR Code & URL By Checkout ID (QR Code)
     suspend fun getQRCodeByCheckoutID(checkoutId: String, method: PaymentMethod): Item<GetQRCodeByCheckoutIDResponse> {
         val data = GetQRURLByCheckoutID(checkoutId, method, "QRCODE")
-        return sdk.call<GetQRURLByCheckoutID, Item<GetQRCodeByCheckoutIDResponse>>(
+        return sdk.call(
             url = "/payment/online/checkout",
             method = HttpMethod.Post,
             body = data
@@ -62,23 +61,23 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     //Get QR Code & URL By Checkout ID (URL)
     suspend fun getURLByCheckoutID(checkoutId: String, method: PaymentMethod): Item<GetURLByCheckoutIDResponse> {
         val data = GetQRURLByCheckoutID(checkoutId, method, "URL")
-        return sdk.call<GetQRURLByCheckoutID, Item<GetURLByCheckoutIDResponse>>(
+        return sdk.call(
             url = "/payment/online/checkout",
             method = HttpMethod.Post,
             body = data
         )
     }
 
-    //Get Online Transaction By Checkout ID
+    // Get Online Transaction By Checkout ID
     suspend fun getOnlineTransactionByCheckoutID(checkoutId: String): Item<OnlineTransaction> {
         return sdk.call<Any, Item<OnlineTransaction>>(
             url = "/payment/online?checkoutId=$checkoutId"
         )
     }
 
-    //Refund
+    // Refund
     suspend fun refund(data: RefundRequest): Item<RefundResponse> {
-        return sdk.call<RefundRequest, Item<RefundResponse>>(
+        return sdk.call(
             url = "/payment/refund",
             method = HttpMethod.Post,
             body = data
@@ -88,47 +87,46 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     //Reverse
     suspend fun reverse(orderId: String): Item<ReverseResponse> {
         val data = ReverseRequest(orderId = orderId)
-        return sdk.call<ReverseRequest, Item<ReverseResponse>>(
+        return sdk.call(
             url = "/payment/reverse",
             method = HttpMethod.Post,
             body = data
         )
     }
 
-    //Query Status By Order ID
+    // Query Status By Order ID
     suspend fun queryStatusByOrderID(orderId: String): Item<Transaction> {
         return sdk.call<Any, Item<Transaction>>(
             url = "/payment/transaction/order/$orderId"
         )
     }
 
-    //Query Status by Transaction ID
+    // Query Status by Transaction ID
     suspend fun queryStatusByTransactionID(transactionId: String): Item<Transaction> {
         return sdk.call<Any, Item<Transaction>>(
             url = "/payment/transaction/$transactionId"
         )
     }
 
-    //Get Fpx Bank List
+    // Get Fpx Bank List
     suspend fun getFpxBanks(): Item<Map<String, Banks>> {
         return sdk.call<Any, Item<Map<String, Banks>>>(url = "/payment/fpx-bank")
     }
 
-    //Get All Transactions
+    // Get All Transactions
     suspend fun getAllTransactions(): Items<Transaction> {
         return sdk.call<Any, Items<Transaction>>(
             url = "/payment/transactions"
         )
     }
 
-    //Daily Settlement Report
+    // Daily Settlement Report
     suspend fun dailySettlementReport(data: DailySettlementReportRequest): Items<DailySettlementReportResponse> {
-        return sdk.call<DailySettlementReportRequest, Items<DailySettlementReportResponse>>(
+        return sdk.call(
             url = "/payment/reconciliation",
             method = HttpMethod.Post,
             body = data
         )
     }
-
 
 }

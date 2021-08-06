@@ -11,17 +11,17 @@ import io.revenuemonster.sdk.model.response.*
 
 class LoyaltyModule(private val sdk: RevenueMonsterSDK) {
 
-    //loyalty members
+    // loyalty members
     suspend fun memberAuthorize(countryCode: String, phoneNumber: String): MemberAuthorizeResponse {
         val data = CheckMemberRequest(countryCode, phoneNumber)
-        return sdk.call<CheckMemberRequest, MemberAuthorizeResponse>(
+        return sdk.call(
             url = "/loyalty/member/authorize",
             method = HttpMethod.Post,
             body = data
         )
     }
 
-    //FIXME: member tier
+    // FIXME: member tier
     suspend fun getLoyaltyMembers(): Items<LoyaltyMember> {
         return sdk.call<Any, Items<LoyaltyMember>>(
             url = "/loyalty/members"
@@ -150,15 +150,13 @@ class LoyaltyModule(private val sdk: RevenueMonsterSDK) {
         )
     }
 
-    //FIXME : get method -> request currencyType, orderAmount but switch to post method -> method not allow
-    suspend fun calculateSpendingReward(orderAmount: Int): Item<Point> {
-        val data = CalculateSpendingRewardRequest("MYR", orderAmount)
+    suspend fun calculateSpendingReward(amount: Int): Item<Point> {
+        val data = CalculateSpendingRewardRequest("MYR", amount)
         return sdk.call<CalculateSpendingRewardRequest, Item<Point>>(
             url = "/loyalty/spending-reward/calculate",
             method = HttpMethod.Post,
             body = data
         )
     }
-
 
 }

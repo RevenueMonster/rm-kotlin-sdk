@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GetQRURLByCheckoutID(
-    val checkoutId : String,
-    val method : PaymentMethod,
-    val type : String
+    val checkoutId: String,
+    val method: PaymentMethod,
+    val type: String
 )

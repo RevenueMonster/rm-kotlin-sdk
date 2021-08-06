@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TopUpWalletRequest(
-    val redirect : String,
-    val amount : Int
+    val redirect: String,
+    val amount: Int
 )

@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class MemberAuthorizeResponse(
-    val profile : MemberProfile,
-    val url : String,
+    val profile: MemberProfile,
+    val url: String,
 )

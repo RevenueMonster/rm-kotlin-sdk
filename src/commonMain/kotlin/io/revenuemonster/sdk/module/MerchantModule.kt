@@ -2,16 +2,13 @@ package io.revenuemonster.sdk.module
 
 import io.revenuemonster.sdk.RevenueMonsterSDK
 import io.revenuemonster.sdk.model.Item
-import io.revenuemonster.sdk.model.ItemList
-import io.revenuemonster.sdk.model.Items
 import io.revenuemonster.sdk.model.response.MerchantProfile
 import io.revenuemonster.sdk.model.response.MerchantSubscriptions
 
 class MerchantModule(private val sdk: RevenueMonsterSDK) {
 
-    //FIXME: typo on back end ("item" -> "items")
-    suspend fun getSubscriptions(): ItemList<MerchantSubscriptions> {
-        return sdk.call<Any, ItemList<MerchantSubscriptions>>(
+    suspend fun getSubscriptions(): Item<List<MerchantSubscriptions>> {
+        return sdk.call<Any, Item<List<MerchantSubscriptions>>>(
             url = "/merchant/subscriptions"
         )
     }

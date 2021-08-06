@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CheckMemberRequest(
-    val countryCode : String,
-    val phoneNumber : String,
+    val countryCode: String,
+    val phoneNumber: String,
 )

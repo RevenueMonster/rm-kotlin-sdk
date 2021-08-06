@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TopUpBalanceOnlineResponse(
-    val paymentUrl : String,
+    val paymentUrl: String,
 )

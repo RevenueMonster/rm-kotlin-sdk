@@ -11,15 +11,13 @@ import io.revenuemonster.sdk.model.request.RegisterMemberRequest
 import io.revenuemonster.sdk.model.response.CheckMemberResponse
 import io.revenuemonster.sdk.model.response.Reward
 import io.revenuemonster.sdk.model.response.Voucher
-import io.revenuemonster.sdk.model.response.Vouchers
 import kotlinx.serialization.json.JsonNull
 
 class MemberModule(private val sdk: RevenueMonsterSDK) {
 
-    //member
-    //FIXME : email didnt insert into db (backend)
+    // member
     suspend fun registerLoyaltyMember(data: RegisterMemberRequest): Item<MemberProfile> {
-        return sdk.call<RegisterMemberRequest, Item<MemberProfile>>(
+        return sdk.call(
             url = "/loyalty/member",
             method = HttpMethod.Post,
             body = data
@@ -28,7 +26,7 @@ class MemberModule(private val sdk: RevenueMonsterSDK) {
 
     suspend fun checkLoyaltyMember(countryCode: String, phoneNumber: String): Item<CheckMemberResponse> {
         val data = CheckMemberRequest(countryCode, phoneNumber)
-        return sdk.call<CheckMemberRequest, Item<CheckMemberResponse>>(
+        return sdk.call(
             url = "/loyalty/member/check",
             method = HttpMethod.Post,
             body = data
@@ -41,7 +39,7 @@ class MemberModule(private val sdk: RevenueMonsterSDK) {
         )
     }
 
-    //member -> vouchers
+    // member -> vouchers
     suspend fun getVouchers(countryCode: String, phoneNumber: String): Items<Voucher> {
         return sdk.call<Any, Items<Voucher>>(
             url = "/loyalty/me/vouchers?countryCode=$countryCode&phoneNumber=$phoneNumber"
@@ -60,11 +58,12 @@ class MemberModule(private val sdk: RevenueMonsterSDK) {
             method = HttpMethod.Post
         )
     }
-    //member -> rewards
-    //FIXME : End point not found
+
+    // member -> rewards
+    // FIXME : Endpoint not found
     suspend fun getRewards(countryCode: String, phoneNumber: String): Items<Reward> {
         return sdk.call<Any, Items<Reward>>(
-            url = "/loyalty/me/reward?countryCode=$countryCode&phoneNumber=$phoneNumber"
+            url = "/loyalty/me/rewards?countryCode=$countryCode&phoneNumber=$phoneNumber"
         )
     }
 
