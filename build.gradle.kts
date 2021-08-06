@@ -28,19 +28,31 @@ android {
     defaultConfig {
         minSdkVersion(22)
         targetSdkVersion(30)
+        multiDexEnabled = true
+    }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
     }
     compileOptions {
         targetCompatibility = JavaVersion.VERSION_1_8
         sourceCompatibility = JavaVersion.VERSION_1_8
     }
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+//    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets {
+        named("main") {
+            manifest.srcFile("src/androidMain/AndroidManifest.xml")
+            res.srcDirs("src/commonMain/resources")
+        }
+    }
 }
-
 
 kotlin {
     // setup for android
     android {
-        publishLibraryVariants("debug", "release")
+//        publishLibraryVariants("debug", "release")
+        publishAllLibraryVariants()
     }
     // setup for JVM
     jvm {
@@ -108,7 +120,7 @@ kotlin {
 //                implementation(kotlin("test-js"))
 //            }
 //        }
-        // Dependencies for iOS and desktop
+//         Dependencies for iOS and desktop
 //        val nativeMain by getting {
 //            dependencies {
 //            }
@@ -117,6 +129,20 @@ kotlin {
 //        val iosMain by creating {
 //            dependsOn(commonMain)
 //        }
+
+        all {
+            languageSettings.apply {
+                useExperimentalAnnotation("kotlin.Experimental")
+            }
+        }
+
+        targets.all {
+            compilations.all {
+                kotlinOptions {
+                    freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
+                }
+            }
+        }
     }
 
 //    configure(listOf(targets["metadata"], android())) {
@@ -126,7 +152,6 @@ kotlin {
 //                .matching { it.publication == targetPublication }
 //        }
 //    }
-
 }
 
 publishing {
