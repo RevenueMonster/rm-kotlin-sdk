@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform") version "1.5.21"
     kotlin("plugin.serialization") version "1.5.21"
+    id("org.jetbrains.dokka") version "1.5.0"
     id("com.android.library")
     id("maven-publish")
     id("signing")
@@ -8,9 +9,10 @@ plugins {
 
 apply(plugin = "maven-publish")
 apply(plugin = "com.android.library")
+apply(plugin = "org.jetbrains.dokka")
 
 group = "io.revenuemonster.sdk"
-version = "1.0.0-beta.5"
+version = System.getenv("RM_KOTLIN_SDK_VERSION") ?: "1.0.0-beta.6"
 
 val artifact = "rm-kotlin-sdk"
 val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
@@ -20,6 +22,22 @@ val ktorVersion = "1.6.2"
 repositories {
     google()
     mavenCentral()
+}
+
+val dokkaOutputDir = "$buildDir/dokka"
+
+tasks.getByName<org.jetbrains.dokka.gradle.DokkaTask>("dokkaHtml") {
+    outputDirectory.set(file(dokkaOutputDir))
+}
+
+val deleteDokkaOutputDir by tasks.register<Delete>("deleteDokkaOutputDirectory") {
+    delete(dokkaOutputDir)
+}
+
+val javadocJar = tasks.register<Jar>("javadocJar") {
+    dependsOn(deleteDokkaOutputDir, tasks.dokkaHtml)
+    archiveClassifier.set("javadoc")
+    from(dokkaOutputDir)
 }
 
 android {
@@ -101,6 +119,7 @@ kotlin {
             }
         }
         val androidMain by getting {
+            dependsOn(commonMain)
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
             }
@@ -127,7 +146,6 @@ kotlin {
 //            dependsOn(commonMain)
 //        }
 
-
         all {
             languageSettings.apply {
                 useExperimentalAnnotation("kotlin.Experimental")
@@ -142,36 +160,37 @@ kotlin {
             }
         }
     }
-
 }
 
 publishing {
-    repositories {
-        maven {
-            name = "Oss"
-            setUrl {
-                "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            }
-            credentials {
-                username = System.getenv("SONATYPE_USERNAME")
-                password = System.getenv("SONATYPE_PASSWORD")
-            }
-        }
-        maven {
-            name = "Snapshot"
-            setUrl { "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-            credentials {
-                username = System.getenv("SONATYPE_USERNAME")
-                password = System.getenv("SONATYPE_PASSWORD")
-            }
-        }
-    }
+//    repositories {
+//        maven {
+//            name = "Oss"
+//            setUrl {
+//                "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+//            }
+//            credentials {
+//                username = System.getenv("SONATYPE_USERNAME")
+//                password = System.getenv("SONATYPE_PASSWORD")
+//            }
+//        }
+//        maven {
+//            name = "Snapshot"
+//            setUrl { "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+//            credentials {
+//                username = System.getenv("SONATYPE_USERNAME")
+//                password = System.getenv("SONATYPE_PASSWORD")
+//            }
+//        }
+//    }
 
     publications {
-        create<MavenPublication>("maven") {
+//        create<MavenPublication>("maven") {
+        withType<MavenPublication> {
             groupId = "$group"
             artifactId = artifact
             version = version
+            artifact(javadocJar)
             pom {
                 name.set(artifact)
                 description.set("Revenue Monster Kotlin Multiplatform SDK")
@@ -207,16 +226,15 @@ publishing {
                     developerConnection.set("scm:git:ssh://$gitUrl")
                     url.set(pkgUrl)
                 }
-
             }
         }
     }
 }
 
-signing {
-    useInMemoryPgpKeys(
-        System.getenv("GPG_PRIVATE_KEY"),
-        System.getenv("GPG_PRIVATE_PASSWORD")
-    )
-    sign(publishing.publications)
-}
+// signing {
+//    useInMemoryPgpKeys(
+//        System.getenv("GPG_PRIVATE_KEY"),
+//        System.getenv("GPG_PRIVATE_PASSWORD")
+//    )
+//    sign(publishing.publications)
+// }

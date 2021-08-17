@@ -27,6 +27,7 @@ jobs:
       SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
       GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
       GPG_PRIVATE_PASSWORD: ${{ secrets.GPG_PRIVATE_PASSWORD }}
+      RM_KOTLIN_SDK_VERSION: ${{ github.event.release.tag_name }}
     strategy:
       matrix:
         os: [ ubuntu-latest, macOS-latest, windows-latest ]
@@ -84,13 +85,13 @@ jobs:
   #      packages: write
   #    steps:
   #      - uses: actions/checkout@v2
-  
+
   #      - name: Set up Java
   #        uses: actions/setup-java@v2
   #        with:
   #          java-version: '11'
   #          distribution: 'adopt'
-  
+
   #      - name: Publish package
   #        run: gradle publish
   #        env:
