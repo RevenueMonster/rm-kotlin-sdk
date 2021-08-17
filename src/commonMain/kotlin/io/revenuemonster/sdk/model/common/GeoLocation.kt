@@ -1,4 +1,3 @@
-
 package io.revenuemonster.sdk.model.common
 
 import kotlinx.serialization.Serializable

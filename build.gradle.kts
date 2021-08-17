@@ -40,7 +40,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
     }
     sourceSets {
-        getByName("main"){
+        getByName("main") {
             manifest.srcFile("src\\androidMain\\AndroidManifest.xml")
             java.srcDirs("src\\androidMain\\kotlin")
             res.srcDirs("src\\androidMain\\res")
@@ -51,7 +51,6 @@ android {
 kotlin {
     // setup for android
     android {
-//        publishLibraryVariants("debug", "release")
         publishAllLibraryVariants()
     }
     // setup for JVM
@@ -94,7 +93,6 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-apache:$ktorVersion")
             }
         }
         val jvmTest by getting {
@@ -105,7 +103,6 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
-                implementation("io.ktor:ktor-client-android:$ktorVersion")
             }
         }
         val androidTest by getting {
@@ -149,26 +146,26 @@ kotlin {
 }
 
 publishing {
-    repositories {
-        maven {
-            name = "Oss"
-            setUrl {
-                "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            }
-            credentials {
-                username = System.getenv("SONATYPE_USERNAME")
-                password = System.getenv("SONATYPE_PASSWORD")
-            }
-        }
-        maven {
-            name = "Snapshot"
-            setUrl { "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-            credentials {
-                username = System.getenv("SONATYPE_USERNAME")
-                password = System.getenv("SONATYPE_PASSWORD")
-            }
-        }
-    }
+//    repositories {
+//        maven {
+//            name = "Oss"
+//            setUrl {
+//                "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+//            }
+//            credentials {
+//                username = System.getenv("SONATYPE_USERNAME")
+//                password = System.getenv("SONATYPE_PASSWORD")
+//            }
+//        }
+//        maven {
+//            name = "Snapshot"
+//            setUrl { "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+//            credentials {
+//                username = System.getenv("SONATYPE_USERNAME")
+//                password = System.getenv("SONATYPE_PASSWORD")
+//            }
+//        }
+//    }
 
     publications {
         create<MavenPublication>("maven") {
@@ -210,15 +207,16 @@ publishing {
                     developerConnection.set("scm:git:ssh://$gitUrl")
                     url.set(pkgUrl)
                 }
+
             }
         }
     }
 }
 
-signing {
-    useInMemoryPgpKeys(
-        System.getenv("GPG_PRIVATE_KEY"),
-        System.getenv("GPG_PRIVATE_PASSWORD")
-    )
-    sign(publishing.publications)
-}
+//signing {
+//    useInMemoryPgpKeys(
+//        System.getenv("GPG_PRIVATE_KEY"),
+//        System.getenv("GPG_PRIVATE_PASSWORD")
+//    )
+//    sign(publishing.publications)
+//}
