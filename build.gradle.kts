@@ -7,12 +7,12 @@ plugins {
     id("signing")
 }
 
-apply(plugin = "maven-publish")
-apply(plugin = "com.android.library")
-apply(plugin = "org.jetbrains.dokka")
+// apply(plugin = "maven-publish")
+// apply(plugin = "com.android.library")
+// apply(plugin = "org.jetbrains.dokka")
 
 group = "io.revenuemonster.sdk"
-version = System.getenv("RM_KOTLIN_SDK_VERSION") ?: "1.0.0-beta.6"
+version = (System.getenv("RM_KOTLIN_SDK_VERSION") ?: "1.0.0").removePrefix("v")
 
 val artifact = "rm-kotlin-sdk"
 val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
@@ -26,10 +26,9 @@ repositories {
 
 val dokkaOutputDir = "$buildDir/dokka"
 
-tasks.getByName<org.jetbrains.dokka.gradle.DokkaTask>("dokkaHtml") {
+tasks.dokkaHtml {
     outputDirectory.set(file(dokkaOutputDir))
 }
-
 val deleteDokkaOutputDir by tasks.register<Delete>("deleteDokkaOutputDirectory") {
     delete(dokkaOutputDir)
 }
@@ -109,17 +108,13 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val jvmMain by getting {
-            dependencies {
-            }
-        }
+        val jvmMain by getting
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
             }
         }
         val androidMain by getting {
-            dependsOn(commonMain)
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
             }
