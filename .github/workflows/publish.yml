@@ -1,28 +1,120 @@
 name: Publish package to the Maven Central Repository and GitHub Packages
 on:
   release:
-    types: [created]
+    types: [ created ]
 
 jobs:
-  publish:
+  create-staging-repository:
+    name: Create staging repository
     runs-on: ubuntu-latest
-    permissions: 
-      contents: read
-      packages: write 
+    outputs:
+      repository_id: ${{ steps.create.outputs.repository_id }}
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Java
-        uses: actions/setup-java@v2
+      - id: create
+        uses: nexus-actions/create-nexus-staging-repo@v1.1
         with:
-          java-version: '11'
-          distribution: 'adopt'
+          username: ${{ secrets.SONATYPE_USERNAME }}
+          password: ${{ secrets.SONATYPE_PASSWORD }}
+          staging_profile_id: ${{ secrets.SONATYPE_PROFILE_ID }}
+          base_url: "https://s01.oss.sonatype.org/service/local/"
+          description: ${{ github.repository }}/${{ github.workflow }}#${{ github.run_number }}
 
-      - name: Publish package
-        run: gradle publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-          GPG_PRIVATE_PASSWORD: ${{ secrets.GPG_PRIVATE_PASSWORD }}
+  build-upload:
+    needs: create-staging-repository
+    runs-on: ${{ matrix.os }}
+    env:
+      SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+      SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+      GPG_PRIVATE_PASSWORD: ${{ secrets.GPG_PRIVATE_PASSWORD }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macOS-latest, windows-latest ]
+    steps:
+      - name: Check out
+        uses: actions/checkout@v2
+      #      - name: Cached Konan
+      #        uses: actions/cache@v2
+      #        with:
+      #          path: ~/.konan
+      #          key: ${{ runner.os }}-konan-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
+      #          restore-keys: ${{ runner.os }}-konan-
+      - name: Cached Gradle
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: ${{ runner.os }}-gradle-
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      #      # Host only for MacOS / Windows
+      #      - name: Check (macos / windows)
+      #        if: matrix.os != 'ubuntu-latest'
+      #        run: ./gradlew hostOnlyTest
+      #        shell: bash
+      #      - name: Check Android
+      #        if: matrix.os == 'macOS-latest'
+      #        uses: reactivecircus/android-emulator-runner@v2
+      #        with:
+      #          api-level: 29
+      #          ndk: 21.3.6528147
+      #          cmake: 3.10.2.4988404
+      #          script: ./gradlew connectedCheck
+      #      - name: Upload (macos / windows)
+      #        if: matrix.os != 'ubuntu-latest'
+      #        run: ./gradlew hostOnlyPublish -Porg.kodein.sonatype.repositoryId=${{ needs.create-staging-repository.outputs.repository_id }}
+      #        shell: bash
+      # Linux / JVM / JS
+      - name: Check (ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: ./gradlew check
+        shell: bash
+      - name: Upload (ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: ./gradlew publishAllPublicationsToOssRepository
+        shell: bash
+  #jobs:
+  #  publish:
+  #    runs-on: ubuntu-latest
+  #    permissions:
+  #      contents: read
+  #      packages: write
+  #    steps:
+  #      - uses: actions/checkout@v2
+  #
+  #      - name: Set up Java
+  #        uses: actions/setup-java@v2
+  #        with:
+  #          java-version: '11'
+  #          distribution: 'adopt'
+  #
+  #      - name: Publish package
+  #        run: gradle publish
+  #        env:
+  #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+  #          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+  #          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+  #          GPG_PRIVATE_PASSWORD: ${{ secrets.GPG_PRIVATE_PASSWORD }}
+
+  drop-or-release:
+    needs: [ create-staging-repository, build-upload ]
+    runs-on: ubuntu-latest
+    if: ${{ always() && needs.create-staging-repository.result == 'success' }}
+    steps:
+      - name: Discard
+        if: ${{ needs.build-upload.result != 'success' }}
+        uses: nexus-actions/drop-nexus-staging-repo@v1
+        with:
+          username: ${{ secrets.SONATYPE_USERNAME }}
+          password: ${{ secrets.SONATYPE_PASSWORD }}
+          staging_repository_id: ${{ needs.create-staging-repository.outputs.repository_id }}
+      - name: Release
+        if: ${{ needs.build-upload.result == 'success' }}
+        uses: nexus-actions/release-nexus-staging-repo@v1
+        with:
+          username: ${{ secrets.SONATYPE_USERNAME }}
+          password: ${{ secrets.SONATYPE_PASSWORD }}
+          staging_repository_id: ${{ needs.create-staging-repository.outputs.repository_id }}
