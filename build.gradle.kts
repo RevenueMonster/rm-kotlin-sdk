@@ -10,7 +10,7 @@ apply(plugin = "maven-publish")
 apply(plugin = "com.android.library")
 
 group = "io.revenuemonster.sdk"
-version = "1.0.0-beta.1"
+version = "1.0.0-beta.5"
 
 val artifact = "rm-kotlin-sdk"
 val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
@@ -35,7 +35,14 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
         sourceCompatibility = JavaVersion.VERSION_1_8
     }
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets {
+        getByName("main"){
+            manifest.srcFile("src\\androidMain\\AndroidManifest.xml")
+            java.srcDirs("src\\androidMain\\kotlin")
+            res.srcDirs("src\\androidMain\\res")
+        }
+    }
+
 }
 
 
@@ -129,13 +136,6 @@ kotlin {
 //        }
     }
 
-    configure(listOf(targets["metadata"], android())) {
-        mavenPublication {
-            val targetPublication = this@mavenPublication
-            tasks.withType<AbstractPublishToMaven>()
-                .matching { it.publication == targetPublication }
-        }
-    }
 
 }
 
