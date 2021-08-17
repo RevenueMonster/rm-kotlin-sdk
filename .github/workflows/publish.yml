@@ -1,4 +1,4 @@
-name: Publish package to the Maven Central Repository and GitHub Packages
+name: Publish package to the Maven Central Repository
 on:
   release:
     types: [ created ]
@@ -75,7 +75,8 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: ./gradlew publishAllPublicationsToOssRepository
         shell: bash
-  #jobs:
+
+  # jobs:
   #  publish:
   #    runs-on: ubuntu-latest
   #    permissions:
@@ -83,13 +84,13 @@ jobs:
   #      packages: write
   #    steps:
   #      - uses: actions/checkout@v2
-  #
+  
   #      - name: Set up Java
   #        uses: actions/setup-java@v2
   #        with:
   #          java-version: '11'
   #          distribution: 'adopt'
-  #
+  
   #      - name: Publish package
   #        run: gradle publish
   #        env:
@@ -110,6 +111,7 @@ jobs:
         with:
           username: ${{ secrets.SONATYPE_USERNAME }}
           password: ${{ secrets.SONATYPE_PASSWORD }}
+          base_url: "https://s01.oss.sonatype.org/service/local/"
           staging_repository_id: ${{ needs.create-staging-repository.outputs.repository_id }}
       - name: Release
         if: ${{ needs.build-upload.result == 'success' }}
@@ -117,4 +119,5 @@ jobs:
         with:
           username: ${{ secrets.SONATYPE_USERNAME }}
           password: ${{ secrets.SONATYPE_PASSWORD }}
+          base_url: "https://s01.oss.sonatype.org/service/local/"
           staging_repository_id: ${{ needs.create-staging-repository.outputs.repository_id }}

@@ -10,7 +10,7 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
-internal val client : HttpClient = HttpClient(CIO) {
+internal val client: HttpClient = HttpClient(CIO) {
     engine {
         threadsCount = 4
     }
@@ -27,7 +27,6 @@ internal val client : HttpClient = HttpClient(CIO) {
         println(it.receive<String>())
     }
 }
-
 
 internal fun normalize(elem: JsonElement): JsonElement {
     return when (elem) {
