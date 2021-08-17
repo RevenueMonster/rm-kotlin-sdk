@@ -231,10 +231,12 @@ publishing {
     }
 }
 
-// signing {
-//    useInMemoryPgpKeys(
-//        System.getenv("GPG_PRIVATE_KEY"),
-//        System.getenv("GPG_PRIVATE_PASSWORD")
-//    )
-//    sign(publishing.publications)
-// }
+if (System.getenv("GPG_PRIVATE_KEY").isNotEmpty() && System.getenv("GPG_PRIVATE_PASSWORD").isNotEmpty()) {
+    signing {
+        useInMemoryPgpKeys(
+            System.getenv("GPG_PRIVATE_KEY"),
+            System.getenv("GPG_PRIVATE_PASSWORD")
+        )
+        sign(publishing.publications)
+    }
+}
