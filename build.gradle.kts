@@ -231,7 +231,7 @@ publishing {
     }
 }
 
-if (System.getenv("GPG_PRIVATE_KEY").isNotEmpty() && System.getenv("GPG_PRIVATE_PASSWORD").isNotEmpty()) {
+if (System.getenv("GPG_PRIVATE_KEY") != null && System.getenv("GPG_PRIVATE_PASSWORD") != null) {
     signing {
         useInMemoryPgpKeys(
             System.getenv("GPG_PRIVATE_KEY"),
