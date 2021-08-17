@@ -146,26 +146,26 @@ kotlin {
 }
 
 publishing {
-//    repositories {
-//        maven {
-//            name = "Oss"
-//            setUrl {
-//                "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-//            }
-//            credentials {
-//                username = System.getenv("SONATYPE_USERNAME")
-//                password = System.getenv("SONATYPE_PASSWORD")
-//            }
-//        }
-//        maven {
-//            name = "Snapshot"
-//            setUrl { "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-//            credentials {
-//                username = System.getenv("SONATYPE_USERNAME")
-//                password = System.getenv("SONATYPE_PASSWORD")
-//            }
-//        }
-//    }
+    repositories {
+        maven {
+            name = "Oss"
+            setUrl {
+                "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            }
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME")
+                password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
+        maven {
+            name = "Snapshot"
+            setUrl { "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME")
+                password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
+    }
 
     publications {
         create<MavenPublication>("maven") {
@@ -213,10 +213,10 @@ publishing {
     }
 }
 
-//signing {
-//    useInMemoryPgpKeys(
-//        System.getenv("GPG_PRIVATE_KEY"),
-//        System.getenv("GPG_PRIVATE_PASSWORD")
-//    )
-//    sign(publishing.publications)
-//}
+signing {
+    useInMemoryPgpKeys(
+        System.getenv("GPG_PRIVATE_KEY"),
+        System.getenv("GPG_PRIVATE_PASSWORD")
+    )
+    sign(publishing.publications)
+}
