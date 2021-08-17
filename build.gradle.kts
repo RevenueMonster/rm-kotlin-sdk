@@ -16,20 +16,24 @@ val artifact = "rm-kotlin-sdk"
 val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
 val gitUrl = "github.com:RevenueMonster/rm-kotlin-sdk.git"
 val ktorVersion = "1.6.2"
-val serializationVersion = "1.2.2"
 
 repositories {
     google()
     mavenCentral()
 }
 
-
 android {
     compileSdkVersion(30)
     buildToolsVersion = "30.0.3"
-    defaultConfig{
+    defaultConfig {
         minSdkVersion(22)
         targetSdkVersion(30)
+        multiDexEnabled = true
+    }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
     }
     compileOptions {
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -42,14 +46,13 @@ android {
             res.srcDirs("src\\androidMain\\res")
         }
     }
-
 }
-
 
 kotlin {
     // setup for android
     android {
-        publishLibraryVariants("debug")
+//        publishLibraryVariants("debug", "release")
+        publishAllLibraryVariants()
     }
     // setup for JVM
     jvm {
@@ -60,14 +63,6 @@ kotlin {
             useJUnit()
         }
     }
-//    js(LEGACY) {
-//        browser {
-//            commonWebpackConfig {
-//                cssSupport.enabled = true
-//            }
-//        }
-//    }
-//    ios()
 
 //    val hostOs = System.getProperty("os.name")
 //    val isMingwX64 = hostOs.startsWith("Windows")
@@ -85,7 +80,7 @@ kotlin {
                 implementation(kotlin("stdlib"))
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.1")
                 implementation("org.apache.commons:commons-collections4:4.4")
                 implementation("io.ktor:ktor-client-cio:$ktorVersion")
@@ -125,7 +120,7 @@ kotlin {
 //                implementation(kotlin("test-js"))
 //            }
 //        }
-        // Dependencies for iOS and desktop
+//         Dependencies for iOS and desktop
 //        val nativeMain by getting {
 //            dependencies {
 //            }
@@ -134,34 +129,46 @@ kotlin {
 //        val iosMain by creating {
 //            dependsOn(commonMain)
 //        }
-    }
 
+
+        all {
+            languageSettings.apply {
+                useExperimentalAnnotation("kotlin.Experimental")
+            }
+        }
+
+        targets.all {
+            compilations.all {
+                kotlinOptions {
+                    freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
+                }
+            }
+        }
+    }
 
 }
 
 publishing {
-//    repositories {
-//        maven {
-//            name = "Oss"
-//            setUrl {
-//                val repositoryId =
-//                    System.getenv("SONATYPE_REPOSITORY_ID") ?: error("Missing env variable: SONATYPE_REPOSITORY_ID")
-//                "https://oss.sonatype.org/service/local/staging/deployByRepositoryId/${repositoryId}/"
-//            }
-//            credentials {
-//                username = System.getenv("SONATYPE_USERNAME")
-//                password = System.getenv("SONATYPE_PASSWORD")
-//            }
-//        }
-//        maven {
-//            name = "Snapshot"
-//            setUrl { "https://oss.sonatype.org/content/repositories/snapshots/" }
-//            credentials {
-//                username = System.getenv("SONATYPE_USERNAME")
-//                password = System.getenv("SONATYPE_PASSWORD")
-//            }
-//        }
-//    }
+    repositories {
+        maven {
+            name = "Oss"
+            setUrl {
+                "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            }
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME")
+                password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
+        maven {
+            name = "Snapshot"
+            setUrl { "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+            credentials {
+                username = System.getenv("SONATYPE_USERNAME")
+                password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
+    }
 
     publications {
         create<MavenPublication>("maven") {
@@ -204,15 +211,14 @@ publishing {
                     url.set(pkgUrl)
                 }
             }
-            //            from(components["java"])
         }
     }
 }
 
-// signing {
-//    useInMemoryPgpKeys(
-//        System.getenv("GPG_PRIVATE_KEY"),
-//        System.getenv("GPG_PRIVATE_PASSWORD")
-//    )
-//    sign(publishing.publications)
-// }
+signing {
+    useInMemoryPgpKeys(
+        System.getenv("GPG_PRIVATE_KEY"),
+        System.getenv("GPG_PRIVATE_PASSWORD")
+    )
+    sign(publishing.publications)
+}

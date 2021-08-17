@@ -29,7 +29,6 @@
 
 ### Maven Central
 
-
 ### Gradle
 
 ```bash
@@ -38,7 +37,7 @@ dependencies {
 }
 ```
 
-### Android
+#### Android
 
 For Android, RM-Kotlin-SDK work on Android 5.1 (API 22) or greater.\
 If your target Android devices running **lower** than Android 8 (API 26)⚠\
@@ -47,27 +46,29 @@ Please config your `build.gradle` as shown below
 ```bash
 android {
   defaultConfig {
+      # add this line
       multiDexEnabled = true
   }
 
   compileOptions {
+      # add this line
       coreLibraryDesugaringEnabled = true
-    
+
       sourceCompatibility = JavaVersion.VERSION_1_8
       targetCompatibility = JavaVersion.VERSION_1_8
   }
 
   dependencies {
     implementation 'io.revenuemonster.sdk:rm-kotlin-sdk:1.0.0-beta.1'
+    # add this line
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
   }
-  
 }
 ```
 
-And make sure your 
-[Android Gradle plugin](https://developer.android.com/studio/releases/gradle-plugin#updating-plugin)
+And make sure your [Android Gradle plugin](https://developer.android.com/studio/releases/gradle-plugin#updating-plugin)
 set to 4.0.0 or higher (recommended version 4.2.0).
+
 ```bash
 buildscript {
     repositories {
@@ -79,7 +80,6 @@ buildscript {
     }
 }
 ```
-
 
 #### Multiplatform
 
@@ -105,9 +105,6 @@ kotlin {
    }
 }
 ```
-
-
-
 
 ## 🪣 Requirements
 
@@ -136,7 +133,7 @@ kotlin {
 | ![badge][badge-mac]     | macOS        | JVM           |   ✅    |
 | ![badge][badge-linux]   | linux        | JVM           |   ✅    |
 | ![badge][badge-windows] | window       | JVM           |   ✅    |
-| ![badge][badge-android] | android      | JVM           |   ✅    |
+| ![badge][badge-android] | android      | Android/JVM   |   ✅    |
 | ![badge][badge-ios]     | iosx64       | Kotlin/Native |   ❌    |
 | ![badge][badge-ios]     | iosarm64     | Kotlin/Native |   ❌    |
 
@@ -163,38 +160,35 @@ val config = Config(
 
 // sdk function is coroutine support, you need to launch using Coroutine package
 GlobalScope.launch {
-   try {
+    try {
 
-       val sdk = RevenueMonsterSDK(config)
-       val data = QuickPayRequest(
-           authCode = "134850717797247290",
-           order = Order(
-               id = "${Random((1..371289).random()).nextInt()}",
-               title = "TEST",
-               detail = "JUST A TEST",
-               additionalData = "NONE",
-               amount = 123,
-               currencyType = "MYR"),
-           ipAddress = "1.1.1.1",
-           terminalId = "1623500916731469951",
-           storeId = "1623743430847879711",
-       )
+        val sdk = RevenueMonsterSDK(config)
+        val data = QuickPayRequest(
+            authCode = "134850717797247290",
+            order = Order(
+                id = "${Random((1..371289).random()).nextInt()}",
+                title = "TEST",
+                detail = "JUST A TEST",
+                additionalData = "NONE",
+                amount = 123,
+                currencyType = "MYR"
+            ),
+            ipAddress = "1.1.1.1",
+            terminalId = "1623500916731469951",
+            storeId = "1623743430847879711",
+        )
 
-       // create quick pay order
-       val result = sdk.Payment.quickPay(data)
-       println(result)
+        // create quick pay order
+        val result = sdk.Payment.quickPay(data)
+        println(result)
 
-   } catch (e: Error) {
-       println(e.printStackTrace())
-   } catch (e: Throwable) {
-       println(e.printStackTrace())
-   }
+    } catch (e: Error) {
+        println(e.printStackTrace())
+    } catch (e: Throwable) {
+        println(e.printStackTrace())
+    }
 }
 ```
-
-## ⚠️ Disclaimer
-
-> This package is under heavily development, please don't try this in production!
 
 ## 📄 License
 

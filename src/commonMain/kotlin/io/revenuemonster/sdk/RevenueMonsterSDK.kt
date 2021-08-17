@@ -26,7 +26,6 @@ import kotlin.time.ExperimentalTime
 class RevenueMonsterSDK(
     private val config: Config,
 ) {
-
     private val oauth2Url: String = domains[config.sandbox]?.get(0) ?: ""
     private val baseUrl: String = domains[config.sandbox]?.get(1) ?: ""
     private val version: String = "/v3"
@@ -43,13 +42,13 @@ class RevenueMonsterSDK(
 
     val Payment: PaymentModule = PaymentModule(this)
     val Merchant: MerchantModule = MerchantModule(this)
-    val Store : StoreModule = StoreModule(this)
-    val User : UserModule = UserModule(this)
-    val MerchantWallet : MerchantWalletModule = MerchantWalletModule(this)
-    val Loyalty : LoyaltyModule = LoyaltyModule(this)
-    val Member : MemberModule = MemberModule(this)
-    val Voucher : VoucherModule = VoucherModule(this)
-    val Campaign : CampaignModule = CampaignModule(this)
+    val Store: StoreModule = StoreModule(this)
+    val User: UserModule = UserModule(this)
+    val MerchantWallet: MerchantWalletModule = MerchantWalletModule(this)
+    val Loyalty: LoyaltyModule = LoyaltyModule(this)
+    val Member: MemberModule = MemberModule(this)
+    val Voucher: VoucherModule = VoucherModule(this)
+    val Campaign: CampaignModule = CampaignModule(this)
 
     internal suspend inline fun <reified I, reified O> call(
         url: String,
