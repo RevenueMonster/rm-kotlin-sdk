@@ -11,7 +11,7 @@ plugins {
 // apply(plugin = "com.android.library")
 // apply(plugin = "org.jetbrains.dokka")
 
-group = "io.revenuemonster.sdk"
+group = "io.revenuemonster"
 version = (System.getenv("RM_KOTLIN_SDK_VERSION") ?: "1.0.0").removePrefix("v")
 
 val artifact = "rm-kotlin-sdk"
