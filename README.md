@@ -25,17 +25,36 @@
 
 > Revenue Monster Kotlin Multiplatform SDK, support every possible platform, such as desktop, mobile and web
 
-## 🔨 Installation
+## 🔨 Installation with Gradle
 
 ### Maven Central
 
-### Gradle
-
 ```bash
+repositories {
+    google()
+    mavenCentral()
+}
+
 dependencies {
-    implementation("io.revenuemonster:rm-kotlin-sdk:1.0.0-beta.5")
+    implementation("io.revenuemonster.sdk:rm-kotlin-sdk:1.0.0-rc2")
 }
 ```
+
+### JitPack
+
+```bash
+repositories {
+    google()
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation("com.github.RevenueMonster.rm-kotlin-sdk:rm-kotlin-sdk:1.0.0-rc2")
+}
+```
+
+
 ⚠ Don't forget to implement [Kotlin Coroutines](https://github.com/Kotlin/kotlinx.coroutines) ⚠
 
 
@@ -62,7 +81,7 @@ android {
   }
 
   dependencies {
-    implementation 'io.revenuemonster.sdk:rm-kotlin-sdk:1.0.0-beta.5'
+    implementation 'io.revenuemonster.sdk:rm-kotlin-sdk:1.0.0-rc2'
     # add this line
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
   }
@@ -102,7 +121,7 @@ kotlin {
    sourceSets {
       val commonMain by getting {
          dependencies {
-            implementation("io.revenuemonster:rm-kotlin-sdk:1.0.0-beta.5")
+            implementation("io.revenuemonster.sdk:rm-kotlin-sdk:1.0.0-rc2")
          }
       }
    }
@@ -164,7 +183,6 @@ val config = Config(
 // sdk function is coroutine support, you need to launch using Coroutine package
 GlobalScope.launch {
     try {
-
         val sdk = RevenueMonsterSDK(config)
         val data = QuickPayRequest(
             authCode = "134850717797247290",
@@ -184,7 +202,6 @@ GlobalScope.launch {
         // create quick pay order
         val result = sdk.Payment.quickPay(data)
         println(result)
-
     } catch (e: Error) {
         println(e.printStackTrace())
     } catch (e: Throwable) {
