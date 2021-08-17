@@ -30,15 +30,23 @@ val dokkaOutputDir = "$buildDir/dokka"
 tasks.dokkaHtml {
     outputDirectory.set(file(dokkaOutputDir))
 }
-val deleteDokkaOutputDir by tasks.register<Delete>("deleteDokkaOutputDirectory") {
-    delete(dokkaOutputDir)
+
+val dokkaJar by tasks.creating(Jar::class) {
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+//    description = "Assembles Kotlin docs with Dokka"
+    archiveClassifier.set("javadoc")
+    from(tasks.dokkaHtml)
 }
 
-val javadocJar = tasks.register<Jar>("javadocJar") {
-    dependsOn(deleteDokkaOutputDir, tasks.dokkaHtml)
-    archiveClassifier.set("javadoc")
-    from(dokkaOutputDir)
-}
+// val deleteDokkaOutputDir by tasks.register<Delete>("deleteDokkaOutputDirectory") {
+//    delete(dokkaOutputDir)
+// }
+
+// val javadocJar = tasks.register<Jar>("javadocJar") {
+//    dependsOn(deleteDokkaOutputDir, tasks.dokkaHtml)
+//    archiveClassifier.set("javadoc")
+//    from(dokkaOutputDir)
+// }
 
 android {
     compileSdkVersion(30)
@@ -181,49 +189,54 @@ publishing {
     }
 
     publications {
-        create<MavenPublication>("maven") {
-//        withType<MavenPublication> {
-            groupId = "$group"
-            artifactId = artifact
-            version = version
-            artifact(javadocJar)
-            pom {
-                name.set(artifact)
-                description.set("Revenue Monster Kotlin Multiplatform SDK")
-                url.set(pkgUrl)
-
-                licenses {
-                    license {
-                        name.set("MIT license")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-                }
-
-                issueManagement {
-                    system.set("GitHub Issues")
-                    url.set("$pkgUrl/issues")
-                }
-
-                developers {
-                    developer {
-                        id.set("si3nloong")
-                        name.set("Lee Sian Loong")
-                        email.set("sianloong90@gmail.com")
-                    }
-                    developer {
-                        id.set("SnorSnor9998")
-                        name.set("Snor")
-                        email.set("snorsnor9998@gmail.com")
-                    }
-                }
-
-                scm {
-                    connection.set("scm:git:git://$gitUrl")
-                    developerConnection.set("scm:git:ssh://$gitUrl")
+        publications.configureEach {
+            if (this is MavenPublication) {
+                artifact(dokkaJar)
+                pom {
+                    name.set(artifact)
+                    description.set("Revenue Monster Kotlin Multiplatform SDK")
                     url.set(pkgUrl)
+
+                    licenses {
+                        license {
+                            name.set("MIT license")
+                            url.set("https://opensource.org/licenses/MIT")
+                        }
+                    }
+
+                    issueManagement {
+                        system.set("GitHub Issues")
+                        url.set("$pkgUrl/issues")
+                    }
+
+                    developers {
+                        developer {
+                            id.set("si3nloong")
+                            name.set("Lee Sian Loong")
+                            email.set("sianloong90@gmail.com")
+                        }
+                        developer {
+                            id.set("SnorSnor9998")
+                            name.set("Snor")
+                            email.set("snorsnor9998@gmail.com")
+                        }
+                    }
+
+                    scm {
+                        connection.set("scm:git:git://$gitUrl")
+                        developerConnection.set("scm:git:ssh://$gitUrl")
+                        url.set(pkgUrl)
+                    }
                 }
             }
         }
+//        create<MavenPublication>("maven") {
+//        withType<MavenPublication> {
+//            groupId = "$group"
+//            artifactId = artifact
+//            version = version
+//            artifact(dokkaJar)
+//        }
     }
 }
 
