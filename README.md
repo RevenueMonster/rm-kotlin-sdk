@@ -1,8 +1,8 @@
 # RM Kotlin Multiplatform SDK
 
 <p>
-   <a href="https://github.com/RevenueMonster/rm-kotlin-sdk/releases"><img src="https://img.shields.io/maven-central/v/io.revenuemonster.sdk/rm-kotlin-sdk" alt="semver tag" title="semver tag"/></a>
-   <a href="https://github.com/RevenueMonster/rm-kotlin-sdk/releases"><img src="https://jitpack.io/v/RevenueMonster/rm-kotlin-sdk.svg" alt="semver tag" title="semver tag"/></a>
+   <a href="https://search.maven.org/search?q=g:io.revenuemonster.sdk"><img src="https://img.shields.io/maven-central/v/io.revenuemonster.sdk/rm-kotlin-sdk" alt="maven central" title="maven central"/></a>
+   <a href="https://jitpack.io/#RevenueMonster/rm-kotlin-sdk"><img src="https://jitpack.io/v/RevenueMonster/rm-kotlin-sdk.svg" alt="jitpack" title="jitpack"/></a>
    <a href="https://github.com/RevenueMonster/rm-kotlin-sdk/actions?query=workflow%3ATest"><img src="https://github.com/RevenueMonster/rm-kotlin-sdk/workflows/Test/badge.svg?branch=main" alt="test status" title="test status"/></a>
    <a href="https://github.com/RevenueMonster/rm-kotlin-sdk/blob/main/LICENSE"><img src="https://img.shields.io/github/license/RevenueMonster/rm-kotlin-sdk" alt="license" title="license"/></a>
 </p>
