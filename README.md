@@ -55,10 +55,7 @@ dependencies {
 }
 ```
 
-
 ⚠ Don't forget to implement [Kotlin Coroutines](https://github.com/Kotlin/kotlinx.coroutines) ⚠
-
-
 
 #### Android
 
@@ -151,14 +148,14 @@ kotlin {
 
 > The idea is to support every possible platforms without pain
 
-| Platform                | Architecture | Technology    | Support |
-| ----------------------- | ------------ | ------------- | :-----: |
-| ![badge][badge-mac]     | macOS        | JVM           |   ✅    |
-| ![badge][badge-linux]   | linux        | JVM           |   ✅    |
-| ![badge][badge-windows] | window       | JVM           |   ✅    |
-| ![badge][badge-android] | android      | Android/JVM   |   ✅    |
-| ![badge][badge-ios]     | iosx64       | Kotlin/Native |   ❌    |
-| ![badge][badge-ios]     | iosarm64     | Kotlin/Native |   ❌    |
+| Platform                | Architecture | Technology    | Package name          | Support |
+| ----------------------- | ------------ | ------------- | --------------------- | :-----: |
+| ![badge][badge-mac]     | macOS        | JVM           | rm-kotlin-sdk-jvm     |   ✅    |
+| ![badge][badge-linux]   | linux        | JVM           | rm-kotlin-sdk-jvm     |   ✅    |
+| ![badge][badge-windows] | window       | JVM           | rm-kotlin-sdk-jvm     |   ✅    |
+| ![badge][badge-android] | android      | Android/JVM   | rm-kotlin-sdk-android |   ✅    |
+| ![badge][badge-ios]     | iosx64       | Kotlin/Native | ❌                    |   ❌    |
+| ![badge][badge-ios]     | iosarm64     | Kotlin/Native | ❌                    |   ❌    |
 
 ## 🙈 Example
 
