@@ -74,8 +74,9 @@ jobs:
         shell: bash
       - name: Upload (ubuntu)
         if: matrix.os == 'ubuntu-latest'
-        run: ./gradlew publishKotlinMultiplatformPublicationToOssRepository
-        #        run: ./gradlew publishAllPublicationsToOssRepository
+        run: |
+          ./gradlew publishAllPublicationsToOssRepository
+          ./gradlew publishKotlinMultiplatformPublicationToOssRepository
         shell: bash
 
   # jobs:
