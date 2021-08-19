@@ -1,13 +1,15 @@
 name: Test
-on: 
+on:
   push:
     branches:
       - main
       - sandbox
   pull_request:
+    types:
+      - opened
     branches:
       - main
-      - sandbox  
+      - sandbox
 
 jobs:
   test:
