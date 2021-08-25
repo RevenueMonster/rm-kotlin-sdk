@@ -22,18 +22,17 @@ actual object Signature {
         val encodedData: String = data.encodeBase64()
         val plainText: String = if (data != "") {
             (
-                    "data=" + encodedData + "&method=" + method.lowercase() + "&nonceStr=" +
-                            nonceStr + "&requestUrl=" + requestUrl + "&signType=" + signType +
-                            "&timestamp=" + timestamp
-                    )
+                "data=" + encodedData + "&method=" + method.lowercase() + "&nonceStr=" +
+                    nonceStr + "&requestUrl=" + requestUrl + "&signType=" + signType +
+                    "&timestamp=" + timestamp
+                )
         } else {
             (
-                    "method=" + method.lowercase() + "&nonceStr=" +
-                            nonceStr + "&requestUrl=" + requestUrl + "&signType=" + signType +
-                            "&timestamp=" + timestamp
-                    )
+                "method=" + method.lowercase() + "&nonceStr=" +
+                    nonceStr + "&requestUrl=" + requestUrl + "&signType=" + signType +
+                    "&timestamp=" + timestamp
+                )
         }
-        println("Text => $plainText")
         val plainTextByte = plainText.toByteArray()
         var privKey: PrivateKey? = null
         if (privateKey.contains("-----BEGIN PRIVATE KEY-----")) {

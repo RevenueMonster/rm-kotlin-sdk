@@ -34,16 +34,6 @@ val dokkaJar by tasks.creating(Jar::class) {
     from(tasks.dokkaHtml)
 }
 
-// val deleteDokkaOutputDir by tasks.register<Delete>("deleteDokkaOutputDirectory") {
-//    delete(dokkaOutputDir)
-// }
-
-// val javadocJar = tasks.register<Jar>("javadocJar") {
-//    dependsOn(deleteDokkaOutputDir, tasks.dokkaHtml)
-//    archiveClassifier.set("javadoc")
-//    from(dokkaOutputDir)
-// }
-
 android {
     compileSdkVersion(30)
     buildToolsVersion = "30.0.3"
@@ -80,7 +70,7 @@ kotlin {
     ios {
         binaries {
             framework {
-                baseName = "RmSDK"
+                baseName = "rmSdk"
             }
         }
     }

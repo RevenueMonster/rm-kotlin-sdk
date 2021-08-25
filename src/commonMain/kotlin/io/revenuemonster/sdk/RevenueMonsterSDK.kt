@@ -17,7 +17,10 @@ import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.plus
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.*
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.encodeToJsonElement
 import kotlin.time.ExperimentalTime
 
 class RevenueMonsterSDK(
@@ -47,6 +50,7 @@ class RevenueMonsterSDK(
     val Voucher: VoucherModule = VoucherModule(this)
     val Campaign: CampaignModule = CampaignModule(this)
 
+    @OptIn(kotlinx.serialization.ExperimentalSerializationApi::class)
     internal suspend inline fun <reified I, reified O> call(
         url: String,
         method: HttpMethod = HttpMethod.Get,
@@ -97,7 +101,6 @@ class RevenueMonsterSDK(
         }
     }
 
-
     @OptIn(ExperimentalTime::class, io.ktor.util.InternalAPI::class)
     private suspend fun getAccessToken(): OAuthCredential {
         if (credential != null && Clock.System.now() < credential!!.expireDateTime) {
@@ -136,5 +139,4 @@ class RevenueMonsterSDK(
             throw e
         }
     }
-
 }
