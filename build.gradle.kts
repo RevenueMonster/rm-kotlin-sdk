@@ -7,10 +7,6 @@ plugins {
     id("signing")
 }
 
-// apply(plugin = "maven-publish")
-// apply(plugin = "com.android.library")
-// apply(plugin = "org.jetbrains.dokka")
-
 group = "io.revenuemonster.sdk"
 // remove prefix v if the version included, eg `v1.0.0`
 version = (System.getenv("RM_KOTLIN_SDK_VERSION") ?: "1.0.0").removePrefix("v")
@@ -75,10 +71,20 @@ android {
 }
 
 kotlin {
-    // setup for android
+    // setup for Android
     android {
         publishAllLibraryVariants()
     }
+
+    // setup for iOS
+    ios {
+        binaries {
+            framework {
+                baseName = "RmSDK"
+            }
+        }
+    }
+
     // setup for JVM
     jvm {
         compilations.all {
@@ -137,21 +143,13 @@ kotlin {
                 implementation(kotlin("test-junit"))
             }
         }
-//        val jsMain by getting {}
-//        val jsTest by getting {
-//            dependencies {
-//                implementation(kotlin("test-js"))
-//            }
-//        }
-//         Dependencies for iOS and desktop
-//        val nativeMain by getting {
-//            dependencies {
-//            }
-//        }
-//        val nativeTest by getting {}
-//        val iosMain by creating {
-//            dependsOn(commonMain)
-//        }
+        val iosMain by getting {
+            dependsOn(commonMain)
+            dependencies {
+                implementation("io.ktor:ktor-client-ios:$ktorVersion")
+            }
+        }
+        val iosTest by getting
 
         all {
             languageSettings.apply {
