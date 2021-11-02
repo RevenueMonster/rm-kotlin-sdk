@@ -18,7 +18,7 @@ version = (System.getenv("RM_KOTLIN_SDK_VERSION") ?: "1.0.0").removePrefix("v")
 val artifact = "rm-kotlin-sdk"
 val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
 val gitUrl = "github.com:RevenueMonster/rm-kotlin-sdk.git"
-val ktorVersion = "1.6.4"
+val ktorVersion = "1.6.5"
 
 repositories {
     google()
