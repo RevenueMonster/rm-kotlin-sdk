@@ -6,7 +6,7 @@ import io.revenuemonster.sdk.model.Item
 import io.revenuemonster.sdk.model.Items
 import io.revenuemonster.sdk.model.Response
 import io.revenuemonster.sdk.model.common.MemberProfile
-import io.revenuemonster.sdk.model.request.CheckMemberRequest
+import io.revenuemonster.sdk.model.common.PhoneNumber
 import io.revenuemonster.sdk.model.request.RegisterMemberRequest
 import io.revenuemonster.sdk.model.response.CheckMemberResponse
 import io.revenuemonster.sdk.model.response.Reward
@@ -25,7 +25,7 @@ class MemberModule(private val sdk: RevenueMonsterSDK) {
     }
 
     suspend fun checkLoyaltyMember(countryCode: String, phoneNumber: String): Item<CheckMemberResponse> {
-        val data = CheckMemberRequest(countryCode, phoneNumber)
+        val data = PhoneNumber(countryCode, phoneNumber)
         return sdk.call(
             url = "/loyalty/member/check",
             method = HttpMethod.Post,

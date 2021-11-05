@@ -6,6 +6,7 @@ import io.revenuemonster.sdk.model.Item
 import io.revenuemonster.sdk.model.Items
 import io.revenuemonster.sdk.model.Response
 import io.revenuemonster.sdk.model.common.LoyaltyMember
+import io.revenuemonster.sdk.model.common.PhoneNumber
 import io.revenuemonster.sdk.model.request.*
 import io.revenuemonster.sdk.model.response.*
 
@@ -13,7 +14,7 @@ class LoyaltyModule(private val sdk: RevenueMonsterSDK) {
 
     // loyalty members
     suspend fun memberAuthorize(countryCode: String, phoneNumber: String): MemberAuthorizeResponse {
-        val data = CheckMemberRequest(countryCode, phoneNumber)
+        val data = PhoneNumber(countryCode, phoneNumber)
         return sdk.call(
             url = "/loyalty/member/authorize",
             method = HttpMethod.Post,

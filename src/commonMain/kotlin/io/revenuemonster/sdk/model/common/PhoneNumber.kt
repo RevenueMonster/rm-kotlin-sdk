@@ -1,9 +1,9 @@
-package io.revenuemonster.sdk.model.request
+package io.revenuemonster.sdk.model.common
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CheckMemberRequest(
+data class PhoneNumber(
     val countryCode: String,
     val phoneNumber: String,
 )
