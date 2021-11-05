@@ -10,7 +10,7 @@ import io.revenuemonster.sdk.model.response.*
 
 class PaymentModule(private val sdk: RevenueMonsterSDK) {
     // quick pay
-    suspend fun quickPay(data: QuickPayRequest): Item<QuickPayResponse> {
+    suspend fun quickPay(data: QuickPayRequest): Item<Transaction> {
         return sdk.call(
             url = "/payment/quickpay",
             method = HttpMethod.Post,
@@ -76,7 +76,7 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     }
 
     // Refund
-    suspend fun refund(data: RefundRequest): Item<RefundResponse> {
+    suspend fun refund(data: RefundRequest): Item<Transaction> {
         return sdk.call(
             url = "/payment/refund",
             method = HttpMethod.Post,
@@ -84,8 +84,9 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
         )
     }
 
-    //Reverse
-    suspend fun reverse(orderId: String): Item<ReverseResponse> {
+    // Reverse
+    // FIXME : 'Store' didnt return
+    suspend fun reverse(orderId: String): Item<Transaction> {
         val data = ReverseRequest(orderId = orderId)
         return sdk.call(
             url = "/payment/reverse",

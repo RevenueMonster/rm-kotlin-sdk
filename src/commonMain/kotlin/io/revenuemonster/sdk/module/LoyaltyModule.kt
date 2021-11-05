@@ -21,7 +21,6 @@ class LoyaltyModule(private val sdk: RevenueMonsterSDK) {
         )
     }
 
-    // FIXME: member tier
     suspend fun getLoyaltyMembers(): Items<LoyaltyMember> {
         return sdk.call<Any, Items<LoyaltyMember>>(
             url = "/loyalty/members"
