@@ -1,5 +1,6 @@
 package io.revenuemonster.sdk.model.response
 
+import io.revenuemonster.sdk.model.common.Address
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
@@ -20,7 +21,7 @@ data class MerchantProfile(
     val city: String,
     val state: String,
     val country: String,
-    val invoiceAddress: InvoiceAddress,
+    val invoiceAddress: Address,
     val isActive: Boolean,
     val status: String,
     val isMasterMerchant: Boolean,
@@ -30,16 +31,4 @@ data class MerchantProfile(
     val gstNo: String,
     val createdAt: Instant,
     val updatedAt: Instant
-
-)
-
-
-@Serializable
-data class InvoiceAddress(
-    val addressLine1: String,
-    val addressLine2: String,
-    val postcode: String,
-    val city: String,
-    val state: String,
-    val country: String
 )
