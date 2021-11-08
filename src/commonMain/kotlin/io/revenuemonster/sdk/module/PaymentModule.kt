@@ -19,7 +19,7 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     }
 
     // Transaction  QR
-    suspend fun generateTransactionQR(data: TransactionQRRequest): Item<TransactionQRResponse> {
+    suspend fun generateTransactionQR(data: TransactionQRRequest): Item<TransactionQRURL> {
         return sdk.call(
             url = "/payment/transaction/qrcode",
             method = HttpMethod.Post,
@@ -27,12 +27,12 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
         )
     }
 
-    suspend fun getTransactionQRURL(): Items<GetTransactionQRURLResponse> {
-        return sdk.call<Any, Items<GetTransactionQRURLResponse>>(url = "/payment/transaction/qrcodes")
+    suspend fun getTransactionQRURL(): Items<TransactionQRURL> {
+        return sdk.call<Any, Items<TransactionQRURL>>(url = "/payment/transaction/qrcodes")
     }
 
-    suspend fun getTransactionQRURLByCode(code: String): Item<GetTransactionQRURLResponse> {
-        return sdk.call<Any, Item<GetTransactionQRURLResponse>>(url = "/payment/transaction/qrcode/$code")
+    suspend fun getTransactionQRURLByCode(code: String): Item<TransactionQRURL> {
+        return sdk.call<Any, Item<TransactionQRURL>>(url = "/payment/transaction/qrcode/$code")
     }
 
     suspend fun getTransactionByCode(code: String): Items<GetTransactionResponse> {
