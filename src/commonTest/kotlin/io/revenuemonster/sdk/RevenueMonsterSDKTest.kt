@@ -15,7 +15,7 @@ class RevenueMonsterSDKTest {
     @Test
     fun initSDK() {
 
-        val auth = Config(
+        val config = Config(
             clientID = "1623743073701188526",
             clientSecret = "TZqprtCpGAhagCyDTFiqigAfIFjPOKHY",
             privateKey = "-----BEGIN PRIVATE KEY-----\n" +
@@ -58,7 +58,7 @@ class RevenueMonsterSDKTest {
             sandbox = true
         )
 
-        val sdk = RevenueMonsterSDK(auth)
+        val sdk = RevenueMonsterSDK(config)
         val data = QuickPayRequest(
             authCode = "281011029263230978927621",
             order = Order(
@@ -74,33 +74,11 @@ class RevenueMonsterSDKTest {
             storeId = "1623743430847879711",
         )
 
-        val data2 = TransactionQRRequest(
-            amount = 100,
-            currencyType = "MYR",
-            method = listOf("BOOST_MY"),
-            expiry = Expiry(ExpiryType.PERMANENT),
-            order = TransactionQROrder(title = "Test",detail = "Test"),
-            redirectUrl = "google.com",
-            type = TransactionQRType.STATIC,
-            storeId = "1623743430847879711",
-            isPreFillAmount = true
-        )
-
-
-
-
-
-
         runBlocking {
             try {
 
-//                val result = sdk.Member.checkLoyaltyMember("60","128534488")
-//                val result = sdk.Store.getStores()
-//                val result = sdk.Payment.getTransactionQRURL()
-//                val result = sdk.Payment.getTransactionQRURLByCode("3f01a09f2f5dbf771e87d7159ff1b0cc")
-                val result = sdk.Payment.getTransactionByCode("5413b4583a9440dd351b2dde0c0ea166")
-//                val result = sdk.Payment.generateTransactionQR(data2)
-
+                val result = sdk.Payment.quickPay(data)
+                
                 println("Result ====>")
                 println(result)
 
