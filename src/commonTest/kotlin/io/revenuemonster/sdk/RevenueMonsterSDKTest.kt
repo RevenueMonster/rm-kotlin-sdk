@@ -1,14 +1,21 @@
 package io.revenuemonster.sdk
 
 import io.revenuemonster.sdk.model.Error
+import io.revenuemonster.sdk.model.common.Expiry
+import io.revenuemonster.sdk.model.common.Order
+import io.revenuemonster.sdk.model.common.TransactionQROrder
+import io.revenuemonster.sdk.model.enum.ExpiryType
+import io.revenuemonster.sdk.model.enum.TransactionQRType
+import io.revenuemonster.sdk.model.request.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.datetime.Clock
 import kotlin.test.Test
 
 class RevenueMonsterSDKTest {
     @Test
     fun initSDK() {
 
-        val auth = Config(
+        val config = Config(
             clientID = "1623743073701188526",
             clientSecret = "TZqprtCpGAhagCyDTFiqigAfIFjPOKHY",
             privateKey = "-----BEGIN PRIVATE KEY-----\n" +
@@ -51,17 +58,30 @@ class RevenueMonsterSDKTest {
             sandbox = true
         )
 
-        val sdk = RevenueMonsterSDK(auth)
+        val sdk = RevenueMonsterSDK(config)
+        val data = QuickPayRequest(
+            authCode = "281011029263230978927621",
+            order = Order(
+                id = Clock.System.now().epochSeconds.toString() + "4488",
+                title = "Snor Test",
+                detail = "Test",
+                amount = 100,
+                currencyType = "MYR",
+                additionalData = "Test"
+            ),
+            ipAddress = "1.1.1.1",
+            terminalId = "1623500916731469951",
+            storeId = "1623743430847879711",
+        )
 
         runBlocking {
             try {
 
-                val result = sdk.Store.getStores()
+                val result = sdk.Payment.quickPay(data)
+                
                 println("Result ====>")
                 println(result)
-//                result.items.forEach {
-//                    println(it)
-//                }
+
             } catch (e: Error) {
                 println("Debug 1 ====>")
                 println(e)

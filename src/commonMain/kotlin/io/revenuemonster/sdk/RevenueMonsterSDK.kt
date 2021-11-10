@@ -62,7 +62,7 @@ class RevenueMonsterSDK(
             val timestamp = Clock.System.now().epochSeconds.toString()
             val nonce = randomString(32)
             val signature = Signature.generateSignature(
-                data = if (body != null) Json.encodeToString(el) else "",
+                data = if (body != null) el.toString() else "",
                 privateKey = config.privateKey,
                 requestUrl = uri,
                 nonceStr = nonce,
@@ -83,6 +83,8 @@ class RevenueMonsterSDK(
                 }
                 if (body != null) {
                     this.body = el
+                    println("HttpRequest =>")
+                    println(this.body)
                 }
             }
         } catch (e: ClientRequestException) {

@@ -1,5 +1,6 @@
 package io.revenuemonster.sdk.model.response
 
+import io.revenuemonster.sdk.model.common.OrderResponse
 import io.revenuemonster.sdk.model.common.Store
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
@@ -9,7 +10,7 @@ data class GetTransactionResponse(
     val store: Store,
     val referenceId: String,
     val transactionId: String,
-    val order: GetTransactionOrder,
+    val order: OrderResponse,
     val terminalId: String,
     val currencyType: String,
     val balanceAmount: Int,
@@ -20,19 +21,10 @@ data class GetTransactionResponse(
     val type: String,
     val status: String,
     val region: String,
+    val source : String,
     val createdAt: Instant,
     val updatedAt: Instant
 )
-
-@Serializable
-data class GetTransactionOrder(
-    val id: String,
-    val title: String,
-    val detail: String,
-    val additionalData: String,
-    val amount: Int
-)
-
 
 @Serializable
 data class TransactionError(

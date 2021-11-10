@@ -37,7 +37,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.revenuemonster.sdk:rm-kotlin-sdk:1.0.0-rc2")
+    implementation("io.revenuemonster.sdk:rm-kotlin-sdk:1.0.0-rc4")
 }
 ```
 
@@ -51,7 +51,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.RevenueMonster.rm-kotlin-sdk:rm-kotlin-sdk:1.0.0-rc2")
+    implementation("com.github.RevenueMonster.rm-kotlin-sdk:rm-kotlin-sdk:1.0.0-rc4")
 }
 ```
 
@@ -79,7 +79,7 @@ android {
   }
 
   dependencies {
-    implementation 'io.revenuemonster.sdk:rm-kotlin-sdk:1.0.0-rc2'
+    implementation 'io.revenuemonster.sdk:rm-kotlin-sdk:1.0.0-rc4'
     # add this line
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
   }
@@ -140,9 +140,9 @@ kotlin {
 
 | Package name                                                             | Version |
 | ------------------------------------------------------------------------ | ------- |
-| [ktor](https://github.com/ktorio/ktor)                                   | 1.6.2   |
-| [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) | 1.2.2   |
-| [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)           | 0.2.1   |
+| [ktor](https://github.com/ktorio/ktor)                                   | 1.6.5   |
+| [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) | 1.3.0   |
+| [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)           | 0.3.1   |
 
 ## 🤖 Supported Platforms
 
@@ -185,7 +185,7 @@ GlobalScope.launch {
         val data = QuickPayRequest(
             authCode = "134850717797247290",
             order = Order(
-                id = "${Random((1..371289).random()).nextInt()}",
+                id = Clock.System.now().epochSeconds.toString() + "4488",
                 title = "TEST",
                 detail = "JUST A TEST",
                 additionalData = "NONE",

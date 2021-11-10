@@ -1,5 +1,6 @@
 package io.revenuemonster.sdk.model.common
 
+import io.revenuemonster.sdk.model.response.MemberTier
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
@@ -17,8 +18,9 @@ data class LoyaltyMember(
     val countryCode: String,
     val phoneNumber: String,
     val profileImageUrl: String,
-//    val memberTier : String?,
+    val memberTier : MemberTier?= null,
     val hasPinCode: Boolean,
     val status: String,
     val createdAt: Instant
 )
+
