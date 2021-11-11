@@ -37,7 +37,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.revenuemonster.sdk:rm-kotlin-sdk:1.0.0-rc4")
+    implementation("io.revenuemonster.sdk:rm-kotlin-sdk:1.1.0")
 }
 ```
 
@@ -51,7 +51,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.RevenueMonster.rm-kotlin-sdk:rm-kotlin-sdk:1.0.0-rc4")
+    implementation ("com.github.RevenueMonster.rm-kotlin-sdk:rm-kotlin-sdk:1.1.0")
 }
 ```
 
@@ -79,7 +79,7 @@ android {
   }
 
   dependencies {
-    implementation 'io.revenuemonster.sdk:rm-kotlin-sdk:1.0.0-rc4'
+    implementation 'io.revenuemonster.sdk:rm-kotlin-sdk:1.1.0'
     # add this line
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
   }
@@ -119,7 +119,7 @@ kotlin {
    sourceSets {
       val commonMain by getting {
          dependencies {
-            implementation("io.revenuemonster.sdk:rm-kotlin-sdk:1.0.0-rc2")
+            implementation("io.revenuemonster.sdk:rm-kotlin-sdk:1.1.0")
          }
       }
    }
