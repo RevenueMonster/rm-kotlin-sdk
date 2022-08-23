@@ -26,6 +26,11 @@
 
 > Revenue Monster Kotlin Multiplatform SDK, support every possible platform, such as desktop, mobile and web
 
+## Update (23-Aug-2022)
+```
+Version 2.0 comming soon.
+```
+
 ## 🔨 Installation with Gradle
 
 ### Maven Central
