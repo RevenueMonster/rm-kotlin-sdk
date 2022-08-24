@@ -1,6 +1,7 @@
 package io.revenuemonster.sdk
 
-import io.ktor.client.features.*
+import io.ktor.client.call.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -9,9 +10,6 @@ import io.revenuemonster.sdk.model.Credential
 import io.revenuemonster.sdk.model.Error
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.datetime.Clock
-import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.plus
 import kotlinx.serialization.json.Json
 
 class RevenueMonsterAuth(private val config: Config) {
@@ -26,22 +24,22 @@ class RevenueMonsterAuth(private val config: Config) {
         coerceInputValues = true
     }
 
-    @OptIn(InternalAPI::class)
     suspend fun getAccessToken(): OAuthCredential {
         try {
-
+            val mutex = Mutex()
             var cred: OAuthCredential
             val b64 = "${config.clientID}:${config.clientSecret}".encodeBase64()
 
-            Mutex().withLock {
+            mutex.withLock {
                 val item =
-                    client.post<Credential>("$baseUrl/v1/token") {
+                    client.post("$baseUrl/v1/token") {
+                        contentType(ContentType.Application.Json)
                         headers {
-                            append(HttpHeaders.ContentType, "application/json")
                             append(HttpHeaders.Authorization, "Basic $b64")
                         }
-                        body = mapOf("grantType" to "client_credentials")
-                    }
+                        setBody(mapOf("grantType" to "client_credentials"))
+                    }.body<Credential>()
+
                 cred = OAuthCredential(
                     accessToken = item.accessToken,
                     expiresIn = item.expiresIn,
@@ -54,7 +52,7 @@ class RevenueMonsterAuth(private val config: Config) {
 
             return cred
         } catch (e: ClientRequestException) {
-            throw json.decodeFromString(Error.serializer(), e.response.readText())
+            throw json.decodeFromString(Error.serializer(), e.response.bodyAsText())
         } catch (e: Exception) {
             throw e
         }

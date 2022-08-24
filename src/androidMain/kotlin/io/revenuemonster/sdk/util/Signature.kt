@@ -36,8 +36,6 @@ actual object Signature {
                             "&timestamp=" + timestamp
                     )
         }
-        println("PlainText =>")
-        println(plainText)
         val plainTextByte = plainText.toByteArray()
         var pKey: PrivateKey? = null
         if (privateKey.contains("-----BEGIN PRIVATE KEY-----")) {

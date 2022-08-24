@@ -1,24 +1,18 @@
 package io.revenuemonster.sdk
 
-import io.ktor.client.features.*
+import io.ktor.client.call.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.util.*
-import io.revenuemonster.sdk.model.Credential
 import io.revenuemonster.sdk.model.Error
 import io.revenuemonster.sdk.module.*
 import io.revenuemonster.sdk.util.Signature
 import io.revenuemonster.sdk.util.randomString
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
-import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.plus
 import kotlinx.serialization.SerializationException
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
-import kotlin.time.ExperimentalTime
 
 class RevenueMonsterSDK(
    private val oAuth: OAuthCredential,
@@ -38,6 +32,7 @@ class RevenueMonsterSDK(
     val Voucher: VoucherModule = VoucherModule(this)
     val Campaign: CampaignModule = CampaignModule(this)
 
+    @OptIn(InternalAPI::class)
     internal suspend inline fun <reified I, reified O> call(
         url: String,
         method: HttpMethod = HttpMethod.Get,
@@ -63,24 +58,22 @@ class RevenueMonsterSDK(
             return client.request(uri) {
                 this.method = method
                 headers {
-                    append(HttpHeaders.ContentType, "application/json")
+                    contentType(ContentType.Application.Json)
                     append(HttpHeaders.Authorization, "Bearer ${oAuth.accessToken}")
                     append("X-Signature", "$signType $signature")
                     append("X-Nonce-Str", nonce)
                     append("X-Timestamp", timestamp)
                 }
                 if (body != null) {
-                    this.body = el
-                    println("HttpRequest =>")
-                    println(this.body)
+                    setBody(el)
                 }
-            }
+            }.body()
         } catch (e: ClientRequestException) {
             val json = Json {
                 ignoreUnknownKeys = true
                 coerceInputValues = true
             }
-            throw json.decodeFromString(Error.serializer(), e.response.readText())
+            throw json.decodeFromString(Error.serializer(), e.response.bodyAsText())
         } catch (e: SerializationException) {
             throw e
         } catch (e: Exception) {

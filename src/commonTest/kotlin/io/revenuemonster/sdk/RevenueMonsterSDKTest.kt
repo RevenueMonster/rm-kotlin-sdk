@@ -63,7 +63,7 @@ class RevenueMonsterSDKTest {
 
                 val auth = RevenueMonsterAuth(config).getAccessToken()
                 val sdk = RevenueMonsterSDK(auth)
-
+//
                 val result = sdk.Store.getStores()
                 
                 println("Result ====>")
