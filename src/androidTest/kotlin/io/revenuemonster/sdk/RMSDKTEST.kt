@@ -7,7 +7,7 @@ class RMSDKTEST {
 
     @Test
     fun test(){
-        val auth = Config(
+        val config = Config(
             clientID = "1623743073701188526",
             clientSecret = "TZqprtCpGAhagCyDTFiqigAfIFjPOKHY",
             privateKey = "-----BEGIN PRIVATE KEY-----\n" +
@@ -51,10 +51,11 @@ class RMSDKTEST {
         )
 
 
-        val sdk = RevenueMonsterSDK(auth)
-
         runBlocking {
             try {
+
+                val auth = RevenueMonsterAuth(config).getAccessToken()
+                val sdk = RevenueMonsterSDK(auth)
 
                 val result = sdk.Store.getStores()
                 println("Result ====>")

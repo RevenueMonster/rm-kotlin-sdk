@@ -58,26 +58,13 @@ class RevenueMonsterSDKTest {
             sandbox = true
         )
 
-        val sdk = RevenueMonsterSDK(config)
-        val data = QuickPayRequest(
-            authCode = "281011029263230978927621",
-            order = Order(
-                id = Clock.System.now().epochSeconds.toString() + "4488",
-                title = "Snor Test",
-                detail = "Test",
-                amount = 100,
-                currencyType = "MYR",
-                additionalData = "Test"
-            ),
-            ipAddress = "1.1.1.1",
-            terminalId = "1623500916731469951",
-            storeId = "1623743430847879711",
-        )
-
         runBlocking {
             try {
 
-                val result = sdk.Payment.quickPay(data)
+                val auth = RevenueMonsterAuth(config).getAccessToken()
+                val sdk = RevenueMonsterSDK(auth)
+
+                val result = sdk.Store.getStores()
                 
                 println("Result ====>")
                 println(result)
