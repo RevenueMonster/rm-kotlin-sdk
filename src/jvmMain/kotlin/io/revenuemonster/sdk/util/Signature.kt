@@ -8,7 +8,6 @@ import java.security.spec.PKCS8EncodedKeySpec
 
 actual object Signature {
 
-    @OptIn(InternalAPI::class)
     actual fun generateSignature(
         data: String,
         privateKey: String,
@@ -18,7 +17,6 @@ actual object Signature {
         method: String,
         timestamp: String
     ): String {
-        var result = ""
         val encodedData: String = data.encodeBase64()
         val plainText: String = if (data != "") {
             (
@@ -47,7 +45,6 @@ actual object Signature {
         return signatureBytes.encodeBase64()
     }
 
-    @OptIn(InternalAPI::class)
     private fun readPCKS1Key(key: String): PrivateKey {
         val content =
             key.replace("-----BEGIN PRIVATE KEY-----", "")
@@ -60,15 +57,4 @@ actual object Signature {
         return kf.generatePrivate(keySpecPKCS8)
     }
 
-//    private fun readPKCS8Key(key: String): PrivateKey {
-//        val content = key
-//            .replace("-----BEGIN PRIVATE KEY-----", "")
-//            .replace("-----END PRIVATE KEY-----", "")
-//            .replace("\\n", "")
-//            .replace("\\s", "")
-//        val bytes = Base64.getDecoder().decode(content)
-//        val keySpec = PKCS8EncodedKeySpec(bytes)
-//        val keyFactory = KeyFactory.getInstance("RSA")
-//        return keyFactory.generatePrivate(keySpec)
-//    }
 }
