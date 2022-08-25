@@ -9,13 +9,13 @@ class MerchantModule(private val sdk: RevenueMonsterSDK) {
 
     suspend fun getSubscriptions(): Item<List<MerchantSubscriptions>> {
         return sdk.call<Any, Item<List<MerchantSubscriptions>>>(
-            url = "/merchant/subscriptions"
+            url = "/v3/merchant/subscriptions"
         )
     }
 
     suspend fun getProfile(): Item<MerchantProfile> {
         return sdk.call<Any, Item<MerchantProfile>>(
-            url = "/merchant"
+            url = "/v3/merchant"
         )
     }
 

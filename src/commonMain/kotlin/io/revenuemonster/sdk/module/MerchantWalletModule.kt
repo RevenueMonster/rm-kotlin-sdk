@@ -11,13 +11,13 @@ class MerchantWalletModule(private val sdk: RevenueMonsterSDK) {
 
     suspend fun checkBalance(): Item<CheckBalance> {
         return sdk.call<Any, Item<CheckBalance>>(
-            url = "/wallet/credit"
+            url = "/v3/wallet/credit"
         )
     }
 
     suspend fun topUpWallet(data: TopUpWalletRequest): Item<String> {
         return sdk.call<TopUpWalletRequest, Item<String>>(
-            url = "/wallet/topup",
+            url = "/v3/wallet/topup",
             method = HttpMethod.Post,
             body = data
         )
@@ -25,7 +25,7 @@ class MerchantWalletModule(private val sdk: RevenueMonsterSDK) {
 
     suspend fun checkWalletHistory(): ItemsC<CheckWalletHistory> {
         return sdk.call<Any, ItemsC<CheckWalletHistory>>(
-            url = "/wallet/history",
+            url = "/v3/wallet/history",
         )
     }
 
@@ -38,7 +38,7 @@ class MerchantWalletModule(private val sdk: RevenueMonsterSDK) {
 
     suspend fun topUpHistory(): ItemsC<TopUpHistory> {
         return sdk.call<Any, ItemsC<TopUpHistory>>(
-            url = "/wallet/transaction"
+            url = "/v3/wallet/transaction"
         )
     }
 

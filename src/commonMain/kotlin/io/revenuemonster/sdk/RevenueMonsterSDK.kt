@@ -18,7 +18,6 @@ class RevenueMonsterSDK(
 
     private val baseUrl: String =
         if (oAuth.sandbox) "https://sb-open.revenuemonster.my" else "https://open.revenuemonster.my"
-    private val version: String = "/v3"
 
     val payment: PaymentModule = PaymentModule(this)
     val merchant: MerchantModule = MerchantModule(this)
@@ -35,9 +34,8 @@ class RevenueMonsterSDK(
         method: HttpMethod = HttpMethod.Get,
         body: I? = null,
     ): O {
-        val uri = baseUrl + version + url
-        var el: JsonElement = JsonNull
-        if (body != null) el = normalize(Json.encodeToJsonElement(body))
+        val uri = baseUrl + url
+        val el = if (body != null) normalize(Json.encodeToJsonElement(body)) else JsonNull
         val signType = "sha256"
         val timestamp = Clock.System.now().epochSeconds.toString()
         val nonce = randomString(32)
