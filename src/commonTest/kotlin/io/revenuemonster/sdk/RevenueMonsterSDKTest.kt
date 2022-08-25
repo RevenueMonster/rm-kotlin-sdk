@@ -59,7 +59,8 @@ class RevenueMonsterSDKTest {
                 val auth = RevenueMonsterAuth(config).getAccessToken()
                 val sdk = RevenueMonsterSDK(auth)
 
-                val result = sdk.Store.getStoreByID("16606363806905669082131")
+
+                val result = sdk.store.getStoreByID("16606363806905669082131")
 
                 println("Result ====>")
                 println(result)

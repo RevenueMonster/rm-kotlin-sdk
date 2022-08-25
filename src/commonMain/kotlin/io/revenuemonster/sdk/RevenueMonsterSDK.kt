@@ -20,15 +20,15 @@ class RevenueMonsterSDK(
         if (oAuth.sandbox) "https://sb-open.revenuemonster.my" else "https://open.revenuemonster.my"
     private val version: String = "/v3"
 
-    val Payment: PaymentModule = PaymentModule(this)
-    val Merchant: MerchantModule = MerchantModule(this)
-    val Store: StoreModule = StoreModule(this)
-    val User: UserModule = UserModule(this)
-    val MerchantWallet: MerchantWalletModule = MerchantWalletModule(this)
-    val Loyalty: LoyaltyModule = LoyaltyModule(this)
-    val Member: MemberModule = MemberModule(this)
-    val Voucher: VoucherModule = VoucherModule(this)
-    val Campaign: CampaignModule = CampaignModule(this)
+    val payment: PaymentModule = PaymentModule(this)
+    val merchant: MerchantModule = MerchantModule(this)
+    val store: StoreModule = StoreModule(this)
+    val user: UserModule = UserModule(this)
+    val merchantWallet: MerchantWalletModule = MerchantWalletModule(this)
+    val loyalty: LoyaltyModule = LoyaltyModule(this)
+    val member: MemberModule = MemberModule(this)
+    val voucher: VoucherModule = VoucherModule(this)
+    val campaign: CampaignModule = CampaignModule(this)
 
     internal suspend inline fun <reified I, reified O> call(
         url: String,
