@@ -1,4 +1,4 @@
-package io.revenuemonster.sdk.model
+package io.revenuemonster.sdk.model.auth
 
 import kotlinx.serialization.Serializable
 

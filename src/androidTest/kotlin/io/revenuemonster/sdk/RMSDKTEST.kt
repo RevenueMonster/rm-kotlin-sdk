@@ -1,5 +1,7 @@
 package io.revenuemonster.sdk
 
+import io.revenuemonster.sdk.model.auth.Config
+import io.revenuemonster.sdk.util.RMException
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
@@ -61,15 +63,15 @@ class RMSDKTEST {
                 println("Result ====>")
                 println(result)
 
-            }catch (e: Error) {
+            }catch (e: RMException) {
                 println("Debug 1 ====>")
-                println(e)
+                println(e.errorCode())
+                println(e.errorMessage())
             }catch (e: Throwable) {
                 println("Debug 2 ====>")
                 println(e)
             }
         }
     }
-
 
 }

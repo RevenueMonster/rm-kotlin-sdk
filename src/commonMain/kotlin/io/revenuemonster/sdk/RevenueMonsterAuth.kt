@@ -6,8 +6,11 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.util.*
-import io.revenuemonster.sdk.model.Credential
+import io.revenuemonster.sdk.model.auth.Credential
 import io.revenuemonster.sdk.model.Error
+import io.revenuemonster.sdk.model.auth.Config
+import io.revenuemonster.sdk.model.auth.OAuthCredential
+import io.revenuemonster.sdk.util.RMException
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
@@ -25,21 +28,22 @@ class RevenueMonsterAuth(private val config: Config) {
     }
 
     suspend fun getAccessToken(): OAuthCredential {
-        try {
-            val mutex = Mutex()
-            var cred: OAuthCredential
-            val b64 = "${config.clientID}:${config.clientSecret}".encodeBase64()
 
-            mutex.withLock {
-                val item =
-                    client.post("$baseUrl/v1/token") {
-                        contentType(ContentType.Application.Json)
-                        headers {
-                            append(HttpHeaders.Authorization, "Basic $b64")
-                        }
-                        setBody(mapOf("grantType" to "client_credentials"))
-                    }.body<Credential>()
+        val mutex = Mutex()
+        var cred: OAuthCredential
+        val b64 = "${config.clientID}:${config.clientSecret}".encodeBase64()
 
+        mutex.withLock {
+            val response = client.post("$baseUrl/v1/token") {
+                contentType(ContentType.Application.Json)
+                headers {
+                    append(HttpHeaders.Authorization, "Basic $b64")
+                }
+                setBody(mapOf("grantType" to "client_credentials"))
+            }
+
+            if (response.status.isSuccess() && response.status.value == 200) {
+                val item = response.body<Credential>()
                 cred = OAuthCredential(
                     accessToken = item.accessToken,
                     expiresIn = item.expiresIn,
@@ -48,13 +52,12 @@ class RevenueMonsterAuth(private val config: Config) {
                     privateKey = config.privateKey,
                     sandbox = config.sandbox
                 )
+
+                return cred
+            } else {
+                throw RMException(response.bodyAsText())
             }
 
-            return cred
-        } catch (e: ClientRequestException) {
-            throw json.decodeFromString(Error.serializer(), e.response.bodyAsText())
-        } catch (e: Exception) {
-            throw e
         }
     }
 

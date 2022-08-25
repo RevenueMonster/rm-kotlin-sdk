@@ -168,7 +168,7 @@ kotlin {
 import io.revenuemonster.sdk.model.Error
 import io.revenuemonster.sdk.model.common.Order
 import io.revenuemonster.sdk.model.request.QuickPayRequest
-import io.revenuemonster.sdk.Config
+import io.revenuemonster.sdk.model.auth.Config
 import io.revenuemonster.sdk.RevenueMonsterSDK
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package io.revenuemonster.sdk
+package io.revenuemonster.sdk.model.auth
 
 data class Config(
     val clientID: String,
