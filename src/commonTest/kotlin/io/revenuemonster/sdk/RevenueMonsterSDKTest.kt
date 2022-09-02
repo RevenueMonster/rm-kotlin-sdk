@@ -1,6 +1,9 @@
 package io.revenuemonster.sdk
 
 import io.revenuemonster.sdk.model.auth.Config
+import io.revenuemonster.sdk.model.common.Order
+import io.revenuemonster.sdk.model.request.PosCardRefundData
+import io.revenuemonster.sdk.model.request.PosQuickPay
 import io.revenuemonster.sdk.util.RMException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -59,19 +62,18 @@ class RevenueMonsterSDKTest {
                 val auth = RevenueMonsterAuth(config).getAccessToken()
                 val sdk = RevenueMonsterSDK(auth)
 
-
-                val result = sdk.store.getStoreByID("16606363806905669082131")
+                val result = sdk.store.getStores()
 
                 println("Result ====>")
                 println(result)
 
             } catch (e: RMException) {
                 println("Debug 1 ====>")
-                println(e.errorCode())
-                println(e.errorMessage())
+                println(e.errorCode)
+                println(e.errorMessage)
             } catch (e: Throwable) {
                 println("Debug 2 ====>")
-                println(e)
+                println(e.printStackTrace())
             }
         }
     }

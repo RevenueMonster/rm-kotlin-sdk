@@ -65,8 +65,8 @@ class RMSDKTEST {
 
             }catch (e: RMException) {
                 println("Debug 1 ====>")
-                println(e.errorCode())
-                println(e.errorMessage())
+                println(e.errorCode)
+                println(e.errorMessage)
             }catch (e: Throwable) {
                 println("Debug 2 ====>")
                 println(e)

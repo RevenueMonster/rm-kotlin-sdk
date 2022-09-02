@@ -3,6 +3,7 @@ package io.revenuemonster.sdk
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.okhttp.*
+import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.observer.*
 import io.ktor.client.statement.*
@@ -24,6 +25,12 @@ internal val client: HttpClient = HttpClient(OkHttp) {
                 ignoreUnknownKeys = true
             }
         )
+    }
+
+    install(HttpTimeout) {
+        // Set max timeout
+        requestTimeoutMillis = 95000
+        socketTimeoutMillis = 60000
     }
 
     ResponseObserver {
