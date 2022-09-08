@@ -1,7 +1,6 @@
-package io.revenuemonster.sdk
+package io.revenuemonster.sdk.util
 
 import io.ktor.client.*
-import io.ktor.client.call.*
 import io.ktor.client.engine.okhttp.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -9,16 +8,13 @@ import io.ktor.client.plugins.observer.*
 import io.ktor.client.statement.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
 
-internal val client: HttpClient = HttpClient(OkHttp) {
+actual val client: HttpClient = HttpClient(OkHttp) {
     engine {
         threadsCount = 4
     }
 
-    install(ContentNegotiation){
+    install(ContentNegotiation) {
         json(
             Json {
                 isLenient = true
@@ -46,18 +42,5 @@ internal val client: HttpClient = HttpClient(OkHttp) {
         println("Response ->")
         println(it.bodyAsText())
         println()
-    }
-
-}
-
-internal fun normalize(elem: JsonElement): JsonElement {
-    return when (elem) {
-        is JsonObject -> JsonObject(
-            elem.entries.map { it.key to normalize(it.value) }.sortedBy { it.first }.toMap()
-        )
-        is JsonArray -> JsonArray(elem.map { normalize(it) })
-        else -> {
-            elem
-        }
     }
 }

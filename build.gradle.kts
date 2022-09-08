@@ -106,7 +106,6 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-                implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
                 implementation("org.apache.commons:commons-collections4:4.4")
@@ -120,6 +119,9 @@ kotlin {
         }
         val jvmMain by getting {
             dependsOn(commonMain)
+            dependencies {
+                implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+            }
         }
         val jvmTest by getting {
             dependencies {
@@ -130,6 +132,7 @@ kotlin {
             dependsOn(commonMain)
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
+                implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
             }
         }
         val androidTest by getting {
@@ -153,12 +156,6 @@ kotlin {
 //        val iosMain by creating {
 //            dependsOn(commonMain)
 //        }
-
-        all {
-            languageSettings.apply {
-                useExperimentalAnnotation("kotlin.Experimental")
-            }
-        }
 
         targets.all {
             compilations.all {

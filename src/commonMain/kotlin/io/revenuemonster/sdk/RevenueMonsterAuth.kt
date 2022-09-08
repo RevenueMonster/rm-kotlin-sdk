@@ -1,16 +1,15 @@
 package io.revenuemonster.sdk
 
 import io.ktor.client.call.*
-import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.util.*
 import io.revenuemonster.sdk.model.auth.Credential
-import io.revenuemonster.sdk.model.Error
 import io.revenuemonster.sdk.model.auth.Config
 import io.revenuemonster.sdk.model.auth.OAuthCredential
 import io.revenuemonster.sdk.util.RMException
+import io.revenuemonster.sdk.util.client
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json

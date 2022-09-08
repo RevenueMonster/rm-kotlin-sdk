@@ -8,6 +8,7 @@ import io.revenuemonster.sdk.model.auth.OAuthCredential
 import io.revenuemonster.sdk.module.*
 import io.revenuemonster.sdk.util.RMException
 import io.revenuemonster.sdk.util.Signature
+import io.revenuemonster.sdk.util.client
 import io.revenuemonster.sdk.util.randomString
 import kotlinx.datetime.Clock
 import kotlinx.serialization.json.*
@@ -68,6 +69,18 @@ class RevenueMonsterSDK(
             return response.body()
         } else {
             throw RMException(response.bodyAsText())
+        }
+    }
+
+    private fun normalize(elem: JsonElement): JsonElement {
+        return when (elem) {
+            is JsonObject -> JsonObject(
+                elem.entries.map { it.key to normalize(it.value) }.sortedBy { it.first }.toMap()
+            )
+            is JsonArray -> JsonArray(elem.map { normalize(it) })
+            else -> {
+                elem
+            }
         }
     }
 
