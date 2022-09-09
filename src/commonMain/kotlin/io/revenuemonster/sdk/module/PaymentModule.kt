@@ -28,7 +28,7 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     }
 
     suspend fun getTransactionQRURL(): Items<TransactionQRURL> {
-        return sdk.call<Any, Items<TransactionQRURL>>( url = "/v3/payment/transaction/qrcodes")
+        return sdk.call<Any, Items<TransactionQRURL>>(url = "/v3/payment/transaction/qrcodes")
     }
 
     suspend fun getTransactionQRURLByCode(code: String): Item<TransactionQRURL> {
@@ -114,13 +114,6 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
         return sdk.call<Any, Item<Map<String, Banks>>>(url = "/v3/payment/fpx-bank")
     }
 
-    // Get All Transactions
-    suspend fun getAllTransactions(): Items<Transaction> {
-        return sdk.call<Any, Items<Transaction>>(
-            url = "/v3/payment/transactions"
-        )
-    }
-
     // Daily Settlement Report
     suspend fun dailySettlementReport(data: DailySettlementReportRequest): Items<DailySettlementReportResponse> {
         return sdk.call(
@@ -129,5 +122,42 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
             body = data
         )
     }
+
+    suspend fun getTransactions(cursor: String = ""): Items<Transaction> {
+        return sdk.call<Any, Items<Transaction>>(
+            url = "/v3/payment/transactions?cursor=$cursor"
+        )
+    }
+
+    // Get Transactions with filter by date
+    suspend fun getTransactions(
+        startAt: String,
+        endAt: String,
+        cursor: String = ""
+    ): Items<Transaction> {
+        return sdk.call<Any, Items<Transaction>>(
+            url = "/v3/terminal/payment/transactions?filter={\"transactionAt\":  {\"\$gte\": \"$startAt\", \"\$lte\": \"$endAt\"}}&cursor=$cursor"
+        )
+    }
+
+    // Get Transactions with filter by status
+    suspend fun getTransactions(status: String, cursor: String = ""): Items<Transaction> {
+        return sdk.call<Any, Items<Transaction>>(
+            url = "/v3/terminal/payment/transactions?filter={\"status\": \"$status\"}&cursor=$cursor"
+        )
+    }
+
+    // Get Transactions with filter by date & status
+    suspend fun getTransactions(
+        startAt: String,
+        endAt: String,
+        status: String,
+        cursor: String = ""
+    ): Items<Transaction> {
+        return sdk.call<Any, Items<Transaction>>(
+            url = "/v3/terminal/payment/transactions?filter={\"transactionAt\":  {\"\$gte\": \"$startAt\", \"\$lte\": \"$endAt\"}, \"status\": \"$status\"}&cursor=$cursor"
+        )
+    }
+
 
 }
