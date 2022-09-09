@@ -28,7 +28,7 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     }
 
     suspend fun getTransactionQRURL(): Items<TransactionQRURL> {
-        return sdk.call<Any, Items<TransactionQRURL>>(url = "/v3/payment/transaction/qrcodes")
+        return sdk.call<Any, Items<TransactionQRURL>>( url = "/v3/payment/transaction/qrcodes")
     }
 
     suspend fun getTransactionQRURLByCode(code: String): Item<TransactionQRURL> {
