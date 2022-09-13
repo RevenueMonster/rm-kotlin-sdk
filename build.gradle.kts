@@ -147,15 +147,6 @@ kotlin {
 //                implementation(kotlin("test-js"))
 //            }
 //        }
-//         Dependencies for iOS and desktop
-//        val nativeMain by getting {
-//            dependencies {
-//            }
-//        }
-//        val nativeTest by getting {}
-//        val iosMain by creating {
-//            dependsOn(commonMain)
-//        }
 
         targets.all {
             compilations.all {

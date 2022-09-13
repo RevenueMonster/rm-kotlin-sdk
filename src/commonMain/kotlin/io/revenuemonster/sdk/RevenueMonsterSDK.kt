@@ -4,6 +4,7 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.ktor.util.*
 import io.revenuemonster.sdk.model.auth.OAuthCredential
 import io.revenuemonster.sdk.module.*
 import io.revenuemonster.sdk.util.RMException
@@ -12,6 +13,9 @@ import io.revenuemonster.sdk.util.client
 import io.revenuemonster.sdk.util.randomString
 import kotlinx.datetime.Clock
 import kotlinx.serialization.json.*
+import java.security.KeyFactory
+import java.security.PublicKey
+import java.security.spec.X509EncodedKeySpec
 
 class RevenueMonsterSDK(
     private val oAuth: OAuthCredential,
@@ -77,6 +81,7 @@ class RevenueMonsterSDK(
             is JsonObject -> JsonObject(
                 elem.entries.map { it.key to normalize(it.value) }.sortedBy { it.first }.toMap()
             )
+
             is JsonArray -> JsonArray(elem.map { normalize(it) })
             else -> {
                 elem
