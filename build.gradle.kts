@@ -49,11 +49,10 @@ val dokkaJar by tasks.creating(Jar::class) {
 // }
 
 android {
-    compileSdkVersion(30)
-    buildToolsVersion = "30.0.3"
+    compileSdk = 32
     defaultConfig {
-        minSdkVersion(22)
-        targetSdkVersion(30)
+        minSdk = 22
+        targetSdk = 32
         multiDexEnabled = true
     }
     testOptions {
