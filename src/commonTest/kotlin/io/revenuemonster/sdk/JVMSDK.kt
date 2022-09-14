@@ -59,7 +59,8 @@ class JVMSDK {
 
                 val auth = RevenueMonsterAuth(config).getAccessToken()
                 val sdk = RevenueMonsterSDK(auth)
-                val r1 = sdk.merchant.getProfile()
+//                val r1 = sdk.merchant.getProfile()
+                val r1 = sdk.loyalty.giveLoyaltyPointByPhoneNumber(100,"60","128534488")
                 println("Result ====>")
                 println(r1)
 

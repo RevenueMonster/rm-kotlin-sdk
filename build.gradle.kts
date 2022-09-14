@@ -88,15 +88,6 @@ kotlin {
         }
     }
 
-//    val hostOs = System.getProperty("os.name")
-//    val isMingwX64 = hostOs.startsWith("Windows")
-//    val nativeTarget = when {
-//        hostOs == "Mac OS X" -> macosX64("native")
-//        hostOs == "Linux" -> linuxX64("native")
-//        isMingwX64 -> mingwX64("native")
-//        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
-//    }
-
     sourceSets {
         // Dependencies for common
         val commonMain by getting {
@@ -113,7 +104,7 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation(kotlin("test-annotations-common"))
+                implementation(kotlin("test"))
             }
         }
         val jvmMain by getting {
@@ -122,11 +113,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
             }
         }
-        val jvmTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
-            }
-        }
+        val jvmTest by getting {}
         val androidMain by getting {
             dependsOn(commonMain)
             dependencies {
@@ -134,18 +121,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
             }
         }
-        val androidTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation(kotlin("test-junit"))
-            }
-        }
-//        val jsMain by getting {}
-//        val jsTest by getting {
-//            dependencies {
-//                implementation(kotlin("test-js"))
-//            }
-//        }
+        val androidTest by getting {}
 
         targets.all {
             compilations.all {
