@@ -76,7 +76,7 @@ android {
 kotlin {
     // setup for android
     android {
-        publishAllLibraryVariants()
+        publishLibraryVariants("release")
     }
     // setup for JVM
     jvm {
