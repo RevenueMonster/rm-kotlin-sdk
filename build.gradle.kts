@@ -105,7 +105,7 @@ kotlin {
                 implementation(kotlin("stdlib"))
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
                 implementation("org.apache.commons:commons-collections4:4.4")
                 implementation("io.ktor:ktor-client-cio:$ktorVersion")
