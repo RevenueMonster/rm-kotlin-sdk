@@ -16,15 +16,4 @@ class CampaignModule(private val sdk: RevenueMonsterSDK) {
         )
     }
 
-    suspend fun gourmetCard(memberId: String, storeId: String): Item<GourmetCardResponse> {
-        return sdk.call(
-            url = "/v3/membership/verify",
-            method = HttpMethod.Post,
-            body = mapOf(
-                "memberCardId" to memberId,
-                "storeId" to storeId
-            )
-        )
-    }
-
 }
