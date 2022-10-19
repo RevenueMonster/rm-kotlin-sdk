@@ -38,12 +38,26 @@ data class ExtraInfo(
 )
 
 @Serializable
-data class CardBean(
+data class CardBean (
+    val cardType: CardType? = null,
+    val provider: String? = null,
+    val isTokenization: Boolean? = null,
+    val token: String? = null,
     val maskNo: String? = null,
     val inputType: String? = null,
     val referenceId: String? = null,
-    val secondaryReferenceId: String? = null,
-    val provider: String? = null
+    val domain: String? = null,
+    val secondaryReferenceId: String? = null
+)
+
+@Serializable
+data class CardType (
+    val brand: String? = null,
+    val type: String? = null,
+    val issuer: String? = null,
+    val alpha2: String? = null,
+    val alpha3: String? = null,
+    val country: String? = null
 )
 
 @Serializable
