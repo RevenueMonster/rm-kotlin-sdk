@@ -28,15 +28,21 @@ class PaymentModule(private val sdk: RevenueMonsterSDK) {
     }
 
     suspend fun getTransactionQRURL(): Items<TransactionQRURL> {
-        return sdk.call<Any, Items<TransactionQRURL>>(url = "/v3/payment/transaction/qrcodes")
+        return sdk.call<Any, Items<TransactionQRURL>>(
+            url = "/v3/payment/transaction/qrcodes"
+        )
     }
 
     suspend fun getTransactionQRURLByCode(code: String): Item<TransactionQRURL> {
-        return sdk.call<Any, Item<TransactionQRURL>>(url = "/v3/payment/transaction/qrcode/$code")
+        return sdk.call<Any, Item<TransactionQRURL>>(
+            url = "/v3/payment/transaction/qrcode/$code"
+        )
     }
 
     suspend fun getTransactionByCode(code: String): Items<GetTransactionResponse> {
-        return sdk.call<Any, Items<GetTransactionResponse>>(url = "/v3/payment/transaction/qrcode/$code/transactions")
+        return sdk.call<Any, Items<GetTransactionResponse>>(
+            url = "/v3/payment/transaction/qrcode/$code/transactions"
+        )
     }
 
     // Web Mobile Payment
