@@ -42,15 +42,6 @@ class JVMSDK {
                     "pseI1FOdK9Nz21gFt0Y/jsgKQuIzXHftA/1HHmU4jxMxN54KEUTAewlIUuoJKCOK\n" +
                     "7du7iRYkSCo2ZVayfga0FpKqSpV1XzzcB3uySBP8XGpzAZ3dHfMn\n" +
                     "-----END RSA PRIVATE KEY-----",
-            publicKey = "-----BEGIN RSA PUBLIC KEY-----\n" +
-                    "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAw9UtQHoQ7N4jew4FL6JF\n" +
-                    "wbp8zsZtGZ0sCKrQSbnhxyy9fRP1414wVX114cfln9ELyz6xv2vAo3QZcwhr0ylm\n" +
-                    "BKyJnBXhrk5kJtNmYKLxlqaYmHLBrQtGvIXNxkDZylnPOptJQ4/qTirS/2ywNfuB\n" +
-                    "xvOCT8UfIfl8jym+UktyKp+amf4WYZ4bDFRejVytrHYdQpOtx4vh4cV+JT8wMDFT\n" +
-                    "fIR/1LYXxf0hoHwFwjBGSuZ3hu6pBsH227O4+cHGq8adJYWud4qTdFHudXtY9ZAd\n" +
-                    "HL7n7/L+wNjd0VXxWN3YjXUbg1rhjoCcDpLs/9f3kGRGYXD/GP51g08ySy94xMPz\n" +
-                    "wwIDAQAB\n" +
-                    "-----END RSA PUBLIC KEY-----\n",
             sandbox = true
         )
 

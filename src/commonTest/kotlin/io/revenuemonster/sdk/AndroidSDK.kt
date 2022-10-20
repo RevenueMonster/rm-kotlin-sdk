@@ -40,7 +40,6 @@ class AndroidSDK {
                     "pseI1FOdK9Nz21gFt0Y/jsgKQuIzXHftA/1HHmU4jxMxN54KEUTAewlIUuoJKCOK\n" +
                     "7du7iRYkSCo2ZVayfga0FpKqSpV1XzzcB3uySBP8XGpzAZ3dHfMn\n" +
                     "-----END RSA PRIVATE KEY-----",
-            publicKey = "",
             sandbox = true
         )
 
