@@ -1,7 +1,7 @@
 plugins {
-    kotlin("multiplatform") version "1.6.10"
-    kotlin("plugin.serialization") version "1.6.10"
-    id("org.jetbrains.dokka") version "1.6.10"
+    kotlin("multiplatform") version "1.7.10"
+    kotlin("plugin.serialization") version "1.7.10"
+    id("org.jetbrains.dokka") version "1.7.10"
     id("com.android.library")
     id("maven-publish")
     id("signing")
@@ -13,12 +13,13 @@ plugins {
 
 group = "io.revenuemonster.sdk"
 // remove prefix v if the version included, eg `v1.0.0`
-version = (System.getenv("RM_KOTLIN_SDK_VERSION") ?: "1.0.0").removePrefix("v")
+//version = "(System.getenv("RM_KOTLIN_SDK_VERSION") ?: "1.0.0").removePrefix("v")"
+version = "2.0.0"
 
 val artifact = "rm-kotlin-sdk"
 val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
 val gitUrl = "github.com:RevenueMonster/rm-kotlin-sdk.git"
-val ktorVersion = "1.6.7"
+val ktorVersion = "2.1.0"
 
 repositories {
     google()
@@ -49,11 +50,10 @@ val dokkaJar by tasks.creating(Jar::class) {
 // }
 
 android {
-    compileSdkVersion(30)
-    buildToolsVersion = "30.0.3"
+    compileSdk = 32
     defaultConfig {
-        minSdkVersion(22)
-        targetSdkVersion(30)
+        minSdk = 22
+        targetSdk = 32
         multiDexEnabled = true
     }
     testOptions {
@@ -62,8 +62,8 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_1_8
-        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_11
     }
     sourceSets {
         getByName("main") {
@@ -77,26 +77,17 @@ android {
 kotlin {
     // setup for android
     android {
-        publishAllLibraryVariants()
+        publishLibraryVariants("release")
     }
     // setup for JVM
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "1.8"
+            kotlinOptions.jvmTarget = "11"
         }
         testRuns["test"].executionTask.configure {
             useJUnit()
         }
     }
-
-//    val hostOs = System.getProperty("os.name")
-//    val isMingwX64 = hostOs.startsWith("Windows")
-//    val nativeTarget = when {
-//        hostOs == "Mac OS X" -> macosX64("native")
-//        hostOs == "Linux" -> linuxX64("native")
-//        isMingwX64 -> mingwX64("native")
-//        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
-//    }
 
     sourceSets {
         // Dependencies for common
@@ -104,60 +95,34 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib"))
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
+                implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
                 implementation("org.apache.commons:commons-collections4:4.4")
-                implementation("io.ktor:ktor-client-cio:$ktorVersion")
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation(kotlin("test-annotations-common"))
+                implementation(kotlin("test"))
             }
         }
         val jvmMain by getting {
             dependsOn(commonMain)
-        }
-        val jvmTest by getting {
             dependencies {
-                implementation(kotlin("test-junit"))
+                implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
             }
         }
+        val jvmTest by getting {}
         val androidMain by getting {
             dependsOn(commonMain)
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
+                implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
             }
         }
-        val androidTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation(kotlin("test-junit"))
-            }
-        }
-//        val jsMain by getting {}
-//        val jsTest by getting {
-//            dependencies {
-//                implementation(kotlin("test-js"))
-//            }
-//        }
-//         Dependencies for iOS and desktop
-//        val nativeMain by getting {
-//            dependencies {
-//            }
-//        }
-//        val nativeTest by getting {}
-//        val iosMain by creating {
-//            dependsOn(commonMain)
-//        }
-
-        all {
-            languageSettings.apply {
-                useExperimentalAnnotation("kotlin.Experimental")
-            }
-        }
+        val androidTest by getting {}
 
         targets.all {
             compilations.all {

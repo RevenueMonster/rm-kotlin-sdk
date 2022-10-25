@@ -11,18 +11,18 @@ import io.revenuemonster.sdk.model.request.StoreDetails
 class StoreModule(private val sdk: RevenueMonsterSDK) {
 
     suspend fun getStores(): Items<Store> {
-        return sdk.call<Any, Items<Store>>("/stores")
+        return sdk.call<Any, Items<Store>>("/v3/stores")
     }
 
     suspend fun getStoreByID(id: String): Item<Store> {
         return sdk.call<Any, Item<Store>>(
-            url = "/store/$id"
+            url = "/v3/store/$id"
         )
     }
 
     suspend fun createStore(data: StoreDetails): Item<Store> {
         return sdk.call<StoreDetails, Item<Store>>(
-            url = "/store",
+            url = "/v3/store",
             method = HttpMethod.Post,
             body = data
         )
@@ -30,7 +30,7 @@ class StoreModule(private val sdk: RevenueMonsterSDK) {
 
     suspend fun updateStore(storeID: String, data: StoreDetails): Item<Store> {
         return sdk.call<StoreDetails, Item<Store>>(
-            url = "/store/$storeID",
+            url = "/v3/store/$storeID",
             method = HttpMethod.Patch,
             body = data
         )
@@ -38,7 +38,7 @@ class StoreModule(private val sdk: RevenueMonsterSDK) {
 
     suspend fun deleteStore(storeID: String): Response {
         return sdk.call<Any, Response>(
-            url = "/store/$storeID",
+            url = "/v3/store/$storeID",
             method = HttpMethod.Delete
         )
     }

@@ -13,7 +13,7 @@ data class UserProfile(
     val email: String,
     val avatarUrl: String,
     val status: String,
-    val storeId: String?,
+    val storeId: List<String>,
     val isActive: Boolean,
     val createdAt: Instant,
     val updatedAt: Instant

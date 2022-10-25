@@ -3,4 +3,7 @@ package io.revenuemonster.sdk.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Error(val error: ErrorDetail)
+data class ErrorDetail(
+    val code: String,
+    val message: String,
+)
