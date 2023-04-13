@@ -13,7 +13,7 @@ import kotlinx.serialization.json.Json
 class PosModule(private val sdk: RevenueMonsterSDK) {
 
     //if rm app version <2.0 provider is not require
-    suspend fun quickPay(data: PosQuickPay): Item<Transaction> {
+    suspend fun quickPay(data: PosQuickPay): Transaction {
         return sdk.call(
             url = "/v3/payment/terminal/quickpay",
             method = HttpMethod.Post,
