@@ -14,7 +14,7 @@ plugins {
 group = "io.revenuemonster.sdk"
 // remove prefix v if the version included, eg `v1.0.0`
 //version = "(System.getenv("RM_KOTLIN_SDK_VERSION") ?: "1.0.0").removePrefix("v")"
-version = "2.0.0"
+version = "2.0.1"
 
 val artifact = "rm-kotlin-sdk"
 val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
