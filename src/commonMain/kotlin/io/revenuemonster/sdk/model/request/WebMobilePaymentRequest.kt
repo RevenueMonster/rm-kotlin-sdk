@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class WebMobilePaymentRequest(
     val order: Order,
-    val customer: WebMobilePaymentCustomer,
+    val customer: WebMobilePaymentCustomer? = null,
     val method: List<String> = listOf(),
     val type: String,
     val storeId: String,
