@@ -37,7 +37,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.revenuemonster.sdk:rm-kotlin-sdk:2.0.1")
+    implementation("io.revenuemonster.sdk:rm-kotlin-sdk:2.1.0")
 }
 ```
 ⚠ Don't forget to implement ⚠</br>
@@ -108,6 +108,18 @@ GlobalScope.launch {
         e.printStackTrace()
     }
 }
+```
+
+## Version 2.1.0 onward
+
+Starting from version 2.1.0 onward, users will have the ability to manually set the timeout or socket timeout. </br>
+By default, the request timeout will be set to 95 seconds (95000L), and the socket timeout will be set to 60 seconds (60000L).
+
+```kotlin
+   sdk.setTimeout(
+      timeout = 120000L,
+      socketTimeout = 120000L
+   )
 ```
 
 ## 📄 License
