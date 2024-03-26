@@ -23,11 +23,11 @@ actual val client: HttpClient = HttpClient(OkHttp) {
         )
     }
 
-    install(HttpTimeout) {
-        // Set max timeout
-        requestTimeoutMillis = 95000
-        socketTimeoutMillis = 60000
-    }
+//    install(HttpTimeout) {
+//        // Set max timeout
+//        requestTimeoutMillis = 95000
+//        socketTimeoutMillis = 60000
+//    }
 
     ResponseObserver {
         println()

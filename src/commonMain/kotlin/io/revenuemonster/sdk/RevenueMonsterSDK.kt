@@ -1,6 +1,7 @@
 package io.revenuemonster.sdk
 
 import io.ktor.client.call.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -23,6 +24,9 @@ class RevenueMonsterSDK(
 
     private val baseUrl: String =
         if (oAuth.sandbox) "https://sb-open.revenuemonster.my" else "https://open.revenuemonster.my"
+
+    private var timeout: Long = 95000L
+    private var socketTimeout: Long = 60000L
 
     val payment: PaymentModule = PaymentModule(this)
     val merchant: MerchantModule = MerchantModule(this)
@@ -58,6 +62,10 @@ class RevenueMonsterSDK(
 
         val response = client.request(uri) {
             this.method = method
+            this.timeout {
+                requestTimeoutMillis = timeout
+                socketTimeoutMillis = socketTimeout
+            }
             headers {
                 contentType(ContentType.Application.Json)
                 append(HttpHeaders.Authorization, "Bearer ${oAuth.accessToken}")
@@ -88,6 +96,11 @@ class RevenueMonsterSDK(
                 elem
             }
         }
+    }
+
+    fun setTimeout(timeout: Long = 95000L, socketTimeout: Long = 60000L) {
+        this.timeout = timeout
+        this.socketTimeout = socketTimeout
     }
 
 }
