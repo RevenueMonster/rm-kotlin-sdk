@@ -37,7 +37,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.revenuemonster.sdk:rm-kotlin-sdk:2.1.0")
+    implementation("io.revenuemonster.sdk:rm-kotlin-sdk:2.1.1")
 }
 ```
 ⚠ Don't forget to implement ⚠</br>
