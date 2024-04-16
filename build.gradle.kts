@@ -19,7 +19,7 @@ version = "2.2.0"
 val artifact = "rm-kotlin-sdk"
 val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
 val gitUrl = "github.com:RevenueMonster/rm-kotlin-sdk.git"
-val ktorVersion = "2.1.2"
+val ktorVersion = "2.3.10"
 
 repositories {
     google()
