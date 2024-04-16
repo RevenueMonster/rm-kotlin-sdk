@@ -12,6 +12,7 @@ import io.revenuemonster.sdk.util.RMException
 import io.revenuemonster.sdk.util.client
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 class RevenueMonsterAuth(private val config: Config) {
@@ -60,42 +61,39 @@ class RevenueMonsterAuth(private val config: Config) {
         }
     }
 
-    //Temporary disable
-//    @OptIn(InternalAPI::class)
-//    suspend fun refreshToken(refreshToken: String): OAuthCredential {
-//        try {
-//
-//            var cred: OAuthCredential
-//            val b64 = "${config.clientID}:${config.clientSecret}".encodeBase64()
-//
-//            Mutex().withLock {
-//                val item =
-//                    client.post<Credential>("$baseUrl/v1/token") {
-//                        headers {
-//                            append(HttpHeaders.ContentType, "application/json")
-//                            append(HttpHeaders.Authorization, "Basic $b64")
-//                        }
-//                        body = mapOf(
-//                            "grantType" to "refresh_token",
-//                            "refreshToken" to refreshToken
-//                        )
-//                    }
-//                cred = OAuthCredential(
-//                    accessToken = item.accessToken,
-//                    expiresIn = item.expiresIn,
-//                    refreshToken = item.refreshToken,
-//                    refreshTokenExpiresIn = item.refreshTokenExpiresIn,
-//                    privateKey = config.privateKey,
-//                    sandbox = config.sandbox
-//                )
-//            }
-//
-//            return cred
-//        } catch (e: ClientRequestException) {
-//            throw json.decodeFromString(Error.serializer(), e.response.readText())
-//        } catch (e: Exception) {
-//            throw e
-//        }
-//    }
+    suspend fun refreshToken(refreshToken: String): OAuthCredential {
+        var auth: OAuthCredential
+        val b64 = "${config.clientID}:${config.clientSecret}".encodeBase64()
+        val mutex = Mutex()
 
+        mutex.withLock {
+            val response = client.post("$baseUrl/v1/token") {
+                contentType(ContentType.Application.Json)
+                headers {
+                    append(HttpHeaders.Authorization, "Basic $b64")
+                }
+                setBody(
+                    mapOf(
+                        "grantType" to "refresh_token",
+                        "refreshToken" to refreshToken
+                    )
+                )
+            }
+
+            if (response.status.isSuccess() && response.status.value == 200) {
+                val cred = json.decodeFromString<Credential>(response.bodyAsText())
+                auth = OAuthCredential(
+                    accessToken = cred.accessToken,
+                    expiresIn = cred.expiresIn,
+                    refreshToken = cred.refreshToken,
+                    refreshTokenExpiresIn = cred.refreshTokenExpiresIn,
+                    privateKey = config.privateKey,
+                    sandbox = config.sandbox
+                )
+                return auth
+            } else {
+                throw RMException(response.bodyAsText())
+            }
+        }
+    }
 }

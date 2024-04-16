@@ -1,7 +1,7 @@
 plugins {
-    kotlin("multiplatform") version "1.7.10"
-    kotlin("plugin.serialization") version "1.7.10"
-    id("org.jetbrains.dokka") version "1.7.10"
+    kotlin("multiplatform") version "1.7.20"
+    kotlin("plugin.serialization") version "1.7.20"
+    id("org.jetbrains.dokka") version "1.7.20"
     id("com.android.library")
     id("maven-publish")
     id("signing")
@@ -14,12 +14,12 @@ plugins {
 group = "io.revenuemonster.sdk"
 // remove prefix v if the version included, eg `v1.0.0`
 //version = "(System.getenv("RM_KOTLIN_SDK_VERSION") ?: "1.0.0").removePrefix("v")"
-version = "2.1.1"
+version = "2.2.0"
 
 val artifact = "rm-kotlin-sdk"
 val pkgUrl = "https://github.com/RevenueMonster/rm-kotlin-sdk"
 val gitUrl = "github.com:RevenueMonster/rm-kotlin-sdk.git"
-val ktorVersion = "2.1.0"
+val ktorVersion = "2.1.2"
 
 repositories {
     google()
