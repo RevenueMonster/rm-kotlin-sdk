@@ -14,5 +14,6 @@ class RMException(response : String) : Exception(response){
     private val e = json.decodeFromString<Error>(this.message!!)
     val errorCode = e.error.code
     val errorMessage = e.error.message
+    val errorResponse = this.message
 
 }
