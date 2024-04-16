@@ -5,7 +5,6 @@ import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.util.*
 import io.revenuemonster.sdk.model.auth.OAuthCredential
 import io.revenuemonster.sdk.module.*
 import io.revenuemonster.sdk.util.RMException
@@ -14,9 +13,6 @@ import io.revenuemonster.sdk.util.client
 import io.revenuemonster.sdk.util.randomString
 import kotlinx.datetime.Clock
 import kotlinx.serialization.json.*
-import java.security.KeyFactory
-import java.security.PublicKey
-import java.security.spec.X509EncodedKeySpec
 
 class RevenueMonsterSDK(
     private val oAuth: OAuthCredential,
@@ -27,6 +23,7 @@ class RevenueMonsterSDK(
 
     private var timeout: Long = 95000L
     private var socketTimeout: Long = 60000L
+    private val signType = "sha256"
 
     val payment: PaymentModule = PaymentModule(this)
     val merchant: MerchantModule = MerchantModule(this)
@@ -47,7 +44,6 @@ class RevenueMonsterSDK(
     ): O {
         val uri = baseUrl + url
         val el = if (body != null) normalize(Json.encodeToJsonElement(body)) else JsonNull
-        val signType = "sha256"
         val timestamp = Clock.System.now().epochSeconds.toString()
         val nonce = randomString(32)
         val signature = Signature.generateSignature(
@@ -83,6 +79,48 @@ class RevenueMonsterSDK(
         } else {
             throw RMException(response.bodyAsText())
         }
+    }
+
+    suspend fun custom(url: String, method: HttpMethod, jsonElement: JsonElement? = null): HttpResponse {
+
+        val uri = baseUrl + url
+        val el = if (jsonElement != null) normalize(jsonElement) else JsonNull
+        val timestamp = Clock.System.now().epochSeconds.toString()
+        val nonce = randomString(32)
+        val signature = Signature.generateSignature(
+            data = if (jsonElement != null) el.toString() else "",
+            privateKey = oAuth.privateKey,
+            requestUrl = uri,
+            nonceStr = nonce,
+            signType = signType,
+            method = method.value,
+            timestamp = timestamp
+        )
+
+        val response = client.request(uri) {
+            this.method = method
+            this.timeout {
+                requestTimeoutMillis = timeout
+                socketTimeoutMillis = socketTimeout
+            }
+            headers {
+                contentType(ContentType.Application.Json)
+                append(HttpHeaders.Authorization, "Bearer ${oAuth.accessToken}")
+                append("X-Signature", "$signType $signature")
+                append("X-Nonce-Str", nonce)
+                append("X-Timestamp", timestamp)
+            }
+            if (jsonElement != null) {
+                setBody(el)
+            }
+        }
+
+        if (response.status.isSuccess() && response.status.value == 200) {
+            return response
+        } else {
+            throw RMException(response.bodyAsText())
+        }
+
     }
 
     private fun normalize(elem: JsonElement): JsonElement {
