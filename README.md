@@ -37,7 +37,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.revenuemonster.sdk:rm-kotlin-sdk:2.1.1")
+    implementation("io.revenuemonster.sdk:rm-kotlin-sdk:2.2.0")
 }
 ```
 ⚠ Don't forget to implement ⚠</br>
@@ -60,8 +60,8 @@ For more detail please visit our [wiki](https://github.com/RevenueMonster/rm-kot
 
 | Package name                                                             | Version |
 | ------------------------------------------------------------------------ |---------|
-| [ktor](https://github.com/ktorio/ktor)                                   | 2.1.0   |
-| [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) | 1.7.10  |
+| [ktor](https://github.com/ktorio/ktor)                                   | 2.1.2   |
+| [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) | 1.7.20  |
 | [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)           | 0.4.0   |
 
 ## 🤖 Supported Platforms
@@ -110,16 +110,77 @@ GlobalScope.launch {
 }
 ```
 
-## Version 2.1.0 onward
+## Custom Request (Sample)
 
-Starting from version 2.1.0 onward, users will have the ability to manually set the timeout or socket timeout. </br>
+If there's some new Feature / Open API, is not updated only we suggest to use this method, we handled most of the data processing & security check part. What you need to do only pass the request parameters and url.
+
+### Get
+```kotlin
+val sdk = RevenueMonsterSDK(auth)
+val response = sdk.custom(url = "/v3/store/1692604052727021311", HttpMethod.Get)
+val json = Json {
+   ignoreUnknownKeys = true
+}
+val store = json.decodeFromString<Item<Store>>(response.bodyAsText())
+
+```
+
+### Post
+
+```kotlin
+@Serializable
+data class LoyaltyPointRequest(
+    val point: Int,
+    val type: String,
+    val countryCode: String,
+    val phoneNumber: String
+)
+
+@Serializable
+data class RMResponse(
+    val code: String
+)
+```
+
+
+```kotlin
+
+val data = LoyaltyPointRequest(
+   point = 100,
+   type = "PHONENUMBER",
+   countryCode = "60",
+   phoneNumber = "123456789"
+)
+
+try{
+
+   val jsonElement = Json.encodeToJsonElement(data)
+   val sdk = RevenueMonsterSDK(auth)
+   val response = sdk.custom("/v3/loyalty/reward", HttpMethod.Post, jsonElement)
+   val result = Json.decodeFromString<RMResponse>(response.bodyAsText())
+
+}catch (e: RMException){
+   println(e.message)
+   println(e.errorCode)
+   println(e.errorMessage)
+}catch (e: Throwable){
+   e.printStackTrace()
+}
+
+
+
+```
+
+## Version 2.1.1 onward
+
+Starting from version 2.1.1 onward, users will have the ability to manually set the timeout or socket timeout. </br>
 By default, the request timeout will be set to 95 seconds (95000L), and the socket timeout will be set to 60 seconds (60000L).
 
 ```kotlin
-   sdk.setTimeout(
-      timeout = 120000L,
-      socketTimeout = 120000L
-   )
+sdk.setTimeout(
+   timeout = 120000L,
+   socketTimeout = 120000L
+)
 ```
 
 ## 📄 License
